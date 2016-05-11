@@ -22,7 +22,7 @@ public class Jugador extends Nave{
 	}
 	
 	public void moverDerecha() {
-		
+		setPosicion(getPosicion().getX()+getVelocidad().getX(), getPosicion().getX()+getVelocidad().getX());
 	}
 	public void moverIzquierda() {
 		
