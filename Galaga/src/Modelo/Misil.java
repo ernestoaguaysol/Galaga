@@ -1,6 +1,6 @@
 package Modelo;
 
-public class Misil extends Municion {
+public class Misil extends Disparo {
 
 	public Misil(int danio, int x, int y) {
 		super(danio, x, y);

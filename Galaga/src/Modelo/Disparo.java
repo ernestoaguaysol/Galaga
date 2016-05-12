@@ -1,12 +1,12 @@
 package Modelo;
 
-public abstract class Municion extends ObjetoMovil {
+public abstract class Disparo extends ObjetoMovil {
 	
 	private int danio;
 	
-	public Municion(int danio,int x, int y) {
+	public Disparo(int danio,int x, int y) {
 		//
-		super(x,y);
+	
 		this.danio = danio;
 	}
 	

@@ -2,27 +2,13 @@ package Modelo;
 
 
 public abstract class ObjetoMovil {
-	private Punto posicion;
-	private Punto velocidad;
-	
-	public ObjetoMovil(int x, int y) {
-		// 
-		this.posicion = new Punto(x, y);
-		this.velocidad = new Punto(x, y);
-		
-	}
+	//posicion, velocidad, y superficie de todos los objetos
+	protected Punto posicion;
+	protected Punto velocidad;
+	protected Rectangulo superficie;
 
 	public Punto getPosicion(){
 		return this.posicion;
-	}
-	
-	public void setPosicion(int x, int y) {
-		this.posicion.setX(x);
-		this.posicion.setY(y);
-	}
-	
-	public Punto getVelocidad() {
-		return velocidad;
 	}
 	
 	public void mover() {

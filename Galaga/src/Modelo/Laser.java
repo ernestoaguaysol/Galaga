@@ -1,6 +1,6 @@
 package Modelo;
 
-public class Laser extends Municion {
+public class Laser extends Disparo {
 
 	public Laser(int danio, int x, int y) {
 		super(danio, x, y);

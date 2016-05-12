@@ -4,9 +4,9 @@ import java.util.LinkedList;
 
 public class MotorJuego {
 	private Espacio espacio;
-	private Jugador naveJugador;
+	private NaveJugador naveJugador;
 	private LinkedList<ObjetoMovil> objetosMoviles;
-//	private LinkedList<Municion> municiones;
+	private LinkedList<Disparo> disparos;
 	
 	public MotorJuego() {
 		this.espacio = new Espacio(512, 512);
