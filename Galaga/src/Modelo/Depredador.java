@@ -9,6 +9,8 @@ public class Depredador extends NaveEnemiga {
 		this.posicion = posicion;
 		//velocidad del enemigo
 		this.velocidad = new Punto(2, 2);
+		//energia
+		this.energia = 100;
 	}
 
 }

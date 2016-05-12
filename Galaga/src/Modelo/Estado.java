@@ -1,5 +1,5 @@
 package Modelo;
 
 public enum Estado {
-	PASIVO,ATACANDO;
+	PASIVO,KAMIKAZE,VOLVIENDO;
 }
