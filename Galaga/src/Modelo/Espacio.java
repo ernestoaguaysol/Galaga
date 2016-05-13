@@ -1,15 +1,14 @@
 package Modelo;
 
-import java.awt.Point;
-
 public class Espacio {
+	//ancho y alto del espacio
 	private int ancho;
 	private int alto;
 	
-	public Espacio(int ancho, int alto) {
+	public Espacio() {
 		// 
-		this.ancho = ancho;
-		this.alto = alto;
+		this.ancho = 512;
+		this.alto = 512;
 	}
 	
 	public int getAncho() {
@@ -20,7 +19,7 @@ public class Espacio {
 		return alto;
 	}
 	
-	public boolean estaDentroDeEspacio(Point posicion) {
+	public boolean estaDentroDeEspacio(Punto posicion) {
 		// 
 		if (posicion.getX() < 0 || posicion.getX() > this.ancho) {
 			return false;

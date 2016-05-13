@@ -1,9 +1,9 @@
 package Modelo;
 
-public class ObjetoEspacial extends ObjetoMovil {
+public abstract class ObjetoEspacial extends ObjetoMovil {
 
-	public ObjetoEspacial(int x, int y) {
-		// TODO Auto-generated constructor stub
-	}
+	// falta agregar lo que puede dejar un objeto espacial
+	// ej: una vida, un campo de energia, etc
+	
 
 }

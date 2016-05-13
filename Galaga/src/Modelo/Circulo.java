@@ -22,26 +22,26 @@ public class Circulo {
 		return Math.pow(radio,2) * Math.PI;
 	}
 	
-	void escalar(int factor){
+	public void escalar(int factor){
 		this.radio *= factor;
 	}
 	
-	void desplazar(int desp_x, int desp_y){
+	public void desplazar(int desp_x, int desp_y){
 		this.centro.setX(this.centro.getX()+ desp_x);
 		this.centro.setY(this.centro.getY()+ desp_y);
 	}
 	
-	static double distancia(Circulo c1, Circulo c2){
+	public static double distancia(Circulo c1, Circulo c2){
 		return Punto.distancia(c1.centro, c2.centro)-(c1.radio+c2.radio);
 	}
 	
-	static boolean seTocan(Circulo c1, Circulo c2){
+	public static boolean colisionan(Circulo c1, Circulo c2){
 		if(distancia(c1,c2) <= 0)
 			return true;
 		return false;
 	}
 	
-	boolean loContiene(Circulo otro){
+	public boolean loContiene(Circulo otro){
 		if(this.radio >= Punto.distancia(this.centro,otro.centro)+otro.radio)
 			return true;
 		return false;

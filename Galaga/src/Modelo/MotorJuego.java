@@ -5,50 +5,21 @@ import java.util.LinkedList;
 public class MotorJuego {
 	private Espacio espacio;
 	private NaveJugador naveJugador;
-	private LinkedList<ObjetoMovil> objetosMoviles;
+	private LinkedList<NaveEnemiga> navesEnemigas;
+	private LinkedList<ObjetoEspacial> objetosEspaciales;
 	private LinkedList<Disparo> disparos;
 	
 	public MotorJuego() {
-		this.espacio = new Espacio(512, 512);
-//		this.naveJugador = new Jugador(x, y, vidas);
-		this.objetosMoviles = new LinkedList<>();
-//		this.municiones = new LinkedList<>();
+		this.espacio = new Espacio();
+		this.naveJugador = new NaveJugador(null, 0);
+		this.objetosEspaciales = new LinkedList<>();
+		this.disparos = new LinkedList<>();
 	}
-	
-	public void agregarObjetoMovil(Nave naveEnemiga) {
-		this.objetosMoviles.add(naveEnemiga);
-	}
-	
-//	public Nave getNaveEnemiga(int posicion){
-//		return this.objetosMoviles.
-//	}
-	
-	public Nave getNaveJugador() {
-		return naveJugador;
-	}
-	
-//	public void agregarMuniciones(Municion municion) {
-//		// TODO Auto-generated method stub
-//		this.municiones.add(municion);
-//
-//	}
-//	
-//	public Municion getMuniciones(int posicion) {
-//		return this.municiones.get(posicion);
-//	}
 	
 	public void jugar() {
 		
-		
 		for (int i = 0; i < 10; i++) {
 			
-			for (int j = 0; j < this.objetosMoviles.size(); j++) {
-				this.objetosMoviles.get(j).mover();
-			}
 		}
-		
-		
-		
 	}
-	
 }

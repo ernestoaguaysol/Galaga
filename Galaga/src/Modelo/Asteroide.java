@@ -1,13 +1,12 @@
 package Modelo;
 
-public class Misil extends Disparo {
-
-	public Misil(Punto posicion, Punto velocidad, int radio) {
+public class Asteroide extends ObjetoEspacial{
+	
+	public Asteroide(Punto posicion, int radio, Punto velocidad) {
 		//
 		this.posicion = posicion;
 		this.superficie = new Circulo(posicion, radio);
 		this.velocidad = velocidad;
-		this.danio = 50;
+		
 	}
-	
 }
