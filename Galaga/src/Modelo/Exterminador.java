@@ -15,4 +15,11 @@ public class Exterminador extends NaveEnemiga{
 		this.superficie = new Circulo(posicion, radio);
 	}
 
+	@Override
+	public Disparo disparar() {
+		// 
+		Bomba bomba = new Bomba(posicion, velocidad, 10);
+		return bomba;
+	}
+
 }

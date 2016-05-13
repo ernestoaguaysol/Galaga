@@ -4,5 +4,7 @@ public abstract class NaveEnemiga extends Nave{
 	//solo las naves enemigas tienen estados
 	//pueden ser...
 	Estado estado;
+
+	public abstract Disparo disparar();
 	
 }

@@ -5,7 +5,7 @@ public class Espacio {
 	private int ancho;
 	private int alto;
 	
-	public Espacio() {
+	public Espacio(int ancho , int alto) {
 		// 
 		this.ancho = 512;
 		this.alto = 512;

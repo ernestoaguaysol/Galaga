@@ -14,4 +14,11 @@ public class Destructor extends NaveEnemiga{
 		//superficie
 		this.superficie = new Circulo(posicion, radio);
 	}
+
+	@Override
+	public Disparo disparar() {
+		//
+		Laser laser = new Laser(posicion, velocidad, 4);
+		return laser;
+	}
 }

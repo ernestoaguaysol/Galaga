@@ -15,4 +15,11 @@ public class Depredador extends NaveEnemiga {
 		this.superficie = new Circulo(posicion, radio);
 	}
 
+	@Override
+	public Disparo disparar() {
+		// depredador tira misil
+		Misil misil = new Misil(posicion, velocidad, 4);
+		return misil;
+	}
+
 }

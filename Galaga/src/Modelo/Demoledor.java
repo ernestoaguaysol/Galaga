@@ -15,4 +15,11 @@ public class Demoledor extends NaveEnemiga {
 		//superficie
 		this.superficie = new Circulo(posicion, radio);
 	}
+
+	@Override
+	public Disparo disparar() {
+		// el demoledor dispara bombas con radio de 6
+		Bomba bomba = new Bomba(posicion, velocidad, 6);
+		return bomba;
+	}
 }
