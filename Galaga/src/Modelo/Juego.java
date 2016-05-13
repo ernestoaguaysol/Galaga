@@ -75,8 +75,16 @@ public class Juego {
 				}
 			}
 			
+			this.chequearFueraDePantalla();
 			
 		}
+	}
+	
+	//
+	private void chequearFueraDePantalla() {
+		//
+		
+		
 	}
 
 	//la dejamos publica por ahora
