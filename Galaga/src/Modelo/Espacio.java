@@ -21,10 +21,10 @@ public class Espacio {
 	
 	public boolean estaDentroDeEspacio(Punto posicion) {
 		// 
-		if (posicion.getX() < 0 || posicion.getX() > this.ancho) {
+		if (posicion.getX() < 0 || posicion.getX() > this.ancho-1) {
 			return false;
 		}
-		if (posicion.getY() < 0 || posicion.getY() > this.alto) {
+		if (posicion.getY() < 0 || posicion.getY() > this.alto-1) {
 			return false;
 		}
 		return true;

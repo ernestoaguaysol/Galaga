@@ -60,21 +60,31 @@ public class Juego {
 		//diez iteraciones
 		for (int i = 0; i < 10; i++) {
 			
+			//movemos la nave jugador
 			naveJugador.mover();
-
+			
+			//movemos todas las naves enemigas
 			for (NaveEnemiga n : navesEnemigas) {
 				n.mover();
 			}
 			
+			//chequeamos si hay colicionas..Continuar metodo..
+			/*
+			 *jugador con enemigos (Mueren ambos)
+			 *jugador con objetos espaciales (...)
+			 *jugador con disparos enemigos (...)
+			 *enemigo con disparos jugador (...)
+			 */
 			this.chequearColiciones();
 			
-			
+			//
 			for (NaveEnemiga naveEnemiga : navesEnemigas) {				
 				if (this.decidirDisparo()) {
 					this.disparos.add(naveEnemiga.disparar());
 				}
 			}
 			
+			//la pantala es el espacio 512x512
 			this.chequearFueraDePantalla();
 			
 		}
@@ -82,8 +92,54 @@ public class Juego {
 	
 	//
 	private void chequearFueraDePantalla() {
-		//
+		//chequeamos el jugador
+		if (!this.espacio.estaDentroDeEspacio(this.naveJugador.posicion)) {
+			this.reubicarPosicion(this.naveJugador);
+		}
 		
+		//chequeamos todas las naves enemigas
+		for (NaveEnemiga naveEnemiga : navesEnemigas) {
+			if (!this.espacio.estaDentroDeEspacio(naveEnemiga.posicion)) {
+				this.reubicarPosicion(naveEnemiga);
+			}
+		}
+		
+		//chequeamos todos los objetos espaciales del momento
+		for (ObjetoEspacial objetoEspacial : objetosEspaciales) {
+			//si está afuera del espacio
+			if (!this.espacio.estaDentroDeEspacio(objetoEspacial.posicion)) {
+				//si se cumple la condición lo eliminamos de la lista
+				this.objetosEspaciales.remove(objetoEspacial);
+			}
+		}
+		
+		//chequeamos todos lod disparos del momento
+		for (Disparo disparo : disparos) {
+			//si está fuera del espacio
+			if (!this.espacio.estaDentroDeEspacio(disparo.posicion)) {
+				//lo eliminamos de la lista de disparos
+				this.disparos.remove(disparo);
+			}
+		}
+		
+	}
+	
+	private void reubicarPosicion(ObjetoMovil objeto){
+		//reubicar X
+		if (objeto.posicion.getX() < 0) {
+			objeto.posicion.setX(511);
+		}
+		if (objeto.posicion.getX() >= 512) {
+			objeto.posicion.setX(0);
+		}
+		//----------------------------------//
+		//reubicar Y
+		if (objeto.posicion.getY() < 0) {
+			objeto.posicion.setY(511);
+		}
+		if (objeto.posicion.getY() >= 512) {
+			objeto.posicion.setY(0);
+		}
 		
 	}
 
@@ -124,6 +180,4 @@ public class Juego {
 		}
 		
 	}
-	
-	
 }
