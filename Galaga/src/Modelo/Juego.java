@@ -1,5 +1,6 @@
 package Modelo;
 
+import java.sql.CallableStatement;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -87,9 +88,118 @@ public class Juego {
 			//la pantala es el espacio 512x512
 			this.chequearFueraDePantalla();
 			
+			//si hay que atacar
+			if (this.decidirAtaque()) {
+				//ataca la primer nave enemiga que encuentra 
+				// en estado PASIVO
+				this.atacar();
+			}
+			
+			this.decidirObjetoEspacial();
+			
 		}
 	}
 	
+	// metodo decide si lanzar un objeto espacial
+	// cual objeto va a ser creado y en que posicion
+	private void decidirObjetoEspacial() {
+		//contamos la cantidad de estrellas fugaz
+		int cantEstrellaFugaz = 0;
+		//contamos la cantidad de estrellas fugaz
+		int cantMeteorito = 0;
+		//contamos la cantidad de estrellas fugaz
+		int cantAsteriode = 0;
+		// recorremos los objetos espaciales
+		for (ObjetoEspacial objetoEspacial : objetosEspaciales) {
+			// si el objeto espacian es una estrella fugaz 
+			if (objetoEspacial.getClass().equals(EstrellaFugaz.class)) {
+				// incrementamos el contador
+				cantEstrellaFugaz++;
+			}
+			//
+			if (objetoEspacial.getClass().equals(Meteorito.class)) {
+				cantMeteorito++;
+			}
+			// 
+			if (objetoEspacial.getClass().equals(Asteroide.class)) {
+				cantAsteriode++;
+			}
+			
+		}
+		
+		// si no hay estrella fugaz
+		if (cantEstrellaFugaz == 0) {
+			// aleatorio de 0 a 9 ¿si es 0?
+			if (this.aleatorio.nextInt(10) == 0) {
+				// creamos una nueva estrella fugaz
+				EstrellaFugaz nuevaEstrellaFugaz = new EstrellaFugaz(new Punto(0, 300), 15, new Punto(2, 2));
+				// agregamos la nueva estrella a la lista de objetos espaciales
+				this.objetosEspaciales.add(nuevaEstrellaFugaz);
+			}
+		}
+		if (cantMeteorito < 3) {
+			// aleatorio de 0 a 4 ¿si es 0?
+			if (this.aleatorio.nextInt(5) == 0) {
+				// creamos un nuevo meteorito
+				Meteorito nuevoMeteorito = new Meteorito(new Punto(0, 255), 10, new Punto(2, 2));
+				// agregamos el nuevo meteorito a la lista de objetos espaciales
+				this.objetosEspaciales.add(nuevoMeteorito);
+			}
+		}
+		if (cantAsteriode < 2) {
+			// aleatorio de 0 a 8 ¿si es 0?
+			if (this.aleatorio.nextInt(8) == 0) {
+				// creamos un nuevo asteroide
+				Asteroide nuevoAsteroide = new Asteroide(new Punto(511, 300), 20, new Punto(3, 2));
+				// agregamos el nuevo asteroide la a la lista de objetos espaciales
+				this.objetosEspaciales.add(nuevoAsteroide);
+			}
+		}
+		
+	}
+
+	// metodo atacar. manda a atacar la primera nave enemiga que
+	// encuentre con el estado PASIVO
+	private void atacar() {
+		//recorremos las naves enemigas 
+		for (NaveEnemiga naveEnemiga : navesEnemigas) {
+			// si la nave enemiga tiene estado pasivo
+			if (naveEnemiga.estado.equals(Estado.PASIVO)) {
+				// cambiamos el estado a KAMIKAZE
+				naveEnemiga.estado = Estado.KAMIKAZE;
+				// retornamos
+				return;
+			}
+		}
+	}
+
+	// metodo para decidir los ataques de las naves enemigas
+	private boolean decidirAtaque() {
+		/*
+		 * si hay menos de 2 naves enemigas atacando entonces 
+		 * vamos a atacar con la primer nave enemiga de la lista
+		 * */
+		//contador de naves kamikazes
+		int contador = 0;
+		
+		//recorremos la lista de naves enemigas
+		for (NaveEnemiga naveEnemiga : navesEnemigas) {
+			//si la nave tiene estado kamikaze
+			if (naveEnemiga.estado.equals(Estado.KAMIKAZE)) {
+				// incrementamos contador
+				contador++;
+				// si el contador es menor a 2
+				if (contador <= 2) {
+					// retornamos verdadero (es decir que se va a atacar)
+					return true;
+				}
+			}
+		}
+		
+		// de otro modo no atacamos
+		return false;
+	}
+
 	//
 	private void chequearFueraDePantalla() {
 		//chequeamos el jugador
