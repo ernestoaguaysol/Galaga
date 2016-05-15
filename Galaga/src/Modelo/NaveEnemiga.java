@@ -5,6 +5,6 @@ public abstract class NaveEnemiga extends Nave{
 	//pueden ser...
 	Estado estado;
 
-	public abstract Disparo disparar();
+	
 	
 }

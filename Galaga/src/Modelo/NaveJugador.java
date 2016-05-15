@@ -28,22 +28,40 @@ public class NaveJugador extends Nave{
 	//--------------------------------------------------//
 	//metodos para mover izq, der, arriba, abajo
 	public void moverDerecha() {
-		velocidad.setX(1);
+		velocidad.setX(2);
 	}
 	
 	public void moverIzquierda() {
-		velocidad.setX(-1);
+		velocidad.setX(-2);
 		
 	}
 	
 	public void moverArriba() {
-		velocidad.setY(1);
+		velocidad.setY(2);
 	}
 	
 	public void moverAbajo() {
-		velocidad.setY(-1);		
+		velocidad.setY(-2);		
 	}
 	
 	//-------------------------------------------------//
+	
+	@Override
+	public void disminuirEnergia(int disminuir) {
+		// disminuyo energia
+		this.energia -= disminuir;			
+		// si energia es menor o igual a cero
+		if (this.energia <= 0) {
+			// energia es cero
+			this.energia = 0;
+			// descontamos una vida
+			this.vidas -=1;
+		}
+	}
 
+	@Override
+	public Disparo disparar() {
+		//
+		return null;
+	}
 }

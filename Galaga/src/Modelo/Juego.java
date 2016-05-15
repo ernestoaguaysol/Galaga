@@ -1,6 +1,5 @@
 package Modelo;
 
-import java.sql.CallableStatement;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -9,7 +8,8 @@ public class Juego {
 	private NaveJugador naveJugador;
 	private LinkedList<NaveEnemiga> navesEnemigas;
 	private LinkedList<ObjetoEspacial> objetosEspaciales;
-	private LinkedList<Disparo> disparos;
+	private LinkedList<Disparo> disparosEnemigos;
+	private LinkedList<Disparo> disparosJugador;
 	
 	//aleatorio para usar en varios
 	private Random aleatorio = new Random();
@@ -19,7 +19,8 @@ public class Juego {
 		this.espacio = new Espacio(512,512);
 		this.naveJugador = new NaveJugador(new Punto(255, 100), 30);
 		this.objetosEspaciales = new LinkedList<>();
-		this.disparos = new LinkedList<>();
+		this.disparosEnemigos = new LinkedList<>();
+		this.disparosJugador = new LinkedList<>();
 		this.navesEnemigas = new LinkedList<>();
 	}
 	
@@ -52,6 +53,7 @@ public class Juego {
 		//
 		//.....continuar....
 		
+		
 	}
 	
 	
@@ -62,7 +64,7 @@ public class Juego {
 		for (int i = 0; i < 10; i++) {
 			
 			//movemos la nave jugador
-			naveJugador.mover();
+			this.naveJugador.mover();
 			
 			//movemos todas las naves enemigas
 			for (NaveEnemiga n : navesEnemigas) {
@@ -81,7 +83,7 @@ public class Juego {
 			//
 			for (NaveEnemiga naveEnemiga : navesEnemigas) {				
 				if (this.decidirDisparo()) {
-					this.disparos.add(naveEnemiga.disparar());
+					this.disparosEnemigos.add(naveEnemiga.disparar());
 				}
 			}
 			
@@ -224,11 +226,11 @@ public class Juego {
 		}
 		
 		//chequeamos todos lod disparos del momento
-		for (Disparo disparo : disparos) {
+		for (Disparo disparo : disparosEnemigos) {
 			//si está fuera del espacio
 			if (!this.espacio.estaDentroDeEspacio(disparo.posicion)) {
 				//lo eliminamos de la lista de disparos
-				this.disparos.remove(disparo);
+				this.disparosEnemigos.remove(disparo);
 			}
 		}
 		
@@ -264,20 +266,28 @@ public class Juego {
 		return false;
 	}
 
+	/*las coliciones son entre:
+	 * naveEnemiga y naveJugador
+	 * 
+	 * */
 	private void chequearColiciones() {
 		//recorremos todas las naves enemigas
 		for (NaveEnemiga naveEnemiga : navesEnemigas) {
 			//si las superficies colisionan
 			if (Circulo.colisionan(naveEnemiga.superficie, this.naveJugador.superficie)) {
-				//continuar...
+				// disminuimos el 100% de energia
+				this.naveJugador.disminuirEnergia(100);
+				
+				// quitamos la nave enemiga que chocó
+				this.navesEnemigas.remove(naveEnemiga);
 			}
 		}
 		
 		//recorremos los disparos "actuales"
-		for (Disparo disparo : disparos) {
+		for (Disparo disparo : disparosEnemigos) {
 			//si las superficies colisionan
 			if (Circulo.colisionan(disparo.superficie, this.naveJugador.superficie)) {
-				//continuar....
+				//
 			}
 		}
 		
