@@ -17,9 +17,12 @@ public class Exterminador extends NaveEnemiga{
 
 	@Override
 	public Disparo disparar() {
-		// 
-		Bomba bomba = new Bomba(posicion, velocidad, 10);
-		return bomba;
+		// posicion del disparo : posX es la misma de la nave, posY es la misma menos el radio  
+		Punto nuevaPosicion = new Punto(this.posicion.getX(), this.posicion.getY()-this.superficie.getRadio());
+		// tira laser baja en velocidad -posY 
+		Laser laser = new Laser(nuevaPosicion, new Punto(0, -2), 2);
+		// retornamos laser
+		return laser;
 	}
 
 }

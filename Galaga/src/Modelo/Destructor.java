@@ -17,8 +17,11 @@ public class Destructor extends NaveEnemiga{
 
 	@Override
 	public Disparo disparar() {
-		//
-		Laser laser = new Laser(posicion, velocidad, 4);
+		// posicion del disparo : posX es la misma de la nave, posY es la misma menos el radio  
+		Punto nuevaPosicion = new Punto(this.posicion.getX(), this.posicion.getY()-this.superficie.getRadio());
+		// tira bomba baja en velocidad -posY 
+		Laser laser = new Laser(nuevaPosicion, new Punto(0, -2), 2);
+		// retornamos laser
 		return laser;
 	}
 }

@@ -32,8 +32,7 @@ public class NaveJugador extends Nave{
 	}
 	
 	public void moverIzquierda() {
-		velocidad.setX(-2);
-		
+		velocidad.setX(-2);	
 	}
 	
 	public void moverArriba() {
@@ -61,7 +60,11 @@ public class NaveJugador extends Nave{
 
 	@Override
 	public Disparo disparar() {
-		//
-		return null;
+		// posicion del disparo : posX es la misma de la nave, posY es la misma mas el radio  
+		Punto nuevaPosicion = new Punto(this.posicion.getX(), this.posicion.getY()+this.superficie.getRadio());
+		// tira misil sube en velocidad posY 
+		Misil misil = new Misil(nuevaPosicion, new Punto(0, 4), 2);
+		// retornamos el misil
+		return misil;
 	}
 }

@@ -18,8 +18,12 @@ public class Demoledor extends NaveEnemiga {
 
 	@Override
 	public Disparo disparar() {
-		// el demoledor dispara bombas con radio de 6
-		Bomba bomba = new Bomba(posicion, velocidad, 6);
+		// posicion del disparo : posX es la misma de la nave, posY es la misma menos el radio  
+		Punto nuevaPosicion = new Punto(this.posicion.getX(), this.posicion.getY()-this.superficie.getRadio());
+		
+		// tira bomba baja en velocidad -posY 
+		Bomba bomba = new Bomba(nuevaPosicion, new Punto(0, -1), 6);
+		// retornamos bomba
 		return bomba;
 	}
 }

@@ -9,6 +9,10 @@ public class Circulo {
 		this.radio = radio;
 	}
 	
+	public int getRadio() {
+		return radio;
+	}
+	
 	public void imprimir(){
 		System.out.println("centro: "+this.centro.getX()+","+this.centro.getY());
 		System.out.println("radio: "+this.radio);

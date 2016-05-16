@@ -31,6 +31,8 @@ public class Prueba {
 			}
 		}
 		
+		System.out.println("Fin del juego");
+		
 	}
 	
 	private static Scanner extraer() {
