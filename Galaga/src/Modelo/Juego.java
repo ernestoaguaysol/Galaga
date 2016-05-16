@@ -2,6 +2,7 @@ package Modelo;
 
 import java.util.LinkedList;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Juego {
 	private Espacio espacio;
@@ -61,47 +62,73 @@ public class Juego {
 	public void jugar() {
 		
 		//diez iteraciones
-		for (int i = 0; i < 10; i++) {
+//		for (int i = 0; i < 10; i++) {
 			
-			//movemos la nave jugador
-			this.naveJugador.mover();
+		// movemos todos los objetos moviles
+		this.moverTodo();
 			
-			//movemos todas las naves enemigas
-			for (NaveEnemiga n : navesEnemigas) {
-				n.mover();
+		//chequeamos si hay colicionas..Continuar metodo..
+		/*
+		 *jugador con enemigos (Mueren ambos)
+		 *jugador con objetos espaciales (...)
+		 *jugador con disparos enemigos (...)
+		 *enemigo con disparos jugador (...)
+		 */
+		this.chequearColiciones();
+		
+		// 
+		for (NaveEnemiga naveEnemiga : navesEnemigas) {				
+			if (this.decidirDisparo()) {
+				this.disparosEnemigos.add(naveEnemiga.disparar());
 			}
-			
-			//chequeamos si hay colicionas..Continuar metodo..
-			/*
-			 *jugador con enemigos (Mueren ambos)
-			 *jugador con objetos espaciales (...)
-			 *jugador con disparos enemigos (...)
-			 *enemigo con disparos jugador (...)
-			 */
-			this.chequearColiciones();
-			
-			//
-			for (NaveEnemiga naveEnemiga : navesEnemigas) {				
-				if (this.decidirDisparo()) {
-					this.disparosEnemigos.add(naveEnemiga.disparar());
-				}
-			}
-			
-			//la pantala es el espacio 512x512
-			this.chequearFueraDePantalla();
-			
-			//si hay que atacar
-			if (this.decidirAtaque()) {
-				//ataca la primer nave enemiga que encuentra 
-				// en estado PASIVO
-				this.atacar();
-			}
-			
-			this.decidirObjetoEspacial();
-			
 		}
+
+		//si hay que atacar
+		if (this.decidirAtaque()) {
+			//ataca la primer nave enemiga que encuentra 
+			// en estado PASIVO
+			this.atacar();
+		}
+		
+		//decide si aparece un objeto espacial en el espacio
+		this.decidirObjetoEspacial();
+
+		//la pantala es el espacio 512x512
+		this.chequearFueraDePantalla();
+		
+		
+		
+//		}//FIN FOR
 	}
 	
+	//movemos todos los objetos moviles
+	private void moverTodo() {
+		//
+		//movemos la nave jugador
+		this.naveJugador.mover();
+		
+		//movemos todas las naves enemigas
+		for (NaveEnemiga n : navesEnemigas) {
+			n.mover();
+		}
+
+		//movemos todos los objetos espaciales
+		for (ObjetoEspacial o : objetosEspaciales) {
+			o.mover();
+		}
+		
+		//movemos todos lOS DISPAROS ENEMIGOS
+		for (Disparo disparoEnemigo : disparosEnemigos) {
+			disparoEnemigo.mover();
+		}
+		
+		//movemos todos lOS disparos del jugador
+		for (Disparo disparoJugador : disparosJugador) {
+			disparoJugador.mover();
+		}
+		
+	}
+
 	// metodo decide si lanzar un objeto espacial
 	// cual objeto va a ser creado y en que posicion
 	private void decidirObjetoEspacial() {
@@ -300,4 +327,87 @@ public class Juego {
 		}
 		
 	}
+	
+	public void menu(){ 
+		//iteraciones	
+		int iteraciones = 0;
+		//mientras las iteraciones sean menor a 10
+		while (iteraciones < 10) {
+			System.out.println("Que desea hacer con la Nave Jugador?");
+			System.out.println("1. Mover a la izquierda");
+			System.out.println("2. Mover a la derecha");
+			System.out.println("3. Mover arriba");
+			System.out.println("4. Mover abajo");
+			System.out.println("5. Disparar");
+			System.out.println("6. Detener la nave");
+			System.out.print("Ingrese su opcion: ");
+			int opcionJugar = Integer.parseInt(extraer().next());
+			
+			switch (opcionJugar) {
+			case 1:
+				naveJugador.moverIzquierda();
+				break;
+			case 2:
+				naveJugador.moverDerecha();
+				break;
+			case 3:
+				naveJugador.moverArriba();
+				break;
+			case 4:
+				naveJugador.moverAbajo();
+				break;
+			case 5:
+				naveJugador.disparar();
+				break;
+			case 6:
+				
+				break;
+			default:
+				break;
+			}
+			// jugar
+			this.jugar();
+			
+			// imprimir los objetos del espacio
+			this.imprimir();
+			
+			//
+			iteraciones++;
+		}			
+			
+			
+	}
+	
+	private void imprimir() {
+		// jugador
+		System.out.println("NAVE JUGADOR: PosX="+naveJugador.getPosicion().getX()+
+				"; PosY="+naveJugador.getPosicion().getY()+"; Energia="+this.naveJugador.getEnergia());
+		// enemigos
+		for (NaveEnemiga naveEnemiga : navesEnemigas) {			
+			System.out.println("Nave Enemiga Estado:"+naveEnemiga.estado+" posX="+naveEnemiga.getPosicion().getX()+
+					"; posY="+naveEnemiga.getPosicion().getY()+"; Energia="+naveEnemiga.getEnergia());
+		}
+		
+		//disparos jugador
+		for (Disparo disparoJ : disparosJugador) {
+			System.out.println("Disparo Jugador; Daño="+disparoJ.danio+"; PosX="+disparoJ.posicion.getX()+"; PosY"+disparoJ.posicion.getY());
+		}
+		
+		//disparo enemigo
+		for (Disparo disparoE : disparosEnemigos) {
+			System.out.println("Disparo Jugador; Daño="+disparoE.danio+"; PosX="+disparoE.posicion.getX()+"; PosY"+disparoE.posicion.getY());
+		}
+		
+		//objetos espaciales
+		for (ObjetoEspacial objetoEspacial : objetosEspaciales) {
+			System.out.println("Objetos Espaciales; get");
+		}
+
+		
+	}
+
+	private static Scanner extraer() {
+		return new Scanner(System.in);
+	}
+	
 }
