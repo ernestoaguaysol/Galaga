@@ -400,9 +400,9 @@ public class Juego {
 		
 		//objetos espaciales
 		for (ObjetoEspacial objetoEspacial : objetosEspaciales) {
-			System.out.println("Objetos Espaciales; get");
+			System.out.println("Objetos Espaciales; PosX="+objetoEspacial.posicion.getX()+
+					"; PosY="+objetoEspacial.posicion.getY());
 		}
-
 		
 	}
 
