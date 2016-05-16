@@ -35,10 +35,10 @@ public class Juego {
 		Demoledor dem5 = new Demoledor(new Punto(455, 455), new Punto(2, 2), 15);
 		//creacion de destructores
 		Destructor des1 = new Destructor(new Punto(55, 355), new Punto(2, 2), 15);
-		Destructor des2 = new Destructor(new Punto(55, 355), new Punto(2, 2), 15);
-		Destructor des3 = new Destructor(new Punto(55, 355), new Punto(2, 2), 15);
-		Destructor des4 = new Destructor(new Punto(55, 355), new Punto(2, 2), 15);
-		Destructor des5 = new Destructor(new Punto(55, 355), new Punto(2, 2), 15);
+		Destructor des2 = new Destructor(new Punto(155, 355), new Punto(2, 2), 15);
+		Destructor des3 = new Destructor(new Punto(255, 355), new Punto(2, 2), 15);
+		Destructor des4 = new Destructor(new Punto(355, 355), new Punto(2, 2), 15);
+		Destructor des5 = new Destructor(new Punto(455, 355), new Punto(2, 2), 15);
 		//los añadimos a la lista de naves enemigas
 		this.navesEnemigas.add(dem1);
 		this.navesEnemigas.add(dem2);
@@ -357,10 +357,13 @@ public class Juego {
 				naveJugador.moverAbajo();
 				break;
 			case 5:
-				naveJugador.disparar();
+				// agrego un nuevo disparo a la lista de disparos jugador
+				this.disparosJugador.add(this.naveJugador.disparar());
 				break;
 			case 6:
-				
+				// detener la nave
+				this.naveJugador.velocidad.setX(0);
+				this.naveJugador.velocidad.setY(0);
 				break;
 			default:
 				break;
@@ -371,7 +374,7 @@ public class Juego {
 			// imprimir los objetos del espacio
 			this.imprimir();
 			
-			//
+			// incrementamos iteraciones
 			iteraciones++;
 		}			
 			
@@ -395,7 +398,7 @@ public class Juego {
 		
 		//disparo enemigo
 		for (Disparo disparoE : disparosEnemigos) {
-			System.out.println("Disparo Jugador; Daño="+disparoE.danio+"; PosX="+disparoE.posicion.getX()+"; PosY"+disparoE.posicion.getY());
+			System.out.println("Disparo Enemigo; Daño="+disparoE.danio+"; PosX="+disparoE.posicion.getX()+"; PosY"+disparoE.posicion.getY());
 		}
 		
 		//objetos espaciales
