@@ -76,10 +76,14 @@ public class Juego {
 		 */
 		this.chequearColiciones();
 		
-		// 
-		for (NaveEnemiga naveEnemiga : navesEnemigas) {				
-			if (this.decidirDisparo()) {
-				this.disparosEnemigos.add(naveEnemiga.disparar());
+		// si hay menos o igual de 3 disparos 
+		if (this.disparosEnemigos.size() <= 3) {
+			// recorremos cada nave enemiga
+			for (NaveEnemiga naveEnemiga : navesEnemigas) {				
+				// y vamos decidiendo la nave dispara o no
+				if (this.decidirDisparo()) {
+					this.disparosEnemigos.add(naveEnemiga.disparar());
+				}
 			}
 		}
 
@@ -282,14 +286,19 @@ public class Juego {
 		
 	}
 
-	//la dejamos publica por ahora
-	public boolean decidirDisparo() {
-		//si aleatorio es cero
-		if (aleatorio.nextInt(5) == 0) {
-//			System.out.println("es cero");
-			return true;
+	// metodo decidir disparo, si hay mas de tres disparos
+	// en el espacio ninguna nave hace disparo
+	// si hay menos de 3, hacemos un ramdom
+	private boolean decidirDisparo() {
+		//cantidad de disparos en disparos enemigos
+		int cantDisparos = this.disparosEnemigos.size();
+		// cantidad de disparos
+		if (cantDisparos <= 3) {
+			//si aleatorio es cero
+			if (aleatorio.nextInt(8) == 0) {
+				return true;
+			}
 		}
-//		System.out.println("no es cero");
 		return false;
 	}
 
@@ -302,11 +311,10 @@ public class Juego {
 		for (NaveEnemiga naveEnemiga : navesEnemigas) {
 			//si las superficies colisionan
 			if (Circulo.colisionan(naveEnemiga.superficie, this.naveJugador.superficie)) {
-				// disminuimos el 100% de energia
+				// disminuimos el 100% de energia de la nave jugador
 				this.naveJugador.disminuirEnergia(100);
-				
-				// quitamos la nave enemiga que chocó
-				this.navesEnemigas.remove(naveEnemiga);
+				// disminuimos el 100% de energia de la nave enemiga
+				naveEnemiga.disminuirEnergia(100);
 			}
 		}
 		
@@ -314,7 +322,7 @@ public class Juego {
 		for (Disparo disparo : disparosEnemigos) {
 			//si las superficies colisionan
 			if (Circulo.colisionan(disparo.superficie, this.naveJugador.superficie)) {
-				//
+				// 
 			}
 		}
 		
