@@ -76,8 +76,8 @@ public class Juego {
 		 */
 		this.chequearColiciones();
 		
-		// si hay menos o igual de 3 disparos 
-		if (this.disparosEnemigos.size() <= 3) {
+		// si hay menos de 3 disparos 
+		if (this.disparosEnemigos.size() < 3) {
 			// recorremos cada nave enemiga
 			for (NaveEnemiga naveEnemiga : navesEnemigas) {				
 				// y vamos decidiendo la nave dispara o no
