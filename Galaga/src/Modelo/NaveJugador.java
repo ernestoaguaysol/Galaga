@@ -67,4 +67,11 @@ public class NaveJugador extends Nave{
 		// retornamos el misil
 		return misil;
 	}
+
+	public void detener() 
+	{
+		this.velocidad.setX(0);
+		this.velocidad.setY(0);
+		
+	}
 }

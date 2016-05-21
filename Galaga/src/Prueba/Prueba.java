@@ -3,12 +3,14 @@ package Prueba;
 import java.util.Scanner;
 
 import Modelo.Juego;
+import Modelo.NaveJugador;
 
 public class Prueba {
 
 	public static void main(String[] args) {
 		//
 		Juego juego = new Juego();
+		juego.cargar();
 		
 		boolean entrar = true;
 		while (entrar) {
@@ -19,16 +21,17 @@ public class Prueba {
 			System.out.print("Ingrese su opcion: ");
 			int opcionUsuario = Integer.parseInt(extraer().next());
 			if (opcionUsuario == 1) {
-				juego = new Juego();
-				juego.cargar();
-				juego.menu();
+				menu(juego);
+				
 			}
 			if (opcionUsuario == 2) {
-				juego.menu();
+				juego.jugar();
+				
 			}
 			if (opcionUsuario == 3) {
 				entrar = false;
 			}
+			juego.imprimir();
 		}
 		
 		System.out.println("Fin del juego");
@@ -38,4 +41,46 @@ public class Prueba {
 	private static Scanner extraer() {
 		return new Scanner(System.in);
 	}
+	
+	public static void menu(Juego juego){ 
+		//iteraciones	
+		System.out.println("Que desea hacer con la Nave Jugador?");
+		System.out.println("1. Mover a la izquierda");
+		System.out.println("2. Mover a la derecha");
+		System.out.println("3. Mover arriba");
+		System.out.println("4. Mover abajo");
+		System.out.println("5. Disparar");
+		System.out.println("6. Detener la nave");
+		System.out.print("Ingrese su opcion: ");
+		int opcionJugar = Integer.parseInt(extraer().next());
+		NaveJugador naveJugador = juego.getNaveJugador();
+		switch (opcionJugar) {
+		case 1:
+			naveJugador.moverIzquierda();
+			break;
+		case 2:
+			naveJugador.moverDerecha();
+			break;
+		case 3:
+			naveJugador.moverArriba();
+			break;
+		case 4:
+			naveJugador.moverAbajo();
+			break;
+		case 5:
+			// agrego un nuevo disparo a la lista de disparos jugador
+			juego.dispararJugador();
+			
+			break;
+		case 6:
+			// detener la nave
+			naveJugador.detener();
+			break;
+		default:
+			break;
+		}
+			
+			
+	}
+	
 }

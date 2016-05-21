@@ -4,6 +4,8 @@ import java.util.LinkedList;
 import java.util.Random;
 import java.util.Scanner;
 
+import Modelo.NaveJugador;
+
 public class Juego {
 	private Espacio espacio;
 	private NaveJugador naveJugador;
@@ -62,7 +64,7 @@ public class Juego {
 	public void jugar() {
 		
 		//diez iteraciones
-//		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 10; i++) {
 			
 		// movemos todos los objetos moviles
 		this.moverTodo();
@@ -74,7 +76,7 @@ public class Juego {
 		 *jugador con disparos enemigos (...)
 		 *enemigo con disparos jugador (...)
 		 */
-		this.chequearColiciones();
+		this.chequearColisiones();
 		
 		// si hay menos de 3 disparos 
 		if (this.disparosEnemigos.size() < 3) {
@@ -102,7 +104,7 @@ public class Juego {
 		
 		
 		
-//		}//FIN FOR
+		}//FIN FOR
 	}
 	
 	//movemos todos los objetos moviles
@@ -306,7 +308,7 @@ public class Juego {
 	 * naveEnemiga y naveJugador
 	 * 
 	 * */
-	private void chequearColiciones() {
+	private void chequearColisiones() {
 		//recorremos todas las naves enemigas
 		for (NaveEnemiga naveEnemiga : navesEnemigas) {
 			//si las superficies colisionan
@@ -336,60 +338,8 @@ public class Juego {
 		
 	}
 	
-	public void menu(){ 
-		//iteraciones	
-		int iteraciones = 0;
-		//mientras las iteraciones sean menor a 10
-		while (iteraciones < 10) {
-			System.out.println("Que desea hacer con la Nave Jugador?");
-			System.out.println("1. Mover a la izquierda");
-			System.out.println("2. Mover a la derecha");
-			System.out.println("3. Mover arriba");
-			System.out.println("4. Mover abajo");
-			System.out.println("5. Disparar");
-			System.out.println("6. Detener la nave");
-			System.out.print("Ingrese su opcion: ");
-			int opcionJugar = Integer.parseInt(extraer().next());
-			
-			switch (opcionJugar) {
-			case 1:
-				naveJugador.moverIzquierda();
-				break;
-			case 2:
-				naveJugador.moverDerecha();
-				break;
-			case 3:
-				naveJugador.moverArriba();
-				break;
-			case 4:
-				naveJugador.moverAbajo();
-				break;
-			case 5:
-				// agrego un nuevo disparo a la lista de disparos jugador
-				this.disparosJugador.add(this.naveJugador.disparar());
-				break;
-			case 6:
-				// detener la nave
-				this.naveJugador.velocidad.setX(0);
-				this.naveJugador.velocidad.setY(0);
-				break;
-			default:
-				break;
-			}
-			// jugar
-			this.jugar();
-			
-			// imprimir los objetos del espacio
-			this.imprimir();
-			
-			// incrementamos iteraciones
-			iteraciones++;
-		}			
-			
-			
-	}
 	
-	private void imprimir() {
+	public void imprimir() {
 		// jugador
 		System.out.println("NAVE JUGADOR: PosX="+naveJugador.getPosicion().getX()+
 				"; PosY="+naveJugador.getPosicion().getY()+"; Energia="+this.naveJugador.getEnergia());
@@ -419,6 +369,16 @@ public class Juego {
 
 	private static Scanner extraer() {
 		return new Scanner(System.in);
+	}
+
+	public void dispararJugador() 
+	{
+		this.disparosJugador.add(this.naveJugador.disparar());
+	}
+
+	public NaveJugador getNaveJugador() {
+		// TODO Auto-generated method stub
+		return this.naveJugador;
 	}
 	
 }
