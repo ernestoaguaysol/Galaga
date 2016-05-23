@@ -5,9 +5,9 @@ public abstract class ObjetoMovil {
 	//posicion, velocidad, y superficie de todos los objetos
 	protected Punto posicion;
 	protected Punto velocidad;
-	protected Rectangulo superficie;
 	protected int ancho;
 	protected int alto;
+	private Rectangulo superficie;
 
 	//
 	public Punto getPosicion(){

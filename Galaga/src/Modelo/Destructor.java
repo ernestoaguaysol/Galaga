@@ -11,7 +11,7 @@ public class Destructor extends NaveEnemiga{
 		this.ancho = ancho;
 		this.alto = alto;
 		//velocidad del enemigo
-		this.velocidad = new Punto(2, 2);
+		this.velocidad = velocidad;
 		//energia
 		this.energia = 100;
 	}
@@ -24,7 +24,7 @@ public class Destructor extends NaveEnemiga{
 		Punto nuevaPosicion = new Punto(this.posicion.getX()+(ancho/2)-(anchoLaser/2), this.posicion.getY()-altoLaser);
 		// depredador tira laser baja en velocidad -posY 
 		Laser laser = new Laser(nuevaPosicion, new Punto(0, -1), anchoLaser, altoLaser);
-		// retornamos el misil
+		// retornamos laser
 		return laser;
 	}
 	

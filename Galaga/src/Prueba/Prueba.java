@@ -7,8 +7,6 @@ import Modelo.NaveJugador;
 public class Prueba {
 
 	public static void main(String[] args) {
-		//
-//		NaveJugador n = new NaveJugador(new Punto(255, ), , alto)
 		
 		Juego juego = new Juego();
 		juego.cargar();
@@ -80,8 +78,5 @@ public class Prueba {
 		default:
 			break;
 		}
-			
-			
 	}
-	
 }

@@ -6,9 +6,11 @@ public class NaveJugador extends Nave{
 	
 	public NaveJugador(Punto posicion,int ancho, int alto) {
 		//cada nave del jugador comienza con 3 vidas
+		this.posicion = posicion;
+		this.ancho = ancho;
+		this.alto = alto;
 		this.vidas = 3;
 		this.energia = 100;
-		this.posicion = posicion;
 		this.velocidad = new Punto(0, 0);
 		
 	}

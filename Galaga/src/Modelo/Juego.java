@@ -70,7 +70,7 @@ public class Juego {
 	public void jugar() {
 		
 		//diez iteraciones
-		for (int i = 0; i < 10; i++) {			
+		for (int i = 0; i < 16; i++) {			
 			// movemos todos los objetos moviles
 			this.moverTodo();
 				
@@ -101,8 +101,8 @@ public class Juego {
 			//la pantala es el espacio 512x512
 			this.chequearFueraDePantalla();
 			
-			
-			
+//			System.out.println("Iteracion: "+i);
+//			this.imprimir();
 		}//FIN FOR
 	}
 	
@@ -237,13 +237,13 @@ public class Juego {
 	//
 	private void chequearFueraDePantalla() {
 		//chequeamos el jugador
-		if (!this.espacio.estaDentroDeEspacio(this.naveJugador.posicion)) {
+		if (!this.espacio.estaDentroDeEspacio(this.naveJugador.getPosicion())) {
 			this.reubicarPosicion(this.naveJugador);
 		}
 		
 		//chequeamos todas las naves enemigas
 		for (NaveEnemiga naveEnemiga : navesEnemigas) {
-			if (!this.espacio.estaDentroDeEspacio(naveEnemiga.posicion)) {
+			if (!this.espacio.estaDentroDeEspacio(naveEnemiga.getPosicion())) {
 				this.reubicarPosicion(naveEnemiga);
 			}
 		}
@@ -318,11 +318,21 @@ public class Juego {
 				naveEnemiga.disminuirEnergia(100);
 			}
 		}
-//		// tamanio a rrecorrer
-//		int tamanio = this.navesEnemigas.size();
-//		for (int i = 0; i < tamanio; i++) {
-//			
-//		}
+		
+		// recorremos todas las naves enemigas
+		for (int i = 0; i < navesEnemigas.size(); i++) {
+			//si las superficies colicionan
+			if (navesEnemigas.get(i).getSuperficie().colisiona(this.naveJugador.getSuperficie())) {
+				// descontamos 50% de energia de jugador
+				this.naveJugador.disminuirEnergia(50);
+				//eliminamos el enemigo
+				navesEnemigas.remove(i);
+				//retrocedemos un paso en i (ya que al remover
+				// la lista se modifica el tamaño e indices tambien)
+				i--;
+			}
+		}
+		
 		
 		//recorremos los disparos "actuales"
 		for (Disparo disparo : disparosEnemigos) {
@@ -355,18 +365,18 @@ public class Juego {
 		
 		//disparos jugador
 		for (Disparo disparoJ : disparosJugador) {
-			System.out.println("Disparo Jugador; Daño="+disparoJ.danio+"; PosX="+disparoJ.posicion.getX()+"; PosY"+disparoJ.posicion.getY());
+			System.out.println("Disparo Jugador; Daño="+disparoJ.danio+"; PosX="+disparoJ.getPosicion().getX()+"; PosY"+disparoJ.getPosicion().getY());
 		}
 		
 		//disparo enemigo
 		for (Disparo disparoE : disparosEnemigos) {
-			System.out.println("Disparo Enemigo; Daño="+disparoE.danio+"; PosX="+disparoE.posicion.getX()+"; PosY"+disparoE.posicion.getY());
+			System.out.println("Disparo Enemigo; Daño="+disparoE.danio+"; PosX="+disparoE.getPosicion().getX()+"; PosY"+disparoE.getPosicion().getY());
 		}
 		
 		//objetos espaciales
 		for (ObjetoEspacial objetoEspacial : objetosEspaciales) {
-			System.out.println("Objetos Espaciales; PosX="+objetoEspacial.posicion.getX()+
-					"; PosY="+objetoEspacial.posicion.getY());
+			System.out.println("Objetos Espaciales; PosX="+objetoEspacial.getPosicion().getX()+
+					"; PosY="+objetoEspacial.getPosicion().getY());
 		}
 		
 	}

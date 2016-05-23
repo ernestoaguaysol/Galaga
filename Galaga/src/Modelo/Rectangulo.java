@@ -17,5 +17,13 @@ public class Rectangulo {
 			return false;
 		return true;
 	}
+	
+	public Punto getEsquina_min() {
+		return esquina_min;
+	}
+	
+	public Punto getEsquina_max() {
+		return esquina_max;
+	}
 
 }
