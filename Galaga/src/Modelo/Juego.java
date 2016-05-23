@@ -175,7 +175,7 @@ public class Juego {
 			// aleatorio de 0 a 4 ¿si es 0?
 			if (this.aleatorio.nextInt(5) == 0) {
 				// creamos un nuevo meteorito
-				Meteorito nuevoMeteorito = new Meteorito(new Punto(0, 303), new Punto(1, -1),16,16);
+				Meteorito nuevoMeteorito = new Meteorito(new Punto(0, 303), new Punto(1, -1),16,16,25);
 				// agregamos el nuevo meteorito a la lista de objetos espaciales
 				this.objetosEspaciales.add(nuevoMeteorito);
 			}
@@ -184,7 +184,7 @@ public class Juego {
 			// aleatorio de 0 a 8 ¿si es 0?
 			if (this.aleatorio.nextInt(8) == 0) {
 				// creamos un nuevo asteroide
-				Asteroide nuevoAsteroide = new Asteroide(new Punto(479, 271),new Punto(-1, -1),16,16);
+				Asteroide nuevoAsteroide = new Asteroide(new Punto(479, 271),new Punto(-1, -1),16,16,40);
 				// agregamos el nuevo asteroide la a la lista de objetos espaciales
 				this.objetosEspaciales.add(nuevoAsteroide);
 			}
@@ -323,21 +323,47 @@ public class Juego {
 		}
 		
 		
-		//recorremos los disparos "actuales"
-		for (Disparo disparo : disparosEnemigos) {
-			//si las superficies colisionan
-			if (disparo.getSuperficie().colisiona(this.naveJugador.getSuperficie())) {
-				// 
+		//recorremos los disparos enemigos "actuales"
+		for (int i = 0; i < disparosEnemigos.size(); i++) {
+			//si el disparo enemigo coliciona con jugador
+			if (disparosEnemigos.get(i).getSuperficie().colisiona(this.naveJugador.getSuperficie())) {
+				//descontamos energia segun el daño que cause el disparo
+				this.naveJugador.disminuirEnergia(disparosEnemigos.get(i).getDanio());
+				//eliminamos el disparo que impactó en la nave
+				disparosEnemigos.get(i);
+				// retocedemos un paso en i
+				i--;
 			}
 		}
 		
 		//recorremos lo objetos espaciales "actuales"
-		for (ObjetoEspacial objetoEspacial : objetosEspaciales) {
-			//si las superficies colisionan
-			if (objetoEspacial.getSuperficie().colisiona( this.naveJugador.getSuperficie())) {
-				//continuar....
+		for (int i = 0; i < this.objetosEspaciales.size(); i++) {
+			//si el objeto espacial colisiona con nave jugador
+			if (this.objetosEspaciales.get(i).getSuperficie().colisiona(this.naveJugador.getSuperficie())) {
+				// si el objeto espacial es una estrella fugaz
+				if (this.objetosEspaciales.get(i).getClass().equals(EstrellaFugaz.class)) {
+					// le sumamos una vida al jugador
+					this.naveJugador.sumarVida();
+					System.out.println("Estrella Fugaz te ha regalado una vida");
+					// eliminamos la estrella fugaz
+					this.objetosEspaciales.remove(i);
+					//retrocedemos un paso en i
+					i--;
+					//----------------------------------------
+					//faltaria sumar puntaje
+				}else {
+					//si no es una estrella fugaz
+					// diminuir energia segun el daño que cause el objeto espacial 
+					this.naveJugador.disminuirEnergia(this.objetosEspaciales.get(i).getDanio());
+					// eliminemos el objeto espacial
+					this.navesEnemigas.remove(i);
+					//retrocedemos un paso en i
+					i--;
+				}
 			}
 		}
+		
+		
 		
 	}
 	

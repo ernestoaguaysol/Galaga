@@ -1,12 +1,28 @@
 package Prueba;
 
 import java.util.Scanner;
+
+import Modelo.EstrellaFugaz;
 import Modelo.Juego;
 import Modelo.NaveJugador;
+import Modelo.Punto;
 
 public class Prueba {
 
 	public static void main(String[] args) {
+		
+		EstrellaFugaz e = new EstrellaFugaz(new Punto(55, 55), new Punto(0, 0), 32, 32);
+		if (e.getClass().equals(EstrellaFugaz.class)) {
+			System.out.println("es una estrella fugaz");
+		}
+		
+		
+		boolean entra = true;
+		if (entra) {
+			
+			return;
+		}
+		
 		
 		Juego juego = new Juego();
 		juego.cargar();
