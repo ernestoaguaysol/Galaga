@@ -308,17 +308,6 @@ public class Juego {
 	 * 
 	 * */
 	private void chequearColisiones() {
-		//recorremos todas las naves enemigas
-		for (NaveEnemiga naveEnemiga : navesEnemigas) {
-			//si las superficies colisionan
-			if (naveEnemiga.getSuperficie().colisiona(this.naveJugador.getSuperficie())) {
-				// disminuimos el 50% de energia de la nave jugador
-				this.naveJugador.disminuirEnergia(50);
-				// disminuimos el 100% de energia de la nave enemiga
-				naveEnemiga.disminuirEnergia(100);
-			}
-		}
-		
 		// recorremos todas las naves enemigas
 		for (int i = 0; i < navesEnemigas.size(); i++) {
 			//si las superficies colicionan
