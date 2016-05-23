@@ -2,12 +2,12 @@ package Modelo;
 
 public class Meteorito extends ObjetoEspacial {
 	
-	public Meteorito(Punto posicion, int radio, Punto velocidad) {
+	public Meteorito(Punto posicion, Punto velocidad, int ancho, int alto) {
 		//
 		this.posicion = posicion;
-		this.superficie = new Circulo(posicion, radio);
-		this.velocidad = velocidad;
-		
+		this.ancho = ancho;
+		this.alto = alto;
+		this.velocidad = velocidad;		
 	}
 
 }

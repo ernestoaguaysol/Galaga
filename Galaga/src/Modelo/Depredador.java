@@ -11,17 +11,16 @@ public class Depredador extends NaveEnemiga {
 		this.velocidad = velocidad;
 		//energia
 		this.energia = 100;
-		//superficie
-		this.superficie = new Circulo(posicion, radio);
 	}
 
 	@Override
 	public Disparo disparar() {
+		int anchoMisil = 16;
+		int altoMisil = 16;
 		// posicion del disparo : posX es la misma de la nave, posY es la misma menos el radio  
-		Punto nuevaPosicion = new Punto(this.posicion.getX(), this.posicion.getY()-this.superficie.getRadio());
-		
+		Punto nuevaPosicion = new Punto(this.posicion.getX()+(ancho/2)-(anchoMisil/2), this.posicion.getY()-altoMisil);
 		// depredador tira misil baja en velocidad -posY 
-		Misil misil = new Misil(nuevaPosicion, new Punto(0, -2), 2);
+		Misil misil = new Misil(nuevaPosicion, new Punto(0, -1), anchoMisil, altoMisil);
 		// retornamos el misil
 		return misil;
 	}

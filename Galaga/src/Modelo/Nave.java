@@ -14,9 +14,11 @@ public abstract class Nave extends ObjetoMovil {
 	
 	//metodo: disminuye la energia según en daño.
 	public void disminuirEnergia(int disminuir) {
+		// disminuir energia
 		this.energia -= disminuir;			
 		// si energia es menor o igual a cero
 		if (this.energia <= 0) {
+			// energia es cero
 			this.energia = 0;
 		}
 	}

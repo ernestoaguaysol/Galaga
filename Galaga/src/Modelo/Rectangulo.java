@@ -3,8 +3,6 @@ package Modelo;
 public class Rectangulo {
 	private Punto esquina_min;
 	private Punto esquina_max;
-	// 
-//	private Punto centro;
 	
 	// 
 	public Rectangulo(Punto min, Punto max){
@@ -16,14 +14,6 @@ public class Rectangulo {
 		if(this.esquina_max.getX() < otro.esquina_min.getX() || otro.esquina_max.getX() < this.esquina_min.getX())
 			return false;
 		if(this.esquina_max.getY() < otro.esquina_min.getY() || otro.esquina_max.getY() < this.esquina_min.getY())
-			return false;
-		return true;
-	}
-	
-	public boolean contiene(Rectangulo otro){
-		if(this.esquina_max.getX() < otro.esquina_max.getX() || otro.esquina_min.getX() < this.esquina_min.getX())
-			return false;
-		if(this.esquina_max.getY() < otro.esquina_max.getY() || otro.esquina_min.getY() < this.esquina_min.getY())
 			return false;
 		return true;
 	}

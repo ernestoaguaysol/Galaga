@@ -4,13 +4,13 @@ public class NaveJugador extends Nave{
 	//las vidas del jugador
 	private int vidas;
 	
-	public NaveJugador(Punto posicion,int radio) {
+	public NaveJugador(Punto posicion,int ancho, int alto) {
 		//cada nave del jugador comienza con 3 vidas
 		this.vidas = 3;
 		this.energia = 100;
 		this.posicion = posicion;
-		this.superficie = new Circulo(posicion, radio);
 		this.velocidad = new Punto(0, 0);
+		
 	}
 	
 	//metodo. devuelve la cantidad de vidas del jugador
@@ -26,7 +26,7 @@ public class NaveJugador extends Nave{
 	}
 	
 	//--------------------------------------------------//
-	//metodos para mover izq, der, arriba, abajo
+	//metodos para mover izq, der, arriba, abajo, detener
 	public void moverDerecha() {
 		velocidad.setX(2);
 	}
@@ -41,6 +41,11 @@ public class NaveJugador extends Nave{
 	
 	public void moverAbajo() {
 		velocidad.setY(-2);		
+	}
+	
+	public void detener() {
+		this.velocidad.setX(0);
+		this.velocidad.setY(0);
 	}
 	
 	//-------------------------------------------------//
@@ -58,20 +63,16 @@ public class NaveJugador extends Nave{
 		}
 	}
 
+	
 	@Override
 	public Disparo disparar() {
-		// posicion del disparo : posX es la misma de la nave, posY es la misma mas el radio  
-		Punto nuevaPosicion = new Punto(this.posicion.getX(), this.posicion.getY()+this.superficie.getRadio());
+		int altoDisparo = 16;
+		int anchoDisparo = 16;
+		// posicion inicial del disparo  
+		Punto nuevaPosicion = new Punto(this.posicion.getX()+(this.ancho/2)-(anchoDisparo/2), this.posicion.getY()+this.alto);
 		// tira misil sube en velocidad posY 
-		Misil misil = new Misil(nuevaPosicion, new Punto(0, 4), 2);
+		Misil misil = new Misil(nuevaPosicion, new Punto(0, 1), anchoDisparo, altoDisparo);
 		// retornamos el misil
 		return misil;
-	}
-
-	public void detener() 
-	{
-		this.velocidad.setX(0);
-		this.velocidad.setY(0);
-		
 	}
 }

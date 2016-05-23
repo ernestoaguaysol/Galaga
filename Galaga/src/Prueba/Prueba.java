@@ -1,7 +1,6 @@
 package Prueba;
 
 import java.util.Scanner;
-
 import Modelo.Juego;
 import Modelo.NaveJugador;
 
@@ -9,6 +8,8 @@ public class Prueba {
 
 	public static void main(String[] args) {
 		//
+//		NaveJugador n = new NaveJugador(new Punto(255, ), , alto)
+		
 		Juego juego = new Juego();
 		juego.cargar();
 		
@@ -43,7 +44,7 @@ public class Prueba {
 	}
 	
 	public static void menu(Juego juego){ 
-		//iteraciones	
+		//
 		System.out.println("Que desea hacer con la Nave Jugador?");
 		System.out.println("1. Mover a la izquierda");
 		System.out.println("2. Mover a la derecha");

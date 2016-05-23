@@ -2,26 +2,30 @@ package Modelo;
 
 public class Destructor extends NaveEnemiga{
 	
-	public Destructor(Punto posicion,Punto velocidad, int radio) {
+	public Destructor(Punto posicion,Punto velocidad, int ancho, int alto) {
 		//estado de la nave demoledor al iniciar
 		estado = Estado.PASIVO;
 		//posicion al iniciar
 		this.posicion = posicion;
+		
+		this.ancho = ancho;
+		this.alto = alto;
 		//velocidad del enemigo
 		this.velocidad = new Punto(2, 2);
 		//energia
 		this.energia = 100;
-		//superficie
-		this.superficie = new Circulo(posicion, radio);
 	}
 
 	@Override
 	public Disparo disparar() {
-		// posicion del disparo : posX es la misma de la nave, posY es la misma menos el radio  
-		Punto nuevaPosicion = new Punto(this.posicion.getX(), this.posicion.getY()-this.superficie.getRadio());
-		// tira bomba baja en velocidad -posY 
-		Laser laser = new Laser(nuevaPosicion, new Punto(0, -2), 2);
-		// retornamos laser
+		int anchoLaser = 16;
+		int altoLaser = 16;
+		// posicion del disparo
+		Punto nuevaPosicion = new Punto(this.posicion.getX()+(ancho/2)-(anchoLaser/2), this.posicion.getY()-altoLaser);
+		// depredador tira laser baja en velocidad -posY 
+		Laser laser = new Laser(nuevaPosicion, new Punto(0, -1), anchoLaser, altoLaser);
+		// retornamos el misil
 		return laser;
 	}
+	
 }

@@ -2,11 +2,11 @@ package Modelo;
 
 import java.util.LinkedList;
 import java.util.Random;
-import java.util.Scanner;
-
 import Modelo.NaveJugador;
 
 public class Juego {
+	// contiene un espacio, un jugador, y listas de naves enemigas
+	//objetos espaciales, disparos enemigos, disparos jugador
 	private Espacio espacio;
 	private NaveJugador naveJugador;
 	private LinkedList<NaveEnemiga> navesEnemigas;
@@ -17,10 +17,10 @@ public class Juego {
 	//aleatorio para usar en varios
 	private Random aleatorio = new Random();
 	
-	
+	// constructor Juego
 	public Juego() {
 		this.espacio = new Espacio(512,512);
-		this.naveJugador = new NaveJugador(new Punto(255, 100), 30);
+		this.naveJugador = new NaveJugador(new Punto(255, 16),32,32);
 		this.objetosEspaciales = new LinkedList<>();
 		this.disparosEnemigos = new LinkedList<>();
 		this.disparosJugador = new LinkedList<>();
@@ -30,32 +30,38 @@ public class Juego {
 	public void cargar() {
 		// lista de naves enemigas
 		//cracion de demoledores
-		Demoledor dem1 = new Demoledor(new Punto(55, 455), new Punto(2, 2), 15);
-		Demoledor dem2 = new Demoledor(new Punto(155, 455), new Punto(2, 2), 15);
-		Demoledor dem3 = new Demoledor(new Punto(255, 455), new Punto(2, 2), 15);
-		Demoledor dem4 = new Demoledor(new Punto(355, 455), new Punto(2, 2), 15);
-		Demoledor dem5 = new Demoledor(new Punto(455, 455), new Punto(2, 2), 15);
+		Demoledor dem1 = new Demoledor(new Punto(47, 447), new Punto(0, 0), 32,32);
+		Demoledor dem2 = new Demoledor(new Punto(111, 447), new Punto(0, 0), 32,32);
+		Demoledor dem3 = new Demoledor(new Punto(175, 447), new Punto(0, 0), 32,32);
+		Demoledor dem4 = new Demoledor(new Punto(239, 447), new Punto(0, 0), 32,32);
+		Demoledor dem5 = new Demoledor(new Punto(303, 447), new Punto(0, 0), 32,32);
+		Demoledor dem6 = new Demoledor(new Punto(367, 447), new Punto(0, 0), 32,32);
+		Demoledor dem7 = new Demoledor(new Punto(431, 447), new Punto(0, 0), 32,32);
 		//creacion de destructores
-		Destructor des1 = new Destructor(new Punto(55, 355), new Punto(2, 2), 15);
-		Destructor des2 = new Destructor(new Punto(155, 355), new Punto(2, 2), 15);
-		Destructor des3 = new Destructor(new Punto(255, 355), new Punto(2, 2), 15);
-		Destructor des4 = new Destructor(new Punto(355, 355), new Punto(2, 2), 15);
-		Destructor des5 = new Destructor(new Punto(455, 355), new Punto(2, 2), 15);
+		Destructor des1 = new Destructor(new Punto(47, 383), new Punto(0, 0), 32,32);
+		Destructor des2 = new Destructor(new Punto(111, 383), new Punto(0, 0), 32,32);
+		Destructor des3 = new Destructor(new Punto(175, 383), new Punto(0, 0), 32,32);
+		Destructor des4 = new Destructor(new Punto(239, 383), new Punto(0, 0), 32,32);
+		Destructor des5 = new Destructor(new Punto(303, 383), new Punto(0, 0), 32,32);
+		Destructor des6 = new Destructor(new Punto(367, 383), new Punto(0, 0), 32,32);
+		Destructor des7 = new Destructor(new Punto(431, 383), new Punto(0, 0), 32,32);
 		//los añadimos a la lista de naves enemigas
 		this.navesEnemigas.add(dem1);
 		this.navesEnemigas.add(dem2);
 		this.navesEnemigas.add(dem3);
 		this.navesEnemigas.add(dem4);
 		this.navesEnemigas.add(dem5);
+		this.navesEnemigas.add(dem6);
+		this.navesEnemigas.add(dem7);
 		///
 		this.navesEnemigas.add(des1);
 		this.navesEnemigas.add(des2);
 		this.navesEnemigas.add(des3);
 		this.navesEnemigas.add(des4);
 		this.navesEnemigas.add(des5);
-		//
-		//.....continuar....
-		
+		this.navesEnemigas.add(des6);
+		this.navesEnemigas.add(des7);
+		//		
 		
 	}
 	
@@ -64,46 +70,39 @@ public class Juego {
 	public void jugar() {
 		
 		//diez iteraciones
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 10; i++) {			
+			// movemos todos los objetos moviles
+			this.moverTodo();
+				
+			//chequeamos si hay colicionas
+			this.chequearColisiones();
 			
-		// movemos todos los objetos moviles
-		this.moverTodo();
-			
-		//chequeamos si hay colicionas..Continuar metodo..
-		/*
-		 *jugador con enemigos (Mueren ambos)
-		 *jugador con objetos espaciales (...)
-		 *jugador con disparos enemigos (...)
-		 *enemigo con disparos jugador (...)
-		 */
-		this.chequearColisiones();
-		
-		// si hay menos de 3 disparos 
-		if (this.disparosEnemigos.size() < 3) {
-			// recorremos cada nave enemiga
-			for (NaveEnemiga naveEnemiga : navesEnemigas) {				
-				// y vamos decidiendo la nave dispara o no
-				if (this.decidirDisparo()) {
-					this.disparosEnemigos.add(naveEnemiga.disparar());
+			// si hay menos de 3 disparos 
+			if (this.disparosEnemigos.size() < 3) {
+				// recorremos cada nave enemiga
+				for (NaveEnemiga naveEnemiga : navesEnemigas) {				
+					// y vamos decidiendo la nave dispara o no
+					if (this.decidirDisparo()) {
+						this.disparosEnemigos.add(naveEnemiga.disparar());
+					}
 				}
 			}
-		}
-
-		//si hay que atacar
-		if (this.decidirAtaque()) {
-			//ataca la primer nave enemiga que encuentra 
-			// en estado PASIVO
-			this.atacar();
-		}
-		
-		//decide si aparece un objeto espacial en el espacio
-		this.decidirObjetoEspacial();
-
-		//la pantala es el espacio 512x512
-		this.chequearFueraDePantalla();
-		
-		
-		
+	
+			//si hay que atacar
+			if (this.decidirAtaque()) {
+				//ataca la primer nave enemiga que encuentra 
+				// en estado PASIVO
+				this.atacar();
+			}
+			
+			//decide si aparece un objeto espacial en el espacio
+			this.decidirObjetoEspacial();
+	
+			//la pantala es el espacio 512x512
+			this.chequearFueraDePantalla();
+			
+			
+			
 		}//FIN FOR
 	}
 	
@@ -167,7 +166,7 @@ public class Juego {
 			// aleatorio de 0 a 9 ¿si es 0?
 			if (this.aleatorio.nextInt(10) == 0) {
 				// creamos una nueva estrella fugaz
-				EstrellaFugaz nuevaEstrellaFugaz = new EstrellaFugaz(new Punto(0, 300), 15, new Punto(2, 2));
+				EstrellaFugaz nuevaEstrellaFugaz = new EstrellaFugaz(new Punto(0, 300), new Punto(0, 0), 16,16);
 				// agregamos la nueva estrella a la lista de objetos espaciales
 				this.objetosEspaciales.add(nuevaEstrellaFugaz);
 			}
@@ -176,7 +175,7 @@ public class Juego {
 			// aleatorio de 0 a 4 ¿si es 0?
 			if (this.aleatorio.nextInt(5) == 0) {
 				// creamos un nuevo meteorito
-				Meteorito nuevoMeteorito = new Meteorito(new Punto(0, 255), 10, new Punto(2, 2));
+				Meteorito nuevoMeteorito = new Meteorito(new Punto(0, 303), new Punto(1, -1),16,16);
 				// agregamos el nuevo meteorito a la lista de objetos espaciales
 				this.objetosEspaciales.add(nuevoMeteorito);
 			}
@@ -185,7 +184,7 @@ public class Juego {
 			// aleatorio de 0 a 8 ¿si es 0?
 			if (this.aleatorio.nextInt(8) == 0) {
 				// creamos un nuevo asteroide
-				Asteroide nuevoAsteroide = new Asteroide(new Punto(511, 300), 20, new Punto(3, 2));
+				Asteroide nuevoAsteroide = new Asteroide(new Punto(479, 271),new Punto(-1, -1),16,16);
 				// agregamos el nuevo asteroide la a la lista de objetos espaciales
 				this.objetosEspaciales.add(nuevoAsteroide);
 			}
@@ -271,11 +270,11 @@ public class Juego {
 	
 	private void reubicarPosicion(ObjetoMovil objeto){
 		//reubicar X
-		if (objeto.posicion.getX() < 0) {
-			objeto.posicion.setX(511);
+		if (objeto.getPosicion().getX() < 0) {
+			objeto.getPosicion().setX(511);
 		}
-		if (objeto.posicion.getX() >= 512) {
-			objeto.posicion.setX(0);
+		if (objeto.getPosicion().getX() >= 512) {
+			objeto.getPosicion().setX(0);
 		}
 		//----------------------------------//
 		//reubicar Y
@@ -312,18 +311,23 @@ public class Juego {
 		//recorremos todas las naves enemigas
 		for (NaveEnemiga naveEnemiga : navesEnemigas) {
 			//si las superficies colisionan
-			if (Circulo.colisionan(naveEnemiga.superficie, this.naveJugador.superficie)) {
-				// disminuimos el 100% de energia de la nave jugador
-				this.naveJugador.disminuirEnergia(100);
+			if (naveEnemiga.getSuperficie().colisiona(this.naveJugador.getSuperficie())) {
+				// disminuimos el 50% de energia de la nave jugador
+				this.naveJugador.disminuirEnergia(50);
 				// disminuimos el 100% de energia de la nave enemiga
 				naveEnemiga.disminuirEnergia(100);
 			}
 		}
+//		// tamanio a rrecorrer
+//		int tamanio = this.navesEnemigas.size();
+//		for (int i = 0; i < tamanio; i++) {
+//			
+//		}
 		
 		//recorremos los disparos "actuales"
 		for (Disparo disparo : disparosEnemigos) {
 			//si las superficies colisionan
-			if (Circulo.colisionan(disparo.superficie, this.naveJugador.superficie)) {
+			if (disparo.getSuperficie().colisiona(this.naveJugador.getSuperficie())) {
 				// 
 			}
 		}
@@ -331,7 +335,7 @@ public class Juego {
 		//recorremos lo objetos espaciales "actuales"
 		for (ObjetoEspacial objetoEspacial : objetosEspaciales) {
 			//si las superficies colisionan
-			if (Circulo.colisionan(objetoEspacial.superficie, this.naveJugador.superficie)) {
+			if (objetoEspacial.getSuperficie().colisiona( this.naveJugador.getSuperficie())) {
 				//continuar....
 			}
 		}
@@ -367,18 +371,16 @@ public class Juego {
 		
 	}
 
-	private static Scanner extraer() {
-		return new Scanner(System.in);
-	}
-
-	public void dispararJugador() 
+	// metodo para disparar 
+	public void dispararJugador()
 	{
+		// agregamos un nuevo disparo a la lista de disparo jugador
 		this.disparosJugador.add(this.naveJugador.disparar());
 	}
 
+	// metodo para llamar al jugador
 	public NaveJugador getNaveJugador() {
-		// TODO Auto-generated method stub
+		// retornamos el jugador
 		return this.naveJugador;
 	}
-	
 }
