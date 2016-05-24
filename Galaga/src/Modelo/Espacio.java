@@ -19,12 +19,25 @@ public class Espacio {
 		return alto;
 	}
 	
+	// 
 	public boolean estaDentroDeEspacio(Punto posicion) {
 		// 
 		if (posicion.getX() < 0 || posicion.getX() > this.ancho-1) {
 			return false;
 		}
 		if (posicion.getY() < 0 || posicion.getY() > this.alto-1) {
+			return false;
+		}
+		return true;
+	}
+	
+	// para evaluar un Rectangulo
+	public boolean estaDentroDeEspacio(Rectangulo rectangulo) {
+		// 
+		if (rectangulo.getEsquina_max().getX() < 0 || rectangulo.getEsquina_min().getX() > this.ancho-1) {
+			return false;
+		}
+		if (rectangulo.getEsquina_max().getY() < 0 || rectangulo.getEsquina_min().getY() > this.alto-1) {
 			return false;
 		}
 		return true;

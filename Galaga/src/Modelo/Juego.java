@@ -70,7 +70,11 @@ public class Juego {
 	public void jugar() {
 		
 		//diez iteraciones
-		for (int i = 0; i < 16; i++) {			
+		for (int i = 0; i < 16; i++) {
+			
+			//la pantala es el espacio 512x512
+			this.chequearFueraDePantalla();
+			
 			// movemos todos los objetos moviles
 			this.moverTodo();
 				
@@ -98,8 +102,6 @@ public class Juego {
 			//decide si aparece un objeto espacial en el espacio
 			this.decidirObjetoEspacial();
 	
-			//la pantala es el espacio 512x512
-			this.chequearFueraDePantalla();
 			
 //			System.out.println("Iteracion: "+i);
 //			this.imprimir();
@@ -237,52 +239,77 @@ public class Juego {
 	//
 	private void chequearFueraDePantalla() {
 		//chequeamos el jugador
-		if (!this.espacio.estaDentroDeEspacio(this.naveJugador.getPosicion())) {
+		if (!this.espacio.estaDentroDeEspacio(this.naveJugador.getSuperficie())) {
 			this.reubicarPosicion(this.naveJugador);
 		}
 		
-		//chequeamos todas las naves enemigas
-		for (NaveEnemiga naveEnemiga : navesEnemigas) {
-			if (!this.espacio.estaDentroDeEspacio(naveEnemiga.getPosicion())) {
-				this.reubicarPosicion(naveEnemiga);
+		//chequeamos todas las naves enemigas		
+		for (int i = 0; i < this.navesEnemigas.size(); i++) {
+			// si no esta en el espacio
+			if (!this.espacio.estaDentroDeEspacio(this.navesEnemigas.get(i).getSuperficie())) {
+				//si la esquina max X es menor a cero o esquina min X es meyor al ancho-1 del espacio
+				if (this.navesEnemigas.get(i).getSuperficie().getEsquina_max().getX() < 0 || this.navesEnemigas.get(i).getSuperficie().getEsquina_min().getX() > this.espacio.getAncho()-1) {
+					// eliminamos la nave
+					this.navesEnemigas.remove(i);
+					//
+					i--;
+				}else {
+					this.reubicarPosicion(this.navesEnemigas.get(i));
+				}
+	
 			}
+			
 		}
 		
 		//chequeamos todos los objetos espaciales del momento
-		for (ObjetoEspacial objetoEspacial : objetosEspaciales) {
+		for (int i = 0; i < this.objetosEspaciales.size(); i++) {
 			//si está afuera del espacio
-			if (!this.espacio.estaDentroDeEspacio(objetoEspacial.posicion)) {
-				//si se cumple la condición lo eliminamos de la lista
-				this.objetosEspaciales.remove(objetoEspacial);
+			if (!this.espacio.estaDentroDeEspacio(this.objetosEspaciales.get(i).getSuperficie())) {
+				//lo eliminamos de la lista
+				this.objetosEspaciales.remove(i);
+				//
+				i--;
 			}
 		}
 		
 		//chequeamos todos lod disparos del momento
-		for (Disparo disparo : disparosEnemigos) {
+		for (int i = 0; i < this.disparosEnemigos.size(); i++) {
 			//si está fuera del espacio
-			if (!this.espacio.estaDentroDeEspacio(disparo.posicion)) {
+			if (!this.espacio.estaDentroDeEspacio(this.disparosEnemigos.get(i).getSuperficie())) {
 				//lo eliminamos de la lista de disparos
-				this.disparosEnemigos.remove(disparo);
+				this.disparosEnemigos.remove(i);
+				// 
+				i--;
 			}
 		}
 		
+		// chequeamos todos los disparos del jugador
+		for (int i = 0; i < this.disparosJugador.size(); i++) {
+			//si está fuera del espacio
+			if (!this.espacio.estaDentroDeEspacio(this.disparosJugador.get(i).getSuperficie())) {
+				//lo eliminamos del espacio
+				this.disparosJugador.remove(i);
+				//
+				i--;
+			}
+		}
 	}
 	
 	private void reubicarPosicion(ObjetoMovil objeto){
 		//reubicar X
-		if (objeto.getPosicion().getX() < 0) {
+		if (objeto.getSuperficie().getEsquina_max().getX() < 0) {
 			objeto.getPosicion().setX(511);
 		}
-		if (objeto.getPosicion().getX() >= 512) {
+		if (objeto.getSuperficie().getEsquina_min().getX() >= 512) {
 			objeto.getPosicion().setX(0);
 		}
 		//----------------------------------//
 		//reubicar Y
-		if (objeto.posicion.getY() < 0) {
-			objeto.posicion.setY(511);
+		if (objeto.getSuperficie().getEsquina_max().getY() < 0) {
+			objeto.getPosicion().setY(511);
 		}
-		if (objeto.posicion.getY() >= 512) {
-			objeto.posicion.setY(0);
+		if (objeto.getSuperficie().getEsquina_min().getY() >= 512) {
+			objeto.getPosicion().setY(0);
 		}
 		
 	}
