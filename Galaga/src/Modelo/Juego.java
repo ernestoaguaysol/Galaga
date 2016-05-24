@@ -361,6 +361,9 @@ public class Juego {
 					i--;
 				}
 			}
+		
+			
+		
 		}
 		
 		
