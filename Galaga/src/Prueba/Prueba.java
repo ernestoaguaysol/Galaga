@@ -2,6 +2,10 @@ package Prueba;
 
 import java.util.Scanner;
 
+//import java.util.LinkedList;
+//import Modelo.Demoledor;
+//import Modelo.Disparo;
+//import Modelo.NaveEnemiga;
 import Modelo.Juego;
 import Modelo.NaveJugador;
 
@@ -9,6 +13,42 @@ public class Prueba {
 
 	public static void main(String[] args) {
 		
+//		LinkedList<Disparo> disparosJugador = new LinkedList<>();
+//		LinkedList<NaveEnemiga> navesEnemigas = new LinkedList<>();
+//		
+//		Demoledor d1 = new Demoledor(new Po, velocidad, ancho, alto)
+//		
+//		
+//		
+//		// recorremos los disparos del jugador
+//				for (int j = 0; j < disparosJugador.size(); j++) {
+//					// recorremos todos los enemigos
+//					for (int i = 0; i < navesEnemigas.size(); i++) {
+//						// si la nave enemiga coliciona con el el disparo jugador
+//						if (navesEnemigas.get(i).getSuperficie().colisiona(disparosJugador.get(j).getSuperficie())) {
+//							// disminuimos energia del enemigo
+//							navesEnemigas.get(i).disminuirEnergia(disparosJugador.get(j).getDanio());
+//							// si la energia es menor o igual a cero
+//							if (navesEnemigas.get(i).getEnergia() <= 0) {
+//								// eliminamos la nave enemiga
+//								navesEnemigas.remove(i);
+//								// retrocedemos un paso en i
+//								i--;
+//							}
+//							// eliminamos el disparo jugador que impactó
+//							disparosJugador.remove(j);
+//							// retrocedemos un paso en j
+//							j--;
+//							// salimos del for i
+//							break;
+//						}
+//					}
+//				}
+		
+//		boolean entra = true;
+//		if (entra) {
+//			return;
+//		}
 		
 		Juego juego = new Juego();
 		juego.cargar();

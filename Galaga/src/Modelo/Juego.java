@@ -20,7 +20,7 @@ public class Juego {
 	// constructor Juego
 	public Juego() {
 		this.espacio = new Espacio(512,512);
-		this.naveJugador = new NaveJugador(new Punto(255, 16),32,32);
+		this.naveJugador = new NaveJugador(new Punto(239, 15),32,32);
 		this.objetosEspaciales = new LinkedList<>();
 		this.disparosEnemigos = new LinkedList<>();
 		this.disparosJugador = new LinkedList<>();
@@ -356,17 +356,88 @@ public class Juego {
 					// diminuir energia segun el daño que cause el objeto espacial 
 					this.naveJugador.disminuirEnergia(this.objetosEspaciales.get(i).getDanio());
 					// eliminemos el objeto espacial
-					this.navesEnemigas.remove(i);
+					this.objetosEspaciales.remove(i);
 					//retrocedemos un paso en i
 					i--;
 				}
+			}		
+		}
+		
+		// recorremos los disparos del jugador
+		for (int j = 0; j < this.disparosJugador.size(); j++) {
+			// recorremos todos los enemigos
+			for (int i = 0; i < this.navesEnemigas.size(); i++) {
+				// si la nave enemiga coliciona con el el disparo jugador
+				if (this.navesEnemigas.get(i).getSuperficie().colisiona(this.disparosJugador.get(j).getSuperficie())) {
+					// disminuimos energia del enemigo
+					this.navesEnemigas.get(i).disminuirEnergia(this.disparosJugador.get(j).getDanio());
+					// si la energia es menor o igual a cero
+					if (this.navesEnemigas.get(i).getEnergia() <= 0) {
+						// eliminamos la nave enemiga
+						this.navesEnemigas.remove(i);
+						// retrocedemos un paso en i
+						i--;
+					}
+					// eliminamos el disparo jugador que impactó
+					this.disparosJugador.remove(j);
+					// retrocedemos un paso en j
+					j--;
+					// salimos del for i
+					break;
+				}
 			}
+		}
 		
-			
-		
+		//ahora los disparos jugador con los disparos enemigos
+		for (int i = 0; i < this.disparosJugador.size(); i++) {
+			//
+			for (int j = 0; j < this.disparosEnemigos.size(); j++) {
+				// si los disparos oponentes colicionan
+				if (this.disparosJugador.get(i).getSuperficie().colisiona(this.disparosEnemigos.get(j).getSuperficie())) {
+					// removemos el disparo jugador
+					this.disparosJugador.remove(i);
+					// retrocedemos u n paso en i
+					i--;
+					// removemos el disparo enemigo
+					this.disparosEnemigos.remove(j);
+					// retrocetemos en j;
+					j--;
+					// volvemos a iterar el primer for
+					break;
+				}
+			}
 		}
 		
 		
+		// disparos jugador con objetos espaciales
+		for (int i = 0; i < this.disparosJugador.size(); i++) {
+			//
+			for (int j = 0; j < this.objetosEspaciales.size(); j++) {
+				//
+				if (this.disparosJugador.get(i).getSuperficie().colisiona(this.objetosEspaciales.get(j).getSuperficie())) {
+					// 
+					if (this.objetosEspaciales.get(j).getClass().equals(EstrellaFugaz.class)) {
+						// le sumamos una vida al jugador
+						this.naveJugador.sumarVida();
+						System.out.println("Estrella Fugaz te ha regalado una vida");
+					}
+					// eliminamos la estrella fugaz
+					this.objetosEspaciales.remove(j);
+					//retrocedemos un paso en j
+					j--;
+					// eliminamos disparo jugador
+					this.disparosJugador.remove(i);
+					// retrocedemos en i
+					i--;
+					// comenzamos de nuevo
+					break;
+					//----------------------------------------
+					//faltaria sumar puntaje
+					
+				}
+			}
+			
+		}
 		
 	}
 	
@@ -374,7 +445,7 @@ public class Juego {
 	public void imprimir() {
 		// jugador
 		System.out.println("NAVE JUGADOR: PosX="+naveJugador.getPosicion().getX()+
-				"; PosY="+naveJugador.getPosicion().getY()+"; Energia="+this.naveJugador.getEnergia());
+				"; PosY="+naveJugador.getPosicion().getY()+"; Energia="+this.naveJugador.getEnergia()+"; Vidas="+this.naveJugador.getVidas());
 		// enemigos
 		for (NaveEnemiga naveEnemiga : navesEnemigas) {			
 			System.out.println("Nave Enemiga Estado:"+naveEnemiga.estado+" posX="+naveEnemiga.getPosicion().getX()+
