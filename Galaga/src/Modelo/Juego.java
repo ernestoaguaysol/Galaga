@@ -5,6 +5,10 @@ import java.util.Random;
 import Modelo.NaveJugador;
 
 public class Juego {
+	//posicion inicial para el jugador
+	private final int posInicialX = 239;
+	private final int posInicialY = 15;
+	
 	// contiene un espacio, un jugador, y listas de naves enemigas
 	//objetos espaciales, disparos enemigos, disparos jugador
 	private Espacio espacio;
@@ -14,13 +18,15 @@ public class Juego {
 	private LinkedList<Disparo> disparosEnemigos;
 	private LinkedList<Disparo> disparosJugador;
 	
+	
+	
 	//aleatorio para usar en varios
 	private Random aleatorio = new Random();
 	
 	// constructor Juego
 	public Juego() {
 		this.espacio = new Espacio(512,512);
-		this.naveJugador = new NaveJugador(new Punto(239, 15),32,32);
+		this.naveJugador = new NaveJugador(new Punto(this.posInicialX, this.posInicialY),32,32);
 		this.objetosEspaciales = new LinkedList<>();
 		this.disparosEnemigos = new LinkedList<>();
 		this.disparosJugador = new LinkedList<>();
@@ -68,44 +74,58 @@ public class Juego {
 	
 	//el bucle principal del juego
 	public void jugar() {
-		
-		//diez iteraciones
-		for (int i = 0; i < 16; i++) {
+		// si el jugador tiene vidas
+		if (this.naveJugador.getVidas() > 0) {
+			// si el estado del jugador está en cero 
+			if (this.naveJugador.getEnergia() <= 0) {
+				// seteamos la posicion del jugador a la pocicion inicial
+				this.naveJugador.getPosicion().setX(posInicialX);
+				this.naveJugador.getPosicion().setY(posInicialY);
+				// detenemos la nave
+				this.naveJugador.detener();
+				// renovamos la energia al 100%
+				this.naveJugador.renovarEnergia();
+			}
 			
-			//la pantala es el espacio 512x512
-			this.chequearFueraDePantalla();
-			
-			// movemos todos los objetos moviles
-			this.moverTodo();
+			//diez iteraciones
+			for (int i = 0; i < 16; i++) {
 				
-			//chequeamos si hay colicionas
-			this.chequearColisiones();
-			
-			// si hay menos de 3 disparos 
-			if (this.disparosEnemigos.size() < 3) {
-				// recorremos cada nave enemiga
-				for (NaveEnemiga naveEnemiga : navesEnemigas) {				
-					// y vamos decidiendo la nave dispara o no
-					if (this.decidirDisparo()) {
-						this.disparosEnemigos.add(naveEnemiga.disparar());
+				//la pantala es el espacio 512x512
+				this.chequearFueraDePantalla();
+				
+				// movemos todos los objetos moviles
+				this.moverTodo();
+				
+				//chequeamos si hay colicionas
+				this.chequearColisiones();		
+				
+				// cada 16 iteracionas va a decidir
+				if (0 == i) {
+					// recorremos cada nave enemiga
+					for (NaveEnemiga naveEnemiga : navesEnemigas) {				
+						// decidimos si la nave enemiga dispara
+						if (this.decidirDisparo()) {
+							this.disparosEnemigos.add(naveEnemiga.disparar());
+						}
 					}
+				
+					//decidimos si la nave enemiga ataca
+					this.decidirAtaque();
+					
+					//decide si aparece un objeto espacial en el espacio
+					this.decidirObjetoEspacial();					
 				}
-			}
-	
-			//si hay que atacar
-			if (this.decidirAtaque()) {
-				//ataca la primer nave enemiga que encuentra 
-				// en estado PASIVO
-				this.atacar();
-			}
-			
-			//decide si aparece un objeto espacial en el espacio
-			this.decidirObjetoEspacial();
-	
-			
+				
+				
 //			System.out.println("Iteracion: "+i);
 //			this.imprimir();
-		}//FIN FOR
+			}//FIN FOR
+			
+		}else { // si no tiene vidas
+			System.out.println("GAME OVER");
+			return;
+		}
+		
 	}
 	
 	//movemos todos los objetos moviles
@@ -147,7 +167,7 @@ public class Juego {
 		int cantAsteriode = 0;
 		// recorremos los objetos espaciales
 		for (ObjetoEspacial objetoEspacial : objetosEspaciales) {
-			// si el objeto espacian es una estrella fugaz 
+			// si	 el objeto espacian es una estrella fugaz 
 			if (objetoEspacial.getClass().equals(EstrellaFugaz.class)) {
 				// incrementamos el contador
 				cantEstrellaFugaz++;
@@ -165,26 +185,28 @@ public class Juego {
 		
 		// si no hay estrella fugaz
 		if (cantEstrellaFugaz == 0) {
-			// aleatorio de 0 a 9 ¿si es 0?
-			if (this.aleatorio.nextInt(10) == 0) {
+			// aleatorio de 0 a 20
+			if (this.aleatorio.nextInt(20) == 0) {
 				// creamos una nueva estrella fugaz
 				EstrellaFugaz nuevaEstrellaFugaz = new EstrellaFugaz(new Punto(0, 300), new Punto(0, 0), 16,16);
 				// agregamos la nueva estrella a la lista de objetos espaciales
 				this.objetosEspaciales.add(nuevaEstrellaFugaz);
 			}
 		}
-		if (cantMeteorito < 3) {
-			// aleatorio de 0 a 4 ¿si es 0?
-			if (this.aleatorio.nextInt(5) == 0) {
+		
+		if (cantMeteorito < 2) {
+			// aleatorio de 0 a 20 ¿si es 0?
+			if (this.aleatorio.nextInt(20) == 0) {
 				// creamos un nuevo meteorito
 				Meteorito nuevoMeteorito = new Meteorito(new Punto(0, 303), new Punto(1, -1),16,16,25);
 				// agregamos el nuevo meteorito a la lista de objetos espaciales
 				this.objetosEspaciales.add(nuevoMeteorito);
 			}
 		}
+		
 		if (cantAsteriode < 2) {
-			// aleatorio de 0 a 8 ¿si es 0?
-			if (this.aleatorio.nextInt(8) == 0) {
+			// aleatorio de 0 a 20 ¿si es 0?
+			if (this.aleatorio.nextInt(20) == 0) {
 				// creamos un nuevo asteroide
 				Asteroide nuevoAsteroide = new Asteroide(new Punto(479, 271),new Punto(-1, -1),16,16,40);
 				// agregamos el nuevo asteroide la a la lista de objetos espaciales
@@ -194,46 +216,40 @@ public class Juego {
 		
 	}
 
-	// metodo atacar. manda a atacar la primera nave enemiga que
-	// encuentre con el estado PASIVO
-	private void atacar() {
-		//recorremos las naves enemigas 
-		for (NaveEnemiga naveEnemiga : navesEnemigas) {
-			// si la nave enemiga tiene estado pasivo
-			if (naveEnemiga.estado.equals(Estado.PASIVO)) {
-				// cambiamos el estado a KAMIKAZE
-				naveEnemiga.estado = Estado.KAMIKAZE;
-				// retornamos
-				return;
-			}
-		}
-	}
-
 	// metodo para decidir los ataques de las naves enemigas
-	private boolean decidirAtaque() {
-		/*
-		 * si hay menos de 2 naves enemigas atacando entonces 
-		 * vamos a atacar con la primer nave enemiga de la lista
-		 * */
+	private void decidirAtaque() {
 		//contador de naves kamikazes
-		int contador = 0;
-		
+		int contadorDeKamikaze = 0;
 		//recorremos la lista de naves enemigas
 		for (NaveEnemiga naveEnemiga : navesEnemigas) {
 			//si la nave tiene estado kamikaze
 			if (naveEnemiga.estado.equals(Estado.KAMIKAZE)) {
 				// incrementamos contador
-				contador++;
-				// si el contador es menor a 2
-				if (contador <= 2) {
-					// retornamos verdadero (es decir que se va a atacar)
-					return true;
-				}
+				contadorDeKamikaze++;
 			}
 		}
 		
-		// de otro modo no atacamos
-		return false;
+		// si quedan menos 4 naves enemigas
+		if (this.navesEnemigas.size() < 4) {
+			if (0 == contadorDeKamikaze) {
+				// cambiamos el estato de algunas de las naves aleatorio 
+				this.navesEnemigas.get(aleatorio.nextInt(navesEnemigas.size())).estado = Estado.KAMIKAZE;
+			}
+		}else if (contadorDeKamikaze < 3) {// si hay menos de 3 kamikaze
+			// recorremos las naves enemigas
+			for (NaveEnemiga naveEnemiga : navesEnemigas) {
+				//si la nave enemiga no tiene estado kamikaze
+				if (!naveEnemiga.estado.equals(Estado.KAMIKAZE)) {
+					// decidimos si se lanza al ataque de modo aleatorio
+					if (this.aleatorio.nextInt(10) == 0) {
+						// cambiamos el estado de la nave enemiga
+						naveEnemiga.estado = Estado.KAMIKAZE;	
+						// retornamos
+						return;
+					}
+				}
+			}
+		}
 	}
 
 	//
@@ -315,32 +331,30 @@ public class Juego {
 	}
 
 	// metodo decidir disparo, si hay mas de tres disparos
-	// en el espacio ninguna nave hace disparo
+	// en el espacio ninguna nave dispara,
 	// si hay menos de 3, hacemos un ramdom
 	private boolean decidirDisparo() {
-		//cantidad de disparos en disparos enemigos
-		int cantDisparos = this.disparosEnemigos.size();
-		// cantidad de disparos
-		if (cantDisparos <= 3) {
+		// cantidad de disparos es menor a 3
+		if (this.disparosEnemigos.size() < 3) {
 			//si aleatorio es cero
-			if (aleatorio.nextInt(8) == 0) {
+			if (aleatorio.nextInt(20) == 0) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	/*las coliciones son entre:
-	 * naveEnemiga y naveJugador
-	 * 
-	 * */
+	/*las coliciones*/
 	private void chequearColisiones() {
 		// recorremos todas las naves enemigas
 		for (int i = 0; i < navesEnemigas.size(); i++) {
 			//si las superficies colicionan
 			if (navesEnemigas.get(i).getSuperficie().colisiona(this.naveJugador.getSuperficie())) {
-				// descontamos 50% de energia de jugador
-				this.naveJugador.disminuirEnergia(50);
+				// si la energia del jugador es mayor a cero
+				if (this.naveJugador.getEnergia() > 0) {
+					// descontamos 50% de energia de jugador
+					this.naveJugador.disminuirEnergia(50);					
+				}
 				//eliminamos el enemigo
 				navesEnemigas.remove(i);
 				//retrocedemos un paso en i (ya que al remover
@@ -349,15 +363,17 @@ public class Juego {
 			}
 		}
 		
-		
 		//recorremos los disparos enemigos "actuales"
 		for (int i = 0; i < disparosEnemigos.size(); i++) {
 			//si el disparo enemigo coliciona con jugador
 			if (disparosEnemigos.get(i).getSuperficie().colisiona(this.naveJugador.getSuperficie())) {
-				//descontamos energia segun el daño que cause el disparo
-				this.naveJugador.disminuirEnergia(disparosEnemigos.get(i).getDanio());
+				// si la energia del jugador es mayor a cero
+				if (this.naveJugador.getEnergia() > 0) {
+					//descontamos energia segun el daño que cause el disparo
+					this.naveJugador.disminuirEnergia(disparosEnemigos.get(i).getDanio());					
+				}
 				//eliminamos el disparo que impactó en la nave
-				disparosEnemigos.get(i);
+				disparosEnemigos.remove(i);
 				// retocedemos un paso en i
 				i--;
 			}
@@ -378,10 +394,12 @@ public class Juego {
 					i--;
 					//----------------------------------------
 					//faltaria sumar puntaje
-				}else {
-					//si no es una estrella fugaz
-					// diminuir energia segun el daño que cause el objeto espacial 
-					this.naveJugador.disminuirEnergia(this.objetosEspaciales.get(i).getDanio());
+				}else { //si no es una estrella fugaz
+					//si la energia del jugador es mayor a cero
+					if (this.naveJugador.getEnergia() > 0) {
+						// diminuir energia segun el daño que cause el objeto espacial 
+						this.naveJugador.disminuirEnergia(this.objetosEspaciales.get(i).getDanio());						
+					}
 					// eliminemos el objeto espacial
 					this.objetosEspaciales.remove(i);
 					//retrocedemos un paso en i
@@ -390,7 +408,7 @@ public class Juego {
 			}		
 		}
 		
-		// recorremos los disparos del jugador
+		// ahora los disparos del jugador con las naves enemigas
 		for (int j = 0; j < this.disparosJugador.size(); j++) {
 			// recorremos todos los enemigos
 			for (int i = 0; i < this.navesEnemigas.size(); i++) {
@@ -470,28 +488,28 @@ public class Juego {
 	
 	
 	public void imprimir() {
-		// jugador
-		System.out.println("NAVE JUGADOR: PosX="+naveJugador.getPosicion().getX()+
-				"; PosY="+naveJugador.getPosicion().getY()+"; Energia="+this.naveJugador.getEnergia()+"; Vidas="+this.naveJugador.getVidas());
 		// enemigos
 		for (NaveEnemiga naveEnemiga : navesEnemigas) {			
 			System.out.println("Nave Enemiga Estado:"+naveEnemiga.estado+" posX="+naveEnemiga.getPosicion().getX()+
 					"; posY="+naveEnemiga.getPosicion().getY()+"; Energia="+naveEnemiga.getEnergia());
 		}
+		// jugador
+		System.out.println("NAVE JUGADOR: PosX="+naveJugador.getPosicion().getX()+
+				"; PosY="+naveJugador.getPosicion().getY()+"; Energia="+this.naveJugador.getEnergia()+"; Vidas="+this.naveJugador.getVidas());
 		
 		//disparos jugador
 		for (Disparo disparoJ : disparosJugador) {
-			System.out.println("Disparo Jugador; Daño="+disparoJ.danio+"; PosX="+disparoJ.getPosicion().getX()+"; PosY"+disparoJ.getPosicion().getY());
+			System.out.println("Disparo Jugador; Daño="+disparoJ.danio+"; PosX="+disparoJ.getPosicion().getX()+"; PosY="+disparoJ.getPosicion().getY());
 		}
 		
 		//disparo enemigo
 		for (Disparo disparoE : disparosEnemigos) {
-			System.out.println("Disparo Enemigo; Daño="+disparoE.danio+"; PosX="+disparoE.getPosicion().getX()+"; PosY"+disparoE.getPosicion().getY());
+			System.out.println("Disparo Enemigo; Daño="+disparoE.danio+"; PosX="+disparoE.getPosicion().getX()+"; PosY="+disparoE.getPosicion().getY());
 		}
 		
 		//objetos espaciales
 		for (ObjetoEspacial objetoEspacial : objetosEspaciales) {
-			System.out.println("Objetos Espaciales; PosX="+objetoEspacial.getPosicion().getX()+
+			System.out.println(objetoEspacial.getClass().getSimpleName()+"; PosX="+objetoEspacial.getPosicion().getX()+
 					"; PosY="+objetoEspacial.getPosicion().getY());
 		}
 		

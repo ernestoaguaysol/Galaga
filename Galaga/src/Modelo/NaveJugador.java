@@ -64,6 +64,10 @@ public class NaveJugador extends Nave{
 			this.vidas -=1;
 		}
 	}
+	
+	public void renovarEnergia() {
+		this.energia = 100;
+	}
 
 	
 	@Override
