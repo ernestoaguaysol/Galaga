@@ -11,5 +11,5 @@ public class Asteroide extends ObjetoEspacial{
 		this.velocidad = velocidad;
 		this.danio = danio;
 	}
-
+//probe el commit
 }
