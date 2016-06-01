@@ -8,10 +8,12 @@ public class Prueba {
 
 	public static void main(String[] args) {
 		
-		
+		// creo un nuevo juego
 		Juego juego = new Juego();
+		// cargo el juego
 		juego.cargar();
 		
+		// boolean para entrar en verdadero
 		boolean entrar = true;
 		while (entrar) {
 			System.out.println("Que desea hacer?");
@@ -33,7 +35,6 @@ public class Prueba {
 			}
 			juego.imprimir();
 		}
-		
 		System.out.println("Fin del juego");
 		
 	}

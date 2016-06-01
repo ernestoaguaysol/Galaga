@@ -18,6 +18,8 @@ public class Juego {
 	private LinkedList<Disparo> disparosEnemigos;
 	private LinkedList<Disparo> disparosJugador;
 	
+	//
+	private int puntaje = 0;
 	
 	
 	//aleatorio para usar en varios
