@@ -21,6 +21,8 @@ public class Juego {
 	//
 	private int puntaje = 0;
 	
+	private Historial historial;
+	
 	
 	//aleatorio para usar en varios
 	private Random aleatorio = new Random();
@@ -33,6 +35,7 @@ public class Juego {
 		this.disparosEnemigos = new LinkedList<>();
 		this.disparosJugador = new LinkedList<>();
 		this.navesEnemigas = new LinkedList<>();
+		this.historial = new Historial();
 	}
 	
 	public void cargar() {
@@ -537,5 +540,129 @@ public class Juego {
 	public NaveJugador getNaveJugador() {
 		// retornamos el jugador
 		return this.naveJugador;
+	}
+	
+	public int getPuntaje() {
+		return puntaje;
+	}
+	
+	public void cargarHistorialJuego() {
+		
+		//creamos un nuevo para nave jugador objetoHistorial
+		ObjetoHistorial jugador = new ObjetoHistorial();
+		// cargamos el nombre
+		jugador.setNombre("NaveJugador");
+		// cargamos la energia del jugador de entero a string
+		jugador.setEnergia(Integer.toString(this.naveJugador.getEnergia()));
+		// cargamos las vidas
+		jugador.setVidas(Integer.toString(this.naveJugador.getVidas()));
+		// cargamos la posicion
+		jugador.setPosicion(Integer.toString(this.naveJugador.getPosicion().getX()));
+		jugador.setPosicion(Integer.toString(this.naveJugador.getPosicion().getY()));
+		// cargamos la velocidad
+		jugador.setVelocidad(Integer.toString(this.naveJugador.getVelocidad().getX()));
+		jugador.setVelocidad(Integer.toString(this.naveJugador.getVelocidad().getY()));
+		// ancho y alto
+		jugador.setTamanio(Integer.toString(this.naveJugador.getAncho()));
+		jugador.setTamanio(Integer.toString(this.naveJugador.getAlto()));
+		
+		// lo agregamos al historial
+		this.historial.setObjeto(jugador);
+		//--------------------------------------------------------------------//
+		
+		// las naves enemigas
+		// recorremos cada una de las naves enemigas
+		for (NaveEnemiga naveEnemiga : navesEnemigas) {
+			// creamos un objetoHoistorial para nave enemiga
+			ObjetoHistorial enemigo = new ObjetoHistorial();
+			// cargamos el nombre
+			enemigo.setNombre("NaveEnemiga");
+			// cargamos la energia del enemigo de entero a string
+			enemigo.setEnergia(Integer.toString(naveEnemiga.getEnergia()));
+			// cargamos la posicion
+			enemigo.setPosicion(Integer.toString(naveEnemiga.getPosicion().getX()));
+			enemigo.setPosicion(Integer.toString(naveEnemiga.getPosicion().getY()));
+			// cargamos la velocidad
+			enemigo.setVelocidad(Integer.toString(naveEnemiga.getVelocidad().getX()));
+			enemigo.setVelocidad(Integer.toString(naveEnemiga.getVelocidad().getY()));
+			// ancho y alto
+			enemigo.setTamanio(Integer.toString(naveEnemiga.getAncho()));
+			enemigo.setTamanio(Integer.toString(naveEnemiga.getAlto()));
+			// estado
+			enemigo.setEstado(naveEnemiga.getEstado().name());
+			
+			// lo agregamos al historial
+			this.historial.setObjeto(enemigo);
+		}
+				
+		// los objetos espaciales
+		// recorremos todos los objetos espaciales
+		for (ObjetoEspacial objetoEspacial : objetosEspaciales) {
+			// creamos un objetoHoistorial para el objeto espacial
+			ObjetoHistorial objetoEsp = new ObjetoHistorial();
+			// cargamos el nombre
+			objetoEsp.setNombre("ObjetoEspacial");
+			// cargamos la posicion
+			objetoEsp.setPosicion(Integer.toString(objetoEspacial.getPosicion().getX()));
+			objetoEsp.setPosicion(Integer.toString(objetoEspacial.getPosicion().getY()));
+			// cargamos la velocidad
+			objetoEsp.setVelocidad(Integer.toString(objetoEspacial.getVelocidad().getX()));
+			objetoEsp.setVelocidad(Integer.toString(objetoEspacial.getVelocidad().getY()));
+			// ancho y alto
+			objetoEsp.setTamanio(Integer.toString(objetoEspacial.getAncho()));
+			objetoEsp.setTamanio(Integer.toString(objetoEspacial.getAlto()));
+			// danio
+			objetoEsp.setDanio(Integer.toString(objetoEspacial.getDanio()));
+			
+			// lo agregamos al historial
+			this.historial.setObjeto(objetoEsp);
+		}
+
+		
+		// los disparos del jugador
+		// recorremos todos los disparos del jugador
+		for (Disparo disparoJugador : disparosJugador) {
+			// creamos un objetoHoistorial para cada disparo
+			ObjetoHistorial disparo = new ObjetoHistorial();
+			// cargamos el nombre
+			disparo.setNombre("DisparoJugador");
+			// cargamos la posicion
+			disparo.setPosicion(Integer.toString(disparoJugador.getPosicion().getX()));
+			disparo.setPosicion(Integer.toString(disparoJugador.getPosicion().getY()));
+			// cargamos la velocidad
+			disparo.setVelocidad(Integer.toString(disparoJugador.getVelocidad().getX()));
+			disparo.setVelocidad(Integer.toString(disparoJugador.getVelocidad().getY()));
+			// ancho y alto
+			disparo.setTamanio(Integer.toString(disparoJugador.getAncho()));
+			disparo.setTamanio(Integer.toString(disparoJugador.getAlto()));
+			// danio
+			disparo.setDanio(Integer.toString(disparoJugador.getDanio()));
+			
+			// lo agregamos al historial
+			this.historial.setObjeto(disparo);
+		}
+
+		// los disparos del enemigo
+		// recorremos todos los disparos del enemigo
+		for (Disparo disparoEnemigo : disparosEnemigos) {
+			// creamos un objetoHoistorial para cada disparo
+			ObjetoHistorial disparo = new ObjetoHistorial();
+			// cargamos el nombre
+			disparo.setNombre("DisparoEnemigo");
+			// cargamos la posicion
+			disparo.setPosicion(Integer.toString(disparoEnemigo.getPosicion().getX()));
+			disparo.setPosicion(Integer.toString(disparoEnemigo.getPosicion().getY()));
+			// cargamos la velocidad
+			disparo.setVelocidad(Integer.toString(disparoEnemigo.getVelocidad().getX()));
+			disparo.setVelocidad(Integer.toString(disparoEnemigo.getVelocidad().getY()));
+			// ancho y alto
+			disparo.setTamanio(Integer.toString(disparoEnemigo.getAncho()));
+			disparo.setTamanio(Integer.toString(disparoEnemigo.getAlto()));
+			// danio
+			disparo.setDanio(Integer.toString(disparoEnemigo.getDanio()));
+			
+			// lo agregamos al historial
+			this.historial.setObjeto(disparo);
+		}
 	}
 }

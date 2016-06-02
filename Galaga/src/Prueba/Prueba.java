@@ -1,6 +1,7 @@
 package Prueba;
 
 import java.util.Scanner;
+
 import Modelo.Juego;
 import Modelo.NaveJugador;
 

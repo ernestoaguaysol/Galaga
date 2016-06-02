@@ -8,6 +8,10 @@ public abstract class NaveEnemiga extends Nave{
 	Estado estado;
 	Punto posicioInicial;
 	LinkedList<Punto> kamikaze;
+	
+	public Estado getEstado() {
+		return estado;
+	}
 
 	 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	//sobrecargo el metodo para hacer funcionar los patrones de movimiento

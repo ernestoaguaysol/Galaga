@@ -15,6 +15,20 @@ public abstract class ObjetoMovil {
 		return this.posicion;
 	}
 	
+	//para XML
+	public Punto getVelocidad() {
+		return velocidad;
+	}
+	
+	// para XML
+	public int getAncho() {
+		return ancho;
+	}
+	
+	public int getAlto() {
+		return alto;
+	}
+	
 	public Rectangulo getSuperficie() {
 		this.superficie = new Rectangulo(posicion, new Punto(posicion.getX() + (ancho), posicion.getY() + (alto)));
 		return this.superficie; 

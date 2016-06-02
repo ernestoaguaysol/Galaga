@@ -1,5 +1,0 @@
-package Enum;
-
-public enum TiposDeObjetos {
-	ESTRELLAFUGAZ,ASTEROIDE,METEORITO,MUNICION,CAMPOENERGIA;
-}
