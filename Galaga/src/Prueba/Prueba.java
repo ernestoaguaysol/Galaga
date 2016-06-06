@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import Modelo.Juego;
 import Modelo.NaveJugador;
+import Persistencia.GalagaXML;
 
 public class Prueba {
 
@@ -21,6 +22,7 @@ public class Prueba {
 			System.out.println("1. Usar la Nave Jugador");
 			System.out.println("2. Realizar mas iteraciones");
 			System.out.println("3. Salir/Terminar");
+			System.out.println("4. Guardar");
 			System.out.print("Ingrese su opcion: ");
 			int opcionUsuario = Integer.parseInt(extraer().next());
 			if (opcionUsuario == 1) {
@@ -32,6 +34,18 @@ public class Prueba {
 				
 			}
 			if (opcionUsuario == 3) {
+				entrar = false;
+			}
+			if (opcionUsuario == 4) {
+				System.out.println("Insertar nombre:");
+				String nombreDeArchivo = extraer().next();
+				juego.cargarHistorialJuego();
+				try {
+					GalagaXML.escribirXML(nombreDeArchivo, juego.historial());
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				entrar = false;
 			}
 			juego.imprimir();

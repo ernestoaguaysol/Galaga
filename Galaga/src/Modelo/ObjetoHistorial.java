@@ -3,6 +3,7 @@ package Modelo;
 import java.util.ArrayList;
 
 public class ObjetoHistorial {
+	private String tipo;
 	private String nombre;
 	private ArrayList<String> posicion;
 	private ArrayList<String> tamanio;
@@ -15,6 +16,16 @@ public class ObjetoHistorial {
 	public ObjetoHistorial() {
 		//
 		this.posicion = new ArrayList<>();
+		this.tamanio = new ArrayList<>();
+		this.velocidad = new ArrayList<>();
+	}
+	
+	public String getTipo() {
+		return tipo;
+	}
+	
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 
 	public String getNombre() {

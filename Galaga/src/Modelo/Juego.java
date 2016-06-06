@@ -550,8 +550,9 @@ public class Juego {
 		
 		//creamos un nuevo para nave jugador objetoHistorial
 		ObjetoHistorial jugador = new ObjetoHistorial();
+		jugador.setTipo("nave jugador");
 		// cargamos el nombre
-		jugador.setNombre("NaveJugador");
+		jugador.setNombre("nave jugador");
 		// cargamos la energia del jugador de entero a string
 		jugador.setEnergia(Integer.toString(this.naveJugador.getEnergia()));
 		// cargamos las vidas
@@ -575,8 +576,18 @@ public class Juego {
 		for (NaveEnemiga naveEnemiga : navesEnemigas) {
 			// creamos un objetoHoistorial para nave enemiga
 			ObjetoHistorial enemigo = new ObjetoHistorial();
+			// cargamos el tipo
+			enemigo.setTipo("nave enemiga");
 			// cargamos el nombre
-			enemigo.setNombre("NaveEnemiga");
+			if (naveEnemiga.getClass().equals(Demoledor.class)) {				
+				enemigo.setNombre("demoledor");
+			}else if (naveEnemiga.getClass().equals(Destructor.class)) {
+				enemigo.setNombre("destructor");				
+			}else if (naveEnemiga.getClass().equals(Depredador.class)) {
+				enemigo.setNombre("depredador");				
+			}else if (naveEnemiga.getClass().equals(Exterminador.class)) {
+				enemigo.setNombre("exterminador");				
+			}
 			// cargamos la energia del enemigo de entero a string
 			enemigo.setEnergia(Integer.toString(naveEnemiga.getEnergia()));
 			// cargamos la posicion
@@ -600,8 +611,16 @@ public class Juego {
 		for (ObjetoEspacial objetoEspacial : objetosEspaciales) {
 			// creamos un objetoHoistorial para el objeto espacial
 			ObjetoHistorial objetoEsp = new ObjetoHistorial();
+			// cargamos el tipo
+			objetoEsp.setTipo("objeto espacial");
 			// cargamos el nombre
-			objetoEsp.setNombre("ObjetoEspacial");
+			if (objetoEspacial.getClass().equals(Meteorito.class)) {				
+				objetoEsp.setNombre("meteorito");
+			}else if (objetoEspacial.getClass().equals(Asteroide.class)) {
+				objetoEsp.setNombre("asteroide");				
+			}else if (objetoEspacial.getClass().equals(EstrellaFugaz.class)) {
+				objetoEsp.setNombre("estrella fugaz");				
+			}
 			// cargamos la posicion
 			objetoEsp.setPosicion(Integer.toString(objetoEspacial.getPosicion().getX()));
 			objetoEsp.setPosicion(Integer.toString(objetoEspacial.getPosicion().getY()));
@@ -664,5 +683,10 @@ public class Juego {
 			// lo agregamos al historial
 			this.historial.setObjeto(disparo);
 		}
+	}
+
+	public Historial historial() {
+		// TODO Auto-generated method stub
+		return this.historial;
 	}
 }
