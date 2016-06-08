@@ -237,7 +237,7 @@ public class Juego {
 		//recorremos la lista de naves enemigas
 		for (NaveEnemiga naveEnemiga : navesEnemigas) {
 			//si la nave tiene estado kamikaze
-			if (naveEnemiga.estado.equals(Estado.KAMIKAZE)) {
+			if (naveEnemiga.getEstado().equals(Estado.KAMIKAZE)) {
 				// incrementamos contador
 				contadorDeKamikaze++;
 			}
@@ -643,8 +643,17 @@ public class Juego {
 		for (Disparo disparoJugador : disparosJugador) {
 			// creamos un objetoHoistorial para cada disparo
 			ObjetoHistorial disparo = new ObjetoHistorial();
+			// cargamos el tipo
+			disparo.setTipo("disparo jugador");
+			
 			// cargamos el nombre
-			disparo.setNombre("DisparoJugador");
+			if (disparoJugador.getClass().equals(Bomba.class)) {				
+				disparo.setNombre("bomba");
+			}else if (disparoJugador.getClass().equals(Laser.class)) {
+				disparo.setNombre("laser");				
+			}else if (disparoJugador.getClass().equals(Misil.class)) {
+				disparo.setNombre("misil");				
+			}
 			// cargamos la posicion
 			disparo.setPosicion(Integer.toString(disparoJugador.getPosicion().getX()));
 			disparo.setPosicion(Integer.toString(disparoJugador.getPosicion().getY()));
@@ -666,8 +675,17 @@ public class Juego {
 		for (Disparo disparoEnemigo : disparosEnemigos) {
 			// creamos un objetoHoistorial para cada disparo
 			ObjetoHistorial disparo = new ObjetoHistorial();
+			// cargamos el tipo
+			disparo.setTipo("disparo enemigo");
+						
 			// cargamos el nombre
-			disparo.setNombre("DisparoEnemigo");
+			if (disparoEnemigo.getClass().equals(Bomba.class)) {				
+				disparo.setNombre("bomba");
+			}else if (disparoEnemigo.getClass().equals(Laser.class)) {
+				disparo.setNombre("laser");				
+			}else if (disparoEnemigo.getClass().equals(Misil.class)) {
+				disparo.setNombre("misil");				
+			}
 			// cargamos la posicion
 			disparo.setPosicion(Integer.toString(disparoEnemigo.getPosicion().getX()));
 			disparo.setPosicion(Integer.toString(disparoEnemigo.getPosicion().getY()));

@@ -9,6 +9,7 @@ public abstract class ObjetoMovil {
 	protected int alto;
 	protected int danio;
 	private Rectangulo superficie;
+	
 
 	//
 	public Punto getPosicion(){
@@ -42,5 +43,9 @@ public abstract class ObjetoMovil {
 	
 	public int getDanio(){
 		return this.danio;
+	}
+	
+	public void setDanio(int danio) {
+		this.danio = danio;
 	}
 }

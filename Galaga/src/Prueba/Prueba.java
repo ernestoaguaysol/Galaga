@@ -1,10 +1,16 @@
 package Prueba;
 
+import java.io.File;
 import java.util.Scanner;
+
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import Modelo.Juego;
 import Modelo.NaveJugador;
 import Persistencia.GalagaXML;
+import Modelo.Historial;
+
 
 public class Prueba {
 
@@ -23,6 +29,7 @@ public class Prueba {
 			System.out.println("2. Realizar mas iteraciones");
 			System.out.println("3. Salir/Terminar");
 			System.out.println("4. Guardar");
+			System.out.println("5. Abrir");
 			System.out.print("Ingrese su opcion: ");
 			int opcionUsuario = Integer.parseInt(extraer().next());
 			if (opcionUsuario == 1) {
@@ -47,6 +54,29 @@ public class Prueba {
 					e.printStackTrace();
 				}
 				entrar = false;
+			}
+			if (opcionUsuario == 5) {
+				JFileChooser selectorDeArchivo = new JFileChooser();
+				FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos Galaga", "galaga");
+				selectorDeArchivo.setFileFilter(filtro);
+				int estado = selectorDeArchivo.showOpenDialog(null);
+				if (estado == JFileChooser.APPROVE_OPTION) {
+					File archivo_selecionado = selectorDeArchivo.getSelectedFile();
+					String ruta = archivo_selecionado.getAbsolutePath();
+					Historial nuevoHist = GalagaXML.leerXML(ruta);
+					if (nuevoHist != null) {
+						for (int i = 0; i < nuevoHist.tamanio(); i++) {
+							System.out.println(nuevoHist.getObjeto(i).getNombre());
+							if (nuevoHist.getObjeto(i).getTipo().equals("nave jugador")) {
+								System.out.println(nuevoHist.getObjeto(i).getVidas());
+							}
+						}
+					}
+					
+				}else{
+					entrar = false;
+					return;
+				}
 			}
 			juego.imprimir();
 		}

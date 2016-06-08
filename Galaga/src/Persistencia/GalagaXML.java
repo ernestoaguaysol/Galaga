@@ -29,33 +29,98 @@ public class GalagaXML {
 		}
 		// creamos un historial nuevo
 		Historial historialList = new Historial();
-		// leemos el xml
+		// leermos el document NODO RAIZ <historial>
 		Element historial = document.getDocumentElement();
-		//creamos la lista de nodosHijos de nodoHistorial
-		NodeList comando = historial.getChildNodes();
-		//recorremos la lista de comandos (nodosHijos)
-		for (int i = 0; i < comando.getLength(); i++) {
-			Node n = comando.item(i);
+		//leemos la lista de nodos Hijos(objeto) de Historial nodo
+		NodeList objeto = historial.getChildNodes();
+		//recorremos la lista de objeto (nodosHijos)
+		for (int i = 0; i < objeto.getLength(); i++) {
+			// nodo i
+			Node n = objeto.item(i);
 			if (n.getNodeType() == Node.ELEMENT_NODE) {
+				// creamos un objeto historial nuevo
+				ObjetoHistorial objetoHistorial = new ObjetoHistorial();
 				// casteamos de node a element
 				Element e = (Element) n;
-				//nombre del tag <nombre>
-				NodeList nombreComandoNodo = e.getElementsByTagName("nombre");
-				// creamos un objeto comando nuevo
-				ObjetoHistorial comandologo = new ObjetoHistorial();
-				// insertamos el nombre del nodelist a comando nombre
-				comandologo.setNombre(nombreComandoNodo.item(0).getTextContent());
-				// tag parametro a nodelist
-				NodeList parametrosComandoNodo = e.getElementsByTagName("parametro");
-				for (int j = 0; j < parametrosComandoNodo.getLength(); j++) {	
-					Node nodoParametro = parametrosComandoNodo.item(j);
-					if (nodoParametro.getNodeType() == Node.ELEMENT_NODE) {
-						// cargamos parametros al comando
-						comandologo.setDanio(parametrosComandoNodo.item(j).getTextContent());
+				//tag <tipo>
+				NodeList tipoObjetoNodo = e.getElementsByTagName("tipo");
+				// insertamos texto tipo
+				objetoHistorial.setTipo(tipoObjetoNodo.item(0).getTextContent());
+				//tag <nombre>
+				NodeList nombreObjetoNodo = e.getElementsByTagName("nombre");
+				// insertamos texto
+				objetoHistorial.setNombre(nombreObjetoNodo.item(0).getTextContent());
+				// tag <posicion>
+				NodeList posicionNodo = e.getElementsByTagName("posicion");
+				for (int j = 0; j < posicionNodo.getLength(); j++) {	
+					Node nodo = posicionNodo.item(j);
+					if (nodo.getNodeType() == Node.ELEMENT_NODE) {
+						// cargamos texto
+						objetoHistorial.setPosicion(posicionNodo.item(j).getTextContent());
 					}
 				}
-				// insertamos el comando al historial
-				historialList.setObjeto(comandologo);
+				// tag <velocidad>
+				NodeList velocidadNodo = e.getElementsByTagName("velocidad");
+				for (int j = 0; j < velocidadNodo.getLength(); j++) {	
+					Node nodo = velocidadNodo.item(j);
+					if (nodo.getNodeType() == Node.ELEMENT_NODE) {
+						// cargamos texto
+						objetoHistorial.setVelocidad(velocidadNodo.item(j).getTextContent());
+					}
+				}
+				// tag <tamanio>
+				NodeList tamanioNodo = e.getElementsByTagName("tamanio");
+				for (int j = 0; j < tamanioNodo.getLength(); j++) {	
+					Node nodo = tamanioNodo.item(j);
+					if (nodo.getNodeType() == Node.ELEMENT_NODE) {
+						// cargamos texto
+						objetoHistorial.setTamanio(tamanioNodo.item(j).getTextContent());
+					}
+				}
+				//------------------------------------------
+				//objetos individuales
+
+				// 	NAVE JUGADOR
+				if (objetoHistorial.getTipo().equals("nave jugador")) {
+					//tag <vida>
+					NodeList vidasNodo = e.getElementsByTagName("vidas");
+					// insertamos texto
+					objetoHistorial.setVidas(vidasNodo.item(0).getTextContent());					
+					//tag <energia>
+					NodeList energiaNodo = e.getElementsByTagName("energia");
+					// insertamos texto
+					objetoHistorial.setEnergia(energiaNodo.item(0).getTextContent());					
+				
+				}else if (objetoHistorial.getTipo().equals("nave enemiga")) {
+					//tag <estado>
+					NodeList estadoNodo = e.getElementsByTagName("estado");
+					// insertamos texto
+					objetoHistorial.setEstado(estadoNodo.item(0).getTextContent());					
+					//tag <energia>
+					NodeList energiaNodo = e.getElementsByTagName("energia");
+					// insertamos texto
+					objetoHistorial.setEnergia(energiaNodo.item(0).getTextContent());					
+					
+				}else if(objetoHistorial.getTipo().equals("objeto espacial")){
+					//tag <danio>
+					NodeList danioNodo = e.getElementsByTagName("danio");
+					// insertamos texto
+					objetoHistorial.setDanio(danioNodo.item(0).getTextContent());
+					
+				}else if(objetoHistorial.getTipo().equals("disparo jugador")){
+					//tag <danio>
+//					NodeList danioNodo = e.getElementsByTagName("danio");
+//					// insertamos texto
+//					objetoHistorial.setDanio(danioNodo.item(0).getTextContent());										
+				}else if(objetoHistorial.getTipo().equals("disparo enemigo")){
+					//tag <danio>
+					NodeList danioNodo = e.getElementsByTagName("danio");
+					// insertamos texto
+					objetoHistorial.setDanio(danioNodo.item(0).getTextContent());										
+				}
+				
+				// insertamos el objeto al historial
+				historialList.setObjeto(objetoHistorial);
 			}
 		}
 		return historialList;
@@ -182,8 +247,36 @@ public class GalagaXML {
                 	energiaNodo.appendChild(energiaTexto);
                 	// insertamos <energia> al nodo <objeto>
                 	objetoNodo.appendChild(energiaNodo);
-                	//
+                	
+                	// OBJETO ESPACIAL
                 }else if (historial.getObjeto(i).getTipo().equals("objeto espacial")) {
+                	
+                	//DAÑO
+                	// creamos un elemento para danio
+                	Element danioNodo = document.createElement("danio");
+                	// creamos texto
+                	Text danioTexto = document.createTextNode(historial.getObjeto(i).getDanio());                
+                	// insertamos texto
+                	danioNodo.appendChild(danioTexto);
+                	// insertamos <danio> al nodo <objeto>
+                	objetoNodo.appendChild(danioNodo);
+                	
+                	
+                	// DISPARO JUGADOR
+                }else if (historial.getObjeto(i).getTipo().equals("disparo jugador")) {
+                	
+                	//DAÑO
+                	// creamos un elemento para danio
+                	Element danioNodo = document.createElement("danio");
+                	// creamos texto
+                	Text danioTexto = document.createTextNode(historial.getObjeto(i).getDanio());                
+                	// insertamos texto
+                	danioNodo.appendChild(danioTexto);
+                	// insertamos <danio> al nodo <objeto>
+                	objetoNodo.appendChild(danioNodo);
+                
+                // DISPARO ENEMIGO
+                }else if (historial.getObjeto(i).getTipo().equals("disparo enemigo")) {
                 	
                 	//DAÑO
                 	// creamos un elemento para danio
