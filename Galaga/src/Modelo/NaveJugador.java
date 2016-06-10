@@ -30,24 +30,32 @@ public class NaveJugador extends Nave{
 	//--------------------------------------------------//
 	//metodos para mover izq, der, arriba, abajo, detener
 	public void moverDerecha() {
-		velocidad.setX(2);
+		velocidad.setX(1);
 	}
 	
 	public void moverIzquierda() {
-		velocidad.setX(-2);	
+		velocidad.setX(-1);	
 	}
 	
 	public void moverArriba() {
-		velocidad.setY(2);
+		velocidad.setY(1);
 	}
 	
 	public void moverAbajo() {
-		velocidad.setY(-2);		
+		velocidad.setY(-1);		
 	}
 	
 	public void detener() {
 		this.velocidad.setX(0);
 		this.velocidad.setY(0);
+	}
+	
+	public void detenerVertical() {
+		this.velocidad.setY(0);
+	}
+	
+	public void detenerHorizontal() {
+		this.velocidad.setX(0);
 	}
 	
 	//-------------------------------------------------//

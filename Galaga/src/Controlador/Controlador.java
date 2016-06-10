@@ -67,8 +67,28 @@ public class Controlador implements KeyListener {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
+		// 
+		int numeroTecla = e.getKeyCode();
 		
+		if (numeroTecla == KeyEvent.VK_LEFT) {
+			
+			this.juego.getNaveJugador().detenerHorizontal();
+		}
+
+		if (numeroTecla == KeyEvent.VK_RIGHT) {
+			
+			this.juego.getNaveJugador().detenerHorizontal();
+		}
+		
+		if (numeroTecla == KeyEvent.VK_UP) {
+			
+			this.juego.getNaveJugador().detenerVertical();
+		}
+		
+		if (numeroTecla == KeyEvent.VK_DOWN) {
+			
+			this.juego.getNaveJugador().detenerVertical();
+		}
 	}
 
 	@Override

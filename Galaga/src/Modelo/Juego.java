@@ -1,10 +1,14 @@
 package Modelo;
 
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Observable;
 import java.util.Random;
 import Modelo.NaveJugador;
 
-public class Juego {
+
+
+public class Juego extends Observable{
 	//posicion inicial para el jugador
 	private final int posInicialX = 239;
 	private final int posInicialY = 15;
@@ -17,7 +21,7 @@ public class Juego {
 	private LinkedList<ObjetoEspacial> objetosEspaciales;
 	private LinkedList<Disparo> disparosEnemigos;
 	private LinkedList<Disparo> disparosJugador;
-	
+	private LinkedList<NaveEnemiga> navesNuevas;
 	//
 	private int puntaje = 0;
 	
@@ -79,8 +83,23 @@ public class Juego {
 	
 	//el bucle principal del juego
 	public void jugar() {
-		// si el jugador tiene vidas
-		if (this.naveJugador.getVidas() > 0) {
+//		// si el jugador tiene vidas
+//		if (this.naveJugador.getVidas() > 0) {
+		
+		
+		while (true)
+		{
+			
+			// freno timer y obtengo tiempo transcurrido
+			
+			// arrancar timer de nuevo
+			
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			// si el estado del jugador está en cero 
 			if (this.naveJugador.getEnergia() <= 0) {
 				// seteamos la posicion del jugador a la pocicion inicial
@@ -126,10 +145,10 @@ public class Juego {
 //			this.imprimir();
 			}//FIN FOR
 			
-		}else { // si no tiene vidas
-			System.out.println("GAME OVER");
-			return;
-		}
+		}//else { // si no tiene vidas
+//			System.out.println("GAME OVER");
+//			return;
+//		}
 		
 	}
 	
@@ -707,4 +726,14 @@ public class Juego {
 		// TODO Auto-generated method stub
 		return this.historial;
 	}
+
+	public List<NaveEnemiga> obtenerNavesNuevas() {
+		// 
+		@SuppressWarnings("unchecked")
+		List<NaveEnemiga> nuevas = (List<NaveEnemiga>)this.navesNuevas.clone();
+		this.navesEnemigas.addAll(this.navesNuevas);
+		this.navesNuevas.clear();
+		return nuevas;
+	}
+	
 }

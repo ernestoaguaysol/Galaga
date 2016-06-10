@@ -13,11 +13,14 @@ public class InicioGalaga {
 		} catch (Exception e) {
 			
 		}
-		VentanaPrincipal ventana = new VentanaPrincipal();
-		ventana.setVisible(true);	
 		Juego juego = new Juego();
+		VentanaPrincipal ventana = new VentanaPrincipal(juego);
+		ventana.setVisible(true);	
 		Controlador controlador = new Controlador(juego);
 		ventana.addKeyListener(controlador);
+		
+		juego.cargar();
+		juego.jugar();
 	}
 
 }
