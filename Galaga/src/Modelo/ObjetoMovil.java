@@ -1,7 +1,8 @@
 package Modelo;
 
+import java.util.Observable;
 
-public abstract class ObjetoMovil {
+public abstract class ObjetoMovil extends Observable{
 	//posicion, velocidad, y superficie de todos los objetos
 	protected Punto posicion;
 	protected Punto velocidad;
@@ -39,6 +40,8 @@ public abstract class ObjetoMovil {
 	public void mover() {
 		this.posicion.setX(this.posicion.getX()+this.velocidad.getX());
 		this.posicion.setY(this.posicion.getY()+this.velocidad.getY());
+		this.setChanged();
+		this.notifyObservers();
 	}
 	
 	public int getDanio(){
