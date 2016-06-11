@@ -155,12 +155,11 @@ public class Juego extends Observable{
 		//movemos todas las naves enemigas
 		for (NaveEnemiga n : navesEnemigas) {
 			
-			//+++++++++++++++ cheque0 si la nave tiene estado KAMIKASE tiene otro patron asignado
+			//+++++++++++++++ chequeo si la nave tiene estado KAMIKASE tiene otro patron asignado
 			if (n.estado.equals(Estado.KAMIKAZE)){
 				//sobreescribo el metodo mover de la clase naveEnemiga para poder recibir la posicion del jugador
 				n.mover(this.naveJugador.posicion);
-			}
-			else{//si no es kamikaze muevo normalmente
+			}else{//si no es kamikaze muevo normalmente
 				n.mover();
 			}
 			
