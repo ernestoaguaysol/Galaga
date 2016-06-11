@@ -23,11 +23,11 @@ public class VistaJugador implements Observer{
 		// nave
 		lblNave = new JLabel();
 		lblNave.setBounds(n.getPosicion().getX(),512-n.getPosicion().getY(), 32, 32);
-		URL pathGalaga = this.getClass().getResource("Imagenes/Galaga_ship.png");
+		URL pathGalaga = this.getClass().getResource("Imagenes/Galaga_ship32.png");
 		imagenNave = new ImageIcon(pathGalaga);
-		Icon iconoNave = new ImageIcon(imagenNave.getImage().getScaledInstance(lblNave.getWidth(), lblNave.getHeight(), Image.SCALE_DEFAULT));
-		lblNave.setIcon(iconoNave);
-		lblNave.repaint();
+//		Icon iconoNave = new ImageIcon(imagenNave.getImage().getScaledInstance(lblNave.getWidth(), lblNave.getHeight(), Image.SCALE_DEFAULT));
+		lblNave.setIcon(imagenNave);
+//		lblNave.repaint();
 		
 		// vidas
 		JLabel lblVida = new JLabel();

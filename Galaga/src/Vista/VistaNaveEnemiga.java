@@ -17,8 +17,8 @@ public class VistaNaveEnemiga implements Observer {
 	public VistaNaveEnemiga(int x,int y) {
 		// nave
 		lblNaveEnemiga = new JLabel();
-		lblNaveEnemiga.setBounds(x,512-y, 32, 32);
-		URL pathGalaga = this.getClass().getResource("Imagenes/Galaga_Flagship2.png");
+		lblNaveEnemiga.setBounds(x,y-512, 32, 32);
+		URL pathGalaga = this.getClass().getResource("Imagenes/Galaga_Flagship32.png");
 		ImageIcon imagenNave = new ImageIcon(pathGalaga);
 		Icon iconoNave = new ImageIcon(imagenNave.getImage().getScaledInstance(lblNaveEnemiga.getWidth(), lblNaveEnemiga.getHeight(), Image.SCALE_DEFAULT));
 		lblNaveEnemiga.setIcon(iconoNave);

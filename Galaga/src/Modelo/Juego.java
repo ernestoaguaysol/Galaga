@@ -141,16 +141,9 @@ public class Juego extends Observable{
 					this.decidirObjetoEspacial();					
 				}
 				
-				
-//			System.out.println("Iteracion: "+i);
-//			this.imprimir();
-			}//FIN FOR
+			}
 			
-		}//else { // si no tiene vidas
-//			System.out.println("GAME OVER");
-//			return;
-//		}
-		
+		}
 	}
 	
 	//movemos todos los objetos moviles
