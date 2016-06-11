@@ -13,9 +13,21 @@ public abstract class NaveEnemiga extends Nave{
 		return estado;
 	}
 
+	public void setEstado(Estado estado) {
+		this.estado = estado;
+	}
+	
+	public Punto getPosicioInicial() {
+		return posicioInicial;
+	}
+	
+	public void setPosicioInicial(Punto posicioInicial) {
+		this.posicioInicial = posicioInicial;
+	}
+
 	 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	//sobrecargo el metodo para hacer funcionar los patrones de movimiento
-	public void mover(Punto jugador) {
+//	public void mover(Punto jugador) {
 		
 //		System.out.println("entre en mover sobrecargado");
 //		//si la lista no esta creada...la creo....sino no
@@ -29,9 +41,9 @@ public abstract class NaveEnemiga extends Nave{
 //		}
 		
 		
-		if (this.estado.equals(Estado.KAMIKAZE)) {
-			KamikaseAlgoritmo.mover(jugador,this);
-		}
+//		if (this.estado.equals(Estado.KAMIKAZE)) {
+//			KamikaseAlgoritmo.mover(jugador,this);
+//		}
 		
 		
 //		//si la lista no esta vacia
@@ -63,7 +75,7 @@ public abstract class NaveEnemiga extends Nave{
 //			//this.mover();
 //		}
 //		
-	}
+//	}
 //	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //	
 //	

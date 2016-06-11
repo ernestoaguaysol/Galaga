@@ -1,10 +1,10 @@
 package Vista;
 
-import java.awt.Image;
+//import java.awt.Image;
 import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
-import javax.swing.Icon;
+//import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import Modelo.NaveEnemiga;
@@ -14,15 +14,16 @@ public class VistaNaveEnemiga implements Observer {
 	JLabel lblNaveEnemiga;
 	
 	
-	public VistaNaveEnemiga(int x,int y) {
+	public VistaNaveEnemiga() {
 		// nave
 		lblNaveEnemiga = new JLabel();
-		lblNaveEnemiga.setBounds(x,y-512, 32, 32);
+//		lblNaveEnemiga.setBounds(x,y-512, 32, 32);
 		URL pathGalaga = this.getClass().getResource("Imagenes/Galaga_Flagship32.png");
 		ImageIcon imagenNave = new ImageIcon(pathGalaga);
-		Icon iconoNave = new ImageIcon(imagenNave.getImage().getScaledInstance(lblNaveEnemiga.getWidth(), lblNaveEnemiga.getHeight(), Image.SCALE_DEFAULT));
-		lblNaveEnemiga.setIcon(iconoNave);
-		lblNaveEnemiga.repaint();
+//		Icon iconoNave = new ImageIcon(imagenNave.getImage().getScaledInstance(lblNaveEnemiga.getWidth(), lblNaveEnemiga.getHeight(), Image.SCALE_DEFAULT));
+		lblNaveEnemiga.setIcon(imagenNave);
+//		lblNaveEnemiga.repaint();
+		
 		
 	}
 	
@@ -30,7 +31,7 @@ public class VistaNaveEnemiga implements Observer {
 	public void update(Observable o, Object arg1) {
 		// 
 		NaveEnemiga n = (NaveEnemiga)o;
-		lblNaveEnemiga.setBounds(n.getPosicion().getX(), 512-n.getPosicion().getY(), n.getAncho(), n.getAlto());
+		lblNaveEnemiga.setBounds(n.getPosicion().getX(), 512-n.getPosicion().getY()-n.getAlto(), n.getAncho(), n.getAlto());
 		
 	}
 	

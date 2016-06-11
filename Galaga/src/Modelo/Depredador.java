@@ -7,6 +7,7 @@ public class Depredador extends NaveEnemiga {
 		estado = Estado.PASIVO;
 		//posicion al iniciar
 		this.posicion = posicion;
+		this.posicioInicial = posicion;
 		//velocidad del enemigo
 		this.velocidad = velocidad;
 		//energia

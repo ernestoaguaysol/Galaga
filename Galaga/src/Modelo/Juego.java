@@ -156,10 +156,15 @@ public class Juego extends Observable{
 		for (NaveEnemiga n : navesEnemigas) {
 			
 			//+++++++++++++++ chequeo si la nave tiene estado KAMIKASE tiene otro patron asignado
-			if (n.estado.equals(Estado.KAMIKAZE)){
-				//sobreescribo el metodo mover de la clase naveEnemiga para poder recibir la posicion del jugador
-				n.mover(this.naveJugador.posicion);
-			}else{//si no es kamikaze muevo normalmente
+			if (n.getEstado().equals(Estado.KAMIKAZE)){
+//				//sobreescribo el metodo mover de la clase naveEnemiga para poder recibir la posicion del jugador
+//				n.mover(this.naveJugador.posicion);
+				KamikaseAlgoritmo.moverKamikaze(this.naveJugador.getPosicion(), n);
+				n.mover();
+			}else if(n.getEstado().equals(Estado.VOLVIENDO)){//si el estado es volviendo
+				KamikaseAlgoritmo.moverVolviendo(n);
+				n.mover();
+			}else {
 				n.mover();
 			}
 			
@@ -261,7 +266,7 @@ public class Juego extends Observable{
 				// cambiamos el estato de algunas de las naves aleatorio 
 				this.navesEnemigas.get(aleatorio.nextInt(navesEnemigas.size())).estado = Estado.KAMIKAZE;
 			}
-		}else if (contadorDeKamikaze < 3) {// si hay menos de 3 kamikaze
+		}else if (contadorDeKamikaze < 1) {// si hay menos de 1 kamikaze generamos uno aleatorio
 			// recorremos las naves enemigas
 			for (NaveEnemiga naveEnemiga : navesEnemigas) {
 				//si la nave enemiga no tiene estado kamikaze

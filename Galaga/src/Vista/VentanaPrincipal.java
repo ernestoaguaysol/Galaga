@@ -73,7 +73,7 @@ public class VentanaPrincipal extends JFrame implements Observer{
 		
 		this.juego = juego;
 		// instanciamos la vista jugador 
-		this.vistaJugador = new VistaJugador(this.juego.getNaveJugador());
+		this.vistaJugador = new VistaJugador();
 		// al juego le pasamos un observador
 		this.juego.getNaveJugador().addObserver(vistaJugador);
 		// instanciamos un escenario (espacio)
@@ -93,7 +93,7 @@ public class VentanaPrincipal extends JFrame implements Observer{
 		LinkedList<NaveEnemiga> navesEnemigas = juego.getNavesEnemigas();
 		
 		for (NaveEnemiga n : navesEnemigas) {
-			VistaNaveEnemiga vista = new VistaNaveEnemiga(n.getPosicion().getX(),n.getPosicion().getY());
+			VistaNaveEnemiga vista = new VistaNaveEnemiga();
 			n.addObserver(vista);
 			this.espacio.getLblEspacio().add(vista.getLblNaveEnemiga());
 		}

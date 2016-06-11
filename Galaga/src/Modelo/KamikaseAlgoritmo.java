@@ -88,31 +88,52 @@ public class KamikaseAlgoritmo {
 //				    
 //				  }
 //				 }
-			public static void mover(Punto posicionJugador, NaveEnemiga enemigo) {
+			public static void moverKamikaze(Punto posicionJugador, NaveEnemiga enemigo) {
 				//
 				
-				
-				
-				if (posicionJugador.getX() < enemigo.getPosicion().getX()) {
-					
-					enemigo.getVelocidad().setX(-1);
-					enemigo.getVelocidad().setY(-1);
-					
-					enemigo.mover();
-					
+				if (enemigo.getPosicion().getY() > 60) {
+										
+					if (posicionJugador.getX() < enemigo.getPosicion().getX()) {
+						
+						enemigo.getVelocidad().setX(-1);
+						enemigo.getVelocidad().setY(-1);
+					}else {
+						
+						enemigo.getVelocidad().setX(1);
+						enemigo.getVelocidad().setY(-1);
+					}
 				}else {
+					enemigo.setEstado(Estado.VOLVIENDO);
+				}
+				
+			}
+
+			public static void moverVolviendo(NaveEnemiga n) {
+				// 
+				
+				if (!n.getPosicioInicial().equals(n.getPosicion())) {
 					
-					enemigo.getVelocidad().setX(1);
-					enemigo.getVelocidad().setY(-1);
-					
-					enemigo.mover();
-					
+					if (n.getPosicioInicial().getY() > n.getPosicion().getY()) {
+						n.getVelocidad().setX(0);
+						n.getVelocidad().setY(-1);
+					}else {
+						if (n.getPosicioInicial().getX() == n.getPosicion().getX()) {					
+							n.getVelocidad().setX(0);
+							n.getVelocidad().setY(1);
+						}else if (n.getPosicioInicial().getX() < n.getPosicion().getX()) {
+							n.getVelocidad().setX(-1);
+							n.getVelocidad().setY(-1);
+						}else {
+							
+							n.getVelocidad().setX(1);
+							n.getVelocidad().setY(-1);
+						}
+					}
+				}else {
+					n.setEstado(Estado.PASIVO);
 				}
 				
 			}
 	
 	
-	
-	
-
 }

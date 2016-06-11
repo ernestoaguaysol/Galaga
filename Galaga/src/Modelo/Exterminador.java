@@ -7,6 +7,7 @@ public class Exterminador extends NaveEnemiga{
 		estado = Estado.PASIVO;
 		//posicion al iniciar
 		this.posicion = posicion;
+		this.posicioInicial = posicion;
 		this.ancho = ancho;
 		this.alto = alto;
 		
