@@ -3,6 +3,8 @@ package Modelo;
 //import java.util.LinkedList;
 
 public class KamikaseAlgoritmo {
+	private static int diferencia;
+	
 	//esta clase sera utilizada para calcular los distintos patrones de movimientos...
 		//por el momento tiene el kamikaze que hace que la nave apunte directamente al jugador...
 		//se implmentara luego el zigzag, elipse.etc....
@@ -98,7 +100,7 @@ public class KamikaseAlgoritmo {
 						enemigo.getVelocidad().setX(-1);
 						enemigo.getVelocidad().setY(-1);
 					}else {
-						
+						System.out.println("entre else");
 						enemigo.getVelocidad().setX(1);
 						enemigo.getVelocidad().setY(-1);
 					}
@@ -110,7 +112,7 @@ public class KamikaseAlgoritmo {
 
 			public static void moverVolviendo(NaveEnemiga n) {
 				// 
-				
+				System.out.println("entre en volviendo");
 				if (!n.getPosicioInicial().equals(n.getPosicion())) {
 					
 					if (n.getPosicioInicial().getY() > n.getPosicion().getY()) {
@@ -135,5 +137,27 @@ public class KamikaseAlgoritmo {
 				
 			}
 	
-	
+			public static void moverPasivo(NaveEnemiga n) {
+				
+				int lejania=n.getPosicion().getX()-n.posicioInicial.getX();
+				
+				if(lejania < 50 ){
+					n.getVelocidad().setX(1);
+					System.out.println("sumo  1     " + diferencia);
+				}else{	diferencia=1;}
+
+				if (diferencia==1){
+						if(n.getPosicion().getX()>0){
+							n.getVelocidad().setX(-1);
+						}else{diferencia=0;}
+				}
+			}
+				
+				
+							
+				
+					
+				
+				
+			
 }

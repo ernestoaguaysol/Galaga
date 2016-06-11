@@ -1,13 +1,11 @@
 package Modelo;
 
-import java.util.LinkedList;
-
 public abstract class NaveEnemiga extends Nave{
 	//solo las naves enemigas tienen estados
 	//pueden ser...
 	Estado estado;
 	Punto posicioInicial;
-	LinkedList<Punto> kamikaze;
+	//LinkedList<Punto> kamikaze;
 	
 	public Estado getEstado() {
 		return estado;

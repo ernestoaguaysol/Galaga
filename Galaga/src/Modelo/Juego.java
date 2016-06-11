@@ -96,7 +96,7 @@ public class Juego extends Observable{
 			// arrancar timer de nuevo
 			
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(100); //1000
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -113,7 +113,7 @@ public class Juego extends Observable{
 			}
 			
 			//diez iteraciones
-			for (int i = 0; i < 16; i++) {
+			for (int i = 0; i < 5; i++) {//tenia 16 y puse uno para probar+++++++++
 				
 				//la pantala es el espacio 512x512
 				this.chequearFueraDePantalla();
@@ -165,7 +165,10 @@ public class Juego extends Observable{
 				KamikaseAlgoritmo.moverVolviendo(n);
 				n.mover();
 			}else {
+				KamikaseAlgoritmo.moverPasivo(n);
 				n.mover();
+				
+
 			}
 			
 		}

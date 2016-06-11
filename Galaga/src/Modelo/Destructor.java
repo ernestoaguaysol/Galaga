@@ -7,7 +7,7 @@ public class Destructor extends NaveEnemiga{
 		estado = Estado.PASIVO;
 		//posicion al iniciar
 		this.posicion = posicion;
-		this.posicioInicial = posicion;
+		this.posicioInicial = new Punto(posicion.getX(),posicion.getY());//tomaba siempre los valores de la posicion en un instante dado lo cambie para que genere un punto y concerve su posicion original de creacion.
 		
 		this.ancho = ancho;
 		this.alto = alto;
