@@ -77,7 +77,8 @@ public class Juego extends Observable{
 		this.navesEnemigas.add(des6);
 		this.navesEnemigas.add(des7);
 		//		
-		
+		this.setChanged();
+		this.notifyObservers();
 	}
 	
 	
@@ -87,7 +88,7 @@ public class Juego extends Observable{
 //		if (this.naveJugador.getVidas() > 0) {
 		
 		
-		while (true)
+		while (this.naveJugador.getVidas() > 0 || this.navesEnemigas.size() == 0)
 		{
 			
 			// freno timer y obtengo tiempo transcurrido
@@ -95,7 +96,7 @@ public class Juego extends Observable{
 			// arrancar timer de nuevo
 			
 			try {
-				Thread.sleep(100);
+				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -727,13 +728,17 @@ public class Juego extends Observable{
 		return this.historial;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<NaveEnemiga> obtenerNavesNuevas() {
 		// 
-		@SuppressWarnings("unchecked")
 		List<NaveEnemiga> nuevas = (List<NaveEnemiga>)this.navesNuevas.clone();
 		this.navesEnemigas.addAll(this.navesNuevas);
 		this.navesNuevas.clear();
 		return nuevas;
+	}
+	
+	public LinkedList<NaveEnemiga> getNavesEnemigas() {
+		return navesEnemigas;
 	}
 	
 }

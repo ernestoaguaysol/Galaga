@@ -2,6 +2,7 @@ package Vista;
 
 import java.awt.Image;
 import java.net.URL;
+//import java.util.ArrayList;
 //import java.awt.Color;
 import java.util.Observable;
 import java.util.Observer;
@@ -14,7 +15,6 @@ import Modelo.NaveJugador;;
 public class VistaJugador implements Observer{
 	//
 	private JLabel lblNave;
-	private JLabel lblCantVidas;
 	private ImageIcon imagenNave;
 	private ImageIcon imagenVidas;
 	
@@ -30,12 +30,12 @@ public class VistaJugador implements Observer{
 		lblNave.repaint();
 		
 		// vidas
-		lblCantVidas = new JLabel();
-		lblCantVidas.setBounds(8, 555, 16, 16);
+		JLabel lblVida = new JLabel();
+		lblVida.setBounds(5, 512, 16, 16);
 		imagenVidas = new ImageIcon(pathGalaga);//
-		Icon iconoVidas = new ImageIcon(imagenVidas.getImage().getScaledInstance(lblCantVidas.getWidth(), lblCantVidas.getHeight(), Image.SCALE_DEFAULT));
-		lblCantVidas.setIcon(iconoVidas);
-		lblCantVidas.repaint();
+		Icon iconoVidas = new ImageIcon(imagenVidas.getImage().getScaledInstance(lblVida.getWidth(), lblVida.getHeight(), Image.SCALE_DEFAULT));
+		lblVida.setIcon(iconoVidas);
+		lblVida.repaint();
 		
 	}
 
@@ -52,7 +52,7 @@ public class VistaJugador implements Observer{
 		return this.lblNave;
 	}
 	
-	public JLabel getLblCantVidas() {
-		return lblCantVidas;
-	}
+//	public JLabel getLblCantVidas(int i) {
+//		return lblCantVidas.get(i);
+//	}
 }
