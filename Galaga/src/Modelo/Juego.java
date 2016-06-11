@@ -164,6 +164,7 @@ public class Juego extends Observable{
 			}else if(n.getEstado().equals(Estado.VOLVIENDO)){//si el estado es volviendo
 				KamikaseAlgoritmo.moverVolviendo(n);
 				n.mover();
+				
 			}else {
 				n.mover();
 			}
