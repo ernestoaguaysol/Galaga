@@ -10,6 +10,9 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+
+import Modelo.Demoledor;
+import Modelo.Destructor;
 import Modelo.Juego;
 import Modelo.NaveEnemiga;
 
@@ -93,9 +96,18 @@ public class VentanaPrincipal extends JFrame implements Observer{
 		LinkedList<NaveEnemiga> navesEnemigas = juego.getNavesEnemigas();
 		
 		for (NaveEnemiga n : navesEnemigas) {
-			VistaNaveEnemiga vista = new VistaNaveEnemiga();
-			n.addObserver(vista);
-			this.espacio.getLblEspacio().add(vista.getLblNaveEnemiga());
+			
+			if (n.getClass().equals(Demoledor.class)) {
+				VistaNaveEnemiga vDem = new VistaNaveEnemiga();
+				n.addObserver(vDem);
+				this.espacio.getLblEspacio().add(vDem.getLblDemoledor());
+			}
+			if (n.getClass().equals(Destructor.class)) {
+				VistaNaveEnemiga vDes = new VistaNaveEnemiga();
+				n.addObserver(vDes);
+				this.espacio.getLblEspacio().add(vDes.getLblDestructor());
+			}
+			
 		}
 		
 	}

@@ -1,29 +1,43 @@
 package Vista;
 
-//import java.awt.Image;
 import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
-//import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import Modelo.NaveEnemiga;
 
 public class VistaNaveEnemiga implements Observer {
 
-	JLabel lblNaveEnemiga;
-	
+	JLabel lblDestructor;
+	JLabel lblDemoledor;
+	JLabel lblDepredador;
+	JLabel lblExterminador;
 	
 	public VistaNaveEnemiga() {
-		// nave
-		lblNaveEnemiga = new JLabel();
-//		lblNaveEnemiga.setBounds(x,y-512, 32, 32);
-		URL pathGalaga = this.getClass().getResource("Imagenes/Galaga_Flagship32.png");
-		ImageIcon imagenNave = new ImageIcon(pathGalaga);
-//		Icon iconoNave = new ImageIcon(imagenNave.getImage().getScaledInstance(lblNaveEnemiga.getWidth(), lblNaveEnemiga.getHeight(), Image.SCALE_DEFAULT));
-		lblNaveEnemiga.setIcon(imagenNave);
-//		lblNaveEnemiga.repaint();
+		// DESTRUCTOR
+		lblDestructor = new JLabel();
+		URL pathDestructor = this.getClass().getResource("Imagenes/Destructor.png");
+		ImageIcon imagenDestructor = new ImageIcon(pathDestructor);
+		lblDestructor.setIcon(imagenDestructor);
 		
+		// DEMOLEDOR
+		lblDemoledor = new JLabel();
+		URL pathDemoledor = this.getClass().getResource("Imagenes/Demoledor.png");
+		ImageIcon imagenDemoledor = new ImageIcon(pathDemoledor);
+		lblDemoledor.setIcon(imagenDemoledor);
+		
+		// DEPREDADOR
+		lblDepredador = new JLabel();
+		URL pathDepredador = this.getClass().getResource("Imagenes/Depredador.png");
+		ImageIcon imagenDepredador = new ImageIcon(pathDepredador);
+		lblDepredador.setIcon(imagenDepredador);
+		
+		// EXTERMINADOR
+		lblExterminador = new JLabel();
+		URL pathExterminador = this.getClass().getResource("Imagenes/Exterminador.png");
+		ImageIcon imagenExterminador = new ImageIcon(pathExterminador);
+		lblExterminador.setIcon(imagenExterminador);
 		
 	}
 	
@@ -31,12 +45,29 @@ public class VistaNaveEnemiga implements Observer {
 	public void update(Observable o, Object arg1) {
 		// 
 		NaveEnemiga n = (NaveEnemiga)o;
-		lblNaveEnemiga.setBounds(n.getPosicion().getX(), 512-n.getPosicion().getY()-n.getAlto(), n.getAncho(), n.getAlto());
-		
+		lblDestructor.setBounds(n.getPosicion().getX(), 512-n.getPosicion().getY()-n.getAlto(), n.getAncho(), n.getAlto());
+		lblDemoledor.setBounds(n.getPosicion().getX(), 512-n.getPosicion().getY()-n.getAlto(), n.getAncho(), n.getAlto());
+		lblDepredador.setBounds(n.getPosicion().getX(), 512-n.getPosicion().getY()-n.getAlto(), n.getAncho(), n.getAlto());
+		lblExterminador.setBounds(n.getPosicion().getX(), 512-n.getPosicion().getY()-n.getAlto(), n.getAncho(), n.getAlto());
 	}
 	
-	public JLabel getLblNaveEnemiga() {
-		return lblNaveEnemiga;
+	public JLabel getLblDestructor() {
+		return lblDestructor;
+	}
+
+	public JLabel getLblDemoledor() {
+		// 
+		return lblDemoledor;
+	}
+	
+	public JLabel getLblDepredador() {
+		// 
+		return lblDepredador;
+	}
+	
+	public JLabel getLblExterminador() {
+		// 
+		return lblExterminador;
 	}
 	
 }
