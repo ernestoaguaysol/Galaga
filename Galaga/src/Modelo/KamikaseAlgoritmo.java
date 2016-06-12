@@ -2,7 +2,7 @@ package Modelo;
 
 //import java.util.LinkedList;
 
-public class KamikazeAlgoritmo {
+public class KamikaseAlgoritmo {
 	private static int diferencia;
 	
 	//esta clase sera utilizada para calcular los distintos patrones de movimientos...

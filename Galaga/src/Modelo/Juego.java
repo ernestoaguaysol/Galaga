@@ -159,13 +159,13 @@ public class Juego extends Observable{
 			if (n.getEstado().equals(Estado.KAMIKAZE)){
 //				//sobreescribo el metodo mover de la clase naveEnemiga para poder recibir la posicion del jugador
 //				n.mover(this.naveJugador.posicion);
-				KamikazeAlgoritmo.moverKamikaze(this.naveJugador.getPosicion(), n);
+				KamikaseAlgoritmo.moverKamikaze(this.naveJugador.getPosicion(), n);
 				n.mover();
 			}else if(n.getEstado().equals(Estado.VOLVIENDO)){//si el estado es volviendo
-				KamikazeAlgoritmo.moverVolviendo(n);
+				KamikaseAlgoritmo.moverVolviendo(n);
 				n.mover();
 			}else {
-				KamikazeAlgoritmo.moverPasivo(n);
+				KamikaseAlgoritmo.moverPasivo(n);
 				n.mover();
 				
 
