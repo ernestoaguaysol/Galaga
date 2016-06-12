@@ -10,12 +10,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-
-import Modelo.Demoledor;
-import Modelo.Destructor;
-import Modelo.Juego;
-import Modelo.NaveEnemiga;
-
+import Modelo.*;
 import javax.swing.JMenuItem;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
@@ -93,7 +88,7 @@ public class VentanaPrincipal extends JFrame implements Observer{
 	public void update(Observable o, Object arg) {
 		//
 		Juego juego = (Juego)o;
-		LinkedList<NaveEnemiga> navesEnemigas = juego.getNavesEnemigas();
+		LinkedList<NaveEnemiga> navesEnemigas = juego.obtenerNavesNuevas();
 		
 		for (NaveEnemiga n : navesEnemigas) {
 			
@@ -107,8 +102,30 @@ public class VentanaPrincipal extends JFrame implements Observer{
 				n.addObserver(vDes);
 				this.espacio.getLblEspacio().add(vDes.getLblDestructor());
 			}
+			if (n.getClass().equals(Depredador.class)) {
+				VistaNaveEnemiga vDep = new VistaNaveEnemiga();
+				n.addObserver(vDep);
+				this.espacio.getLblEspacio().add(vDep.getLblDepredador());
+			}
+			if (n.getClass().equals(Exterminador.class)) {
+				VistaNaveEnemiga vExt = new VistaNaveEnemiga();
+				n.addObserver(vExt);
+				this.espacio.getLblEspacio().add(vExt.getLblExterminador());
+			}
 			
 		}
+		
+		LinkedList<Disparo> disparosJugador = juego.getDisparosJugadorNuevos();
+		
+		for (Disparo disparo : disparosJugador) {
+			if (disparo.getClass().equals(Laser.class)){
+				VistaDisparo vDis = new VistaDisparo();
+				disparo.addObserver(vDis);
+				this.espacio.getLblEspacio().add(vDis.getLblLaserJugador());
+			}
+		}
+		
+		
 		
 	}
 

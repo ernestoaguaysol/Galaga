@@ -1,7 +1,6 @@
 package Modelo;
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Observable;
 import java.util.Random;
 import Modelo.NaveJugador;
@@ -18,10 +17,11 @@ public class Juego extends Observable{
 	private Espacio espacio;
 	private NaveJugador naveJugador;
 	private LinkedList<NaveEnemiga> navesEnemigas;
+	private LinkedList<NaveEnemiga> navesNuevas;
 	private LinkedList<ObjetoEspacial> objetosEspaciales;
 	private LinkedList<Disparo> disparosEnemigos;
 	private LinkedList<Disparo> disparosJugador;
-	private LinkedList<NaveEnemiga> navesNuevas;
+	private LinkedList<Disparo> disparosJugadorNuevos;
 	//
 	private int puntaje = 0;
 	
@@ -38,7 +38,9 @@ public class Juego extends Observable{
 		this.objetosEspaciales = new LinkedList<>();
 		this.disparosEnemigos = new LinkedList<>();
 		this.disparosJugador = new LinkedList<>();
+		this.disparosJugadorNuevos = new LinkedList<>();
 		this.navesEnemigas = new LinkedList<>();
+		this.navesNuevas = new LinkedList<>();
 		this.historial = new Historial();
 	}
 	
@@ -61,21 +63,21 @@ public class Juego extends Observable{
 		Destructor des6 = new Destructor(new Punto(367, 383), new Punto(0, 0), 32,32);
 		Destructor des7 = new Destructor(new Punto(431, 383), new Punto(0, 0), 32,32);
 		//los añadimos a la lista de naves enemigas
-		this.navesEnemigas.add(dem1);
-		this.navesEnemigas.add(dem2);
-		this.navesEnemigas.add(dem3);
-		this.navesEnemigas.add(dem4);
-		this.navesEnemigas.add(dem5);
-		this.navesEnemigas.add(dem6);
-		this.navesEnemigas.add(dem7);
+		this.navesNuevas.add(dem1);
+		this.navesNuevas.add(dem2);
+		this.navesNuevas.add(dem3);
+		this.navesNuevas.add(dem4);
+		this.navesNuevas.add(dem5);
+		this.navesNuevas.add(dem6);
+		this.navesNuevas.add(dem7);
 		///
-		this.navesEnemigas.add(des1);
-		this.navesEnemigas.add(des2);
-		this.navesEnemigas.add(des3);
-		this.navesEnemigas.add(des4);
-		this.navesEnemigas.add(des5);
-		this.navesEnemigas.add(des6);
-		this.navesEnemigas.add(des7);
+		this.navesNuevas.add(des1);
+		this.navesNuevas.add(des2);
+		this.navesNuevas.add(des3);
+		this.navesNuevas.add(des4);
+		this.navesNuevas.add(des5);
+		this.navesNuevas.add(des6);
+		this.navesNuevas.add(des7);
 		//		
 		this.setChanged();
 		this.notifyObservers();
@@ -552,8 +554,10 @@ public class Juego extends Observable{
 	// metodo para disparar 
 	public void dispararJugador()
 	{
-		// agregamos un nuevo disparo a la lista de disparo jugador
-		this.disparosJugador.add(this.naveJugador.disparar());
+		// agregamos un nuevo disparo a la lista de disparo jugador nuevos
+		this.disparosJugadorNuevos.add(this.naveJugador.disparar());
+		this.setChanged();
+		this.notifyObservers();
 	}
 
 	// metodo para llamar al jugador
@@ -728,17 +732,22 @@ public class Juego extends Observable{
 		return this.historial;
 	}
 
+
 	@SuppressWarnings("unchecked")
-	public List<NaveEnemiga> obtenerNavesNuevas() {
+	public LinkedList<NaveEnemiga> obtenerNavesNuevas() {
 		// 
-		List<NaveEnemiga> nuevas = (List<NaveEnemiga>)this.navesNuevas.clone();
+		LinkedList<NaveEnemiga> nuevas = (LinkedList<NaveEnemiga>) this.navesNuevas.clone();
 		this.navesEnemigas.addAll(this.navesNuevas);
 		this.navesNuevas.clear();
 		return nuevas;
 	}
 	
-	public LinkedList<NaveEnemiga> getNavesEnemigas() {
-		return navesEnemigas;
+	@SuppressWarnings("unchecked")
+	public LinkedList<Disparo> getDisparosJugadorNuevos() {
+		LinkedList<Disparo> nuevos = (LinkedList<Disparo>) this.disparosJugadorNuevos.clone();
+		this.disparosJugador.addAll(this.disparosJugadorNuevos);
+		this.disparosJugadorNuevos.clear();
+		return nuevos;
 	}
 	
 }

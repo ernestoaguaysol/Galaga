@@ -84,9 +84,9 @@ public class NaveJugador extends Nave{
 		int anchoDisparo = 16;
 		// posicion inicial del disparo  
 		Punto nuevaPosicion = new Punto(this.posicion.getX()+(this.ancho/2)-(anchoDisparo/2), this.posicion.getY()+this.alto);
-		// tira misil sube en velocidad posY 
-		Misil misil = new Misil(nuevaPosicion, new Punto(0, 1), anchoDisparo, altoDisparo);
-		// retornamos el misil
-		return misil;
+		// tira laser por defecto sube en velocidad posY 
+		Laser laser = new Laser(nuevaPosicion, new Punto(0, 1), anchoDisparo, altoDisparo);
+		// retornamos
+		return laser;
 	}
 }
