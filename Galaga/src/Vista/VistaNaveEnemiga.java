@@ -23,6 +23,8 @@ public class VistaNaveEnemiga implements Observer {
 //		Icon iconoNave = new ImageIcon(imagenNave.getImage().getScaledInstance(lblNaveEnemiga.getWidth(), lblNaveEnemiga.getHeight(), Image.SCALE_DEFAULT));
 		lblNaveEnemiga.setIcon(imagenNave);
 //		lblNaveEnemiga.repaint();
+		
+		
 	}
 	
 	@Override
