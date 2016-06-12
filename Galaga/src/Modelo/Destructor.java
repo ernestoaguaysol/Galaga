@@ -19,13 +19,13 @@ public class Destructor extends NaveEnemiga{
 
 	@Override
 	public Disparo disparar() {
-		int anchoLaser = 16;
-		int altoLaser = 16;
+		int anchoDisparo = 16;
+		int altoDisparo = 16;
 		// posicion del disparo
-		Punto nuevaPosicion = new Punto(this.posicion.getX()+(ancho/2)-(anchoLaser/2), this.posicion.getY()-altoLaser);
-		// depredador tira laser baja en velocidad -posY 
-		Laser laser = new Laser(nuevaPosicion, new Punto(0, -1), anchoLaser, altoLaser);
-		// retornamos laser
+		Punto nuevaPosicion = new Punto(this.posicion.getX()+(ancho/2)-(anchoDisparo/2), this.posicion.getY()-altoDisparo);
+		// tira laser baja en velocidad -posY 
+		Laser laser = new Laser(nuevaPosicion, new Punto(0, -1), anchoDisparo, altoDisparo);
+		// retornamos
 		return laser;
 	}
 	

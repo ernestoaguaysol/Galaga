@@ -19,7 +19,9 @@ public class Juego extends Observable{
 	private LinkedList<NaveEnemiga> navesEnemigas;
 	private LinkedList<NaveEnemiga> navesNuevas;
 	private LinkedList<ObjetoEspacial> objetosEspaciales;
+	private LinkedList<ObjetoEspacial> objetosEspacialesNuevos;
 	private LinkedList<Disparo> disparosEnemigos;
+	private LinkedList<Disparo> disparosEnemigosNuevos;
 	private LinkedList<Disparo> disparosJugador;
 	private LinkedList<Disparo> disparosJugadorNuevos;
 	//
@@ -36,7 +38,9 @@ public class Juego extends Observable{
 		this.espacio = new Espacio(512,512);
 		this.naveJugador = new NaveJugador(new Punto(this.posInicialX, this.posInicialY),32,32);
 		this.objetosEspaciales = new LinkedList<>();
+		this.objetosEspacialesNuevos = new LinkedList<>();
 		this.disparosEnemigos = new LinkedList<>();
+		this.disparosEnemigosNuevos = new LinkedList<>();
 		this.disparosJugador = new LinkedList<>();
 		this.disparosJugadorNuevos = new LinkedList<>();
 		this.navesEnemigas = new LinkedList<>();
@@ -126,13 +130,15 @@ public class Juego extends Observable{
 				//chequeamos si hay colicionas
 				this.chequearColisiones();		
 				
-				// cada 16 iteracionas va a decidir
+				// cada x iteracionas va a decidir
 				if (0 == i) {
 					// recorremos cada nave enemiga
 					for (NaveEnemiga naveEnemiga : navesEnemigas) {				
 						// decidimos si la nave enemiga dispara
 						if (this.decidirDisparo()) {
-							this.disparosEnemigos.add(naveEnemiga.disparar());
+							this.disparosEnemigosNuevos.add(naveEnemiga.disparar());
+							this.setChanged();
+							this.notifyObservers();
 						}
 					}
 				
@@ -224,9 +230,11 @@ public class Juego extends Observable{
 			// aleatorio de 0 a 20
 			if (this.aleatorio.nextInt(20) == 0) {
 				// creamos una nueva estrella fugaz
-				EstrellaFugaz nuevaEstrellaFugaz = new EstrellaFugaz(new Punto(0, 300), new Punto(0, 0), 16,16);
+				EstrellaFugaz nuevaEstrellaFugaz = new EstrellaFugaz(new Punto(0, 300), new Punto(0, 0), 32,32);
 				// agregamos la nueva estrella a la lista de objetos espaciales
-				this.objetosEspaciales.add(nuevaEstrellaFugaz);
+				this.objetosEspacialesNuevos.add(nuevaEstrellaFugaz);
+				setChanged();
+				notifyObservers();
 			}
 		}
 		
@@ -234,9 +242,11 @@ public class Juego extends Observable{
 			// aleatorio de 0 a 20 ¿si es 0?
 			if (this.aleatorio.nextInt(20) == 0) {
 				// creamos un nuevo meteorito
-				Meteorito nuevoMeteorito = new Meteorito(new Punto(0, 303), new Punto(1, -1),16,16,25);
+				Meteorito nuevoMeteorito = new Meteorito(new Punto(0, 303), new Punto(1, -1),32,32,25);
 				// agregamos el nuevo meteorito a la lista de objetos espaciales
-				this.objetosEspaciales.add(nuevoMeteorito);
+				this.objetosEspacialesNuevos.add(nuevoMeteorito);
+				setChanged();
+				notifyObservers();	
 			}
 		}
 		
@@ -244,9 +254,11 @@ public class Juego extends Observable{
 			// aleatorio de 0 a 20 ¿si es 0?
 			if (this.aleatorio.nextInt(20) == 0) {
 				// creamos un nuevo asteroide
-				Asteroide nuevoAsteroide = new Asteroide(new Punto(479, 271),new Punto(-1, -1),16,16,40);
+				Asteroide nuevoAsteroide = new Asteroide(new Punto(479, 271),new Punto(-1, -1),32,32,40);
 				// agregamos el nuevo asteroide la a la lista de objetos espaciales
-				this.objetosEspaciales.add(nuevoAsteroide);
+				this.objetosEspacialesNuevos.add(nuevoAsteroide);
+				setChanged();
+				notifyObservers();
 			}
 		}
 		
@@ -747,6 +759,22 @@ public class Juego extends Observable{
 		LinkedList<Disparo> nuevos = (LinkedList<Disparo>) this.disparosJugadorNuevos.clone();
 		this.disparosJugador.addAll(this.disparosJugadorNuevos);
 		this.disparosJugadorNuevos.clear();
+		return nuevos;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public LinkedList<Disparo> getDisparosEnemigosNuevos() {
+		LinkedList<Disparo> nuevos = (LinkedList<Disparo>) this.disparosEnemigosNuevos.clone();
+		this.disparosEnemigos.addAll(this.disparosEnemigosNuevos);
+		this.disparosEnemigosNuevos.clear();
+		return nuevos;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public LinkedList<ObjetoEspacial> getObjetosEspacialesNuevos() {
+		LinkedList<ObjetoEspacial> nuevos = (LinkedList<ObjetoEspacial>) this.objetosEspacialesNuevos.clone();
+		this.objetosEspaciales.addAll(this.objetosEspacialesNuevos);
+		this.objetosEspacialesNuevos.clear();
 		return nuevos;
 	}
 	

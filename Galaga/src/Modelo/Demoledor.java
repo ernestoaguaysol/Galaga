@@ -19,15 +19,15 @@ public class Demoledor extends NaveEnemiga {
 
 	@Override
 	public Disparo disparar() {
-		// ancho de bomba
-		int anchoBomba = 16;
-		// alto de bomba
-		int altoBomba = 16;
+		// ancho de disparo
+		int anchoDisparo = 16;
+		// alto de disparo
+		int altoDisparo = 16;
 		// posicion del disparo  
-		Punto nuevaPosicion = new Punto((this.posicion.getX()+(this.ancho/2))-(anchoBomba/2), this.posicion.getY()-altoBomba);
-		// tira bomba baja en velocidad -y
-		Bomba bomba = new Bomba(nuevaPosicion, new Punto(0, -1), anchoBomba, altoBomba);
-		// retornamos bomba
-		return bomba;
+		Punto nuevaPosicion = new Punto((this.posicion.getX()+(this.ancho/2))-(anchoDisparo/2), this.posicion.getY()-altoDisparo);
+		// tira disparo baja en velocidad -y
+		Misil misil = new Misil(nuevaPosicion, new Punto(0, -1), anchoDisparo, altoDisparo);
+		// retornamos disparo
+		return misil;
 	}
 }

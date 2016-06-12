@@ -123,9 +123,47 @@ public class VentanaPrincipal extends JFrame implements Observer{
 				disparo.addObserver(vDis);
 				this.espacio.getLblEspacio().add(vDis.getLblLaserJugador());
 			}
+			if (disparo.getClass().equals(Misil.class)){
+				VistaDisparo vMis = new VistaDisparo();
+				disparo.addObserver(vMis);
+				this.espacio.getLblEspacio().add(vMis.getLblMisilJugador());
+			}
 		}
 		
+		LinkedList<Disparo> disparosEnemigos = juego.getDisparosEnemigosNuevos();
 		
+		for (Disparo disparo : disparosEnemigos) {
+			if (disparo.getClass().equals(Laser.class)){
+				VistaDisparo vDis = new VistaDisparo();
+				disparo.addObserver(vDis);
+				this.espacio.getLblEspacio().add(vDis.getLblLaserEnemigo());
+			}
+			if (disparo.getClass().equals(Misil.class)){
+				VistaDisparo vMis = new VistaDisparo();
+				disparo.addObserver(vMis);
+				this.espacio.getLblEspacio().add(vMis.getLblMisilEnemigo());
+			}
+		}
+		
+		LinkedList<ObjetoEspacial> objetosEspaciales = juego.getObjetosEspacialesNuevos();
+		
+		for (ObjetoEspacial objetoEspacial : objetosEspaciales) {
+			if (objetoEspacial.getClass().equals(EstrellaFugaz.class)){
+				VistaObjetoEspacial oEst = new VistaObjetoEspacial();
+				objetoEspacial.addObserver(oEst);
+				this.espacio.getLblEspacio().add(oEst.getLblEstrellaFugaz());
+			}
+			if (objetoEspacial.getClass().equals(Meteorito.class)){
+				VistaObjetoEspacial oMet = new VistaObjetoEspacial();
+				objetoEspacial.addObserver(oMet);
+				this.espacio.getLblEspacio().add(oMet.getLblMeteorito());
+			}
+			if (objetoEspacial.getClass().equals(Asteroide.class)){
+				VistaObjetoEspacial oAst = new VistaObjetoEspacial();
+				objetoEspacial.addObserver(oAst);
+				this.espacio.getLblEspacio().add(oAst.getLblAsteroide());
+			}
+		}
 		
 	}
 
