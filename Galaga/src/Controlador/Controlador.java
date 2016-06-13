@@ -16,7 +16,6 @@ public class Controlador implements KeyListener {
 	
 	@Override
 	public void keyPressed(KeyEvent e) {
-		System.out.println("----------");
 		int numeroTecla = e.getKeyCode();
 		
 		if (numeroTecla == KeyEvent.VK_I) {
@@ -29,7 +28,6 @@ public class Controlador implements KeyListener {
 			this.juego.jugar();
 			this.juego.imprimir();
 			
-			System.out.println("cargado");
 		}
 		
 		
@@ -41,25 +39,21 @@ public class Controlador implements KeyListener {
 		if (numeroTecla == KeyEvent.VK_LEFT) {
 			
 			this.juego.getNaveJugador().moverIzquierda();
-			System.out.println("mover izquierda");
 		}
 
 		if (numeroTecla == KeyEvent.VK_RIGHT) {
 			
 			this.juego.getNaveJugador().moverDerecha();
-			System.out.println("mover derecha");
 		}
 		
 		if (numeroTecla == KeyEvent.VK_UP) {
 			
 			this.juego.getNaveJugador().moverArriba();
-			System.out.println("mover arriba");
 		}
 		
 		if (numeroTecla == KeyEvent.VK_DOWN) {
 			
 			this.juego.getNaveJugador().moverAbajo();
-			System.out.println("mover abajo");
 		}
 		
 		

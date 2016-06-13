@@ -137,12 +137,14 @@ public class VentanaPrincipal extends JFrame implements Observer{
 				VistaDisparo vLas = new VistaDisparo();
 				vLas.setDisparo(disparo);
 				disparo.addObserver(vLas);
+				this.vistaDisparos.add(vLas);
 				this.espacio.getLblEspacio().add(vLas.getLblLaserJugador());
 			}
 			if (disparo.getClass().equals(Misil.class)){
 				VistaDisparo vMis = new VistaDisparo();
 				vMis.setDisparo(disparo);
 				disparo.addObserver(vMis);
+				this.vistaDisparos.add(vMis);
 				this.espacio.getLblEspacio().add(vMis.getLblMisilJugador());
 			}
 		}
@@ -154,12 +156,14 @@ public class VentanaPrincipal extends JFrame implements Observer{
 				VistaDisparo vLas = new VistaDisparo();
 				vLas.setDisparo(disparo);
 				disparo.addObserver(vLas);
+				this.vistaDisparos.add(vLas);
 				this.espacio.getLblEspacio().add(vLas.getLblLaserEnemigo());
 			}
 			if (disparo.getClass().equals(Misil.class)){
 				VistaDisparo vMis = new VistaDisparo();
 				vMis.setDisparo(disparo);
 				disparo.addObserver(vMis);
+				this.vistaDisparos.add(vMis);
 				this.espacio.getLblEspacio().add(vMis.getLblMisilEnemigo());
 			}
 		}
@@ -214,8 +218,7 @@ public class VentanaPrincipal extends JFrame implements Observer{
 						this.espacio.getLblEspacio().remove(vistaObjetoEspacial.getLblAsteroide());
 					}
 				}
-			}
-			if (objetoMovilMuerto.getClass().equals(Demoledor.class)) {
+			}else if (objetoMovilMuerto.getClass().equals(Demoledor.class)) {
 				for (VistaNaveEnemiga vistaNaveEnemiga : vistaNavesEnemigas) {
 					if (objetoMovilMuerto.equals(vistaNaveEnemiga.getNaveEnemiga())) {
 						objetoMovilMuerto.deleteObserver(vistaNaveEnemiga);
@@ -241,6 +244,22 @@ public class VentanaPrincipal extends JFrame implements Observer{
 					if (objetoMovilMuerto.equals(vistaNaveEnemiga.getNaveEnemiga())) {
 						objetoMovilMuerto.deleteObserver(vistaNaveEnemiga);
 						this.espacio.getLblEspacio().remove(vistaNaveEnemiga.getLblExterminador());
+					}
+				}
+			}else if (objetoMovilMuerto.getClass().equals(Laser.class)) {
+				for (VistaDisparo vistaDisparo : vistaDisparos) {
+					if (objetoMovilMuerto.equals(vistaDisparo.getDisparo())) {
+						objetoMovilMuerto.deleteObserver(vistaDisparo);
+						this.espacio.getLblEspacio().remove(vistaDisparo.getLblLaserEnemigo());
+						this.espacio.getLblEspacio().remove(vistaDisparo.getLblLaserJugador());
+					}
+				}
+			}else if (objetoMovilMuerto.getClass().equals(Misil.class)) {
+				for (VistaDisparo vistaDisparo : vistaDisparos) {
+					if (objetoMovilMuerto.equals(vistaDisparo.getDisparo())) {
+						objetoMovilMuerto.deleteObserver(vistaDisparo);
+						this.espacio.getLblEspacio().remove(vistaDisparo.getLblMisilEnemigo());
+						this.espacio.getLblEspacio().remove(vistaDisparo.getLblMisilJugador());
 					}
 				}
 			}
