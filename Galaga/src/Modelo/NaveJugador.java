@@ -30,19 +30,19 @@ public class NaveJugador extends Nave{
 	//--------------------------------------------------//
 	//metodos para mover izq, der, arriba, abajo, detener
 	public void moverDerecha() {
-		velocidad.setX(1);
+		velocidad.setX(2);
 	}
 	
 	public void moverIzquierda() {
-		velocidad.setX(-1);	
+		velocidad.setX(-2);	
 	}
 	
 	public void moverArriba() {
-		velocidad.setY(1);
+		velocidad.setY(2);
 	}
 	
 	public void moverAbajo() {
-		velocidad.setY(-1);		
+		velocidad.setY(-2);		
 	}
 	
 	public void detener() {
@@ -85,7 +85,7 @@ public class NaveJugador extends Nave{
 		// posicion inicial del disparo  
 		Punto nuevaPosicion = new Punto(this.posicion.getX()+(this.ancho/2)-(anchoDisparo/2), this.posicion.getY()+this.alto);
 		// tira laser por defecto sube en velocidad posY 
-		Laser laser = new Laser(nuevaPosicion, new Punto(0, 1), anchoDisparo, altoDisparo);
+		Laser laser = new Laser(nuevaPosicion, new Punto(0, 3), anchoDisparo, altoDisparo);
 		// retornamos
 		return laser;
 	}
