@@ -559,7 +559,6 @@ public class Juego extends Observable{
 			
 		}
 		
-//		System.out.println(this.objetosMuertos.size()+"--------------------------------------------------------------------");
 		this.setChanged();
 		this.notifyObservers();
 		

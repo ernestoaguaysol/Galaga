@@ -85,6 +85,11 @@ public class VentanaPrincipal extends JFrame implements Observer{
 		this.espacio = new VistaEscenario();
 		// agregamos label al escenario
 		this.espacio.getLblEspacio().add(this.vistaJugador.getLblNaveJugador());
+		this.espacio.getLblEspacio().add(this.vistaJugador.getEnergia());
+		this.espacio.getLblEspacio().add(this.vistaJugador.getLblVidas().get(0));
+		this.espacio.getLblEspacio().add(this.vistaJugador.getLblVidas().get(1));
+		this.espacio.getLblEspacio().add(this.vistaJugador.getLblVidas().get(2));
+		
 		// agregamos espacio a ventana principal
 		panel.add(this.espacio.getLblEspacio());
 		
