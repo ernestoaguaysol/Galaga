@@ -100,7 +100,7 @@ public class KamikaseAlgoritmo {
 						enemigo.getVelocidad().setX(-1);
 						enemigo.getVelocidad().setY(-1);
 					}else {
-						System.out.println("entre else");
+//						System.out.println("entre else");
 						enemigo.getVelocidad().setX(1);
 						enemigo.getVelocidad().setY(-1);
 					}
@@ -112,7 +112,7 @@ public class KamikaseAlgoritmo {
 
 			public static void moverVolviendo(NaveEnemiga n) {
 				// 
-				System.out.println("entre en volviendo");
+//				System.out.println("entre en volviendo");
 				if (!n.getPosicioInicial().equals(n.getPosicion())) {
 					
 					if (n.getPosicioInicial().getY() > n.getPosicion().getY()) {
@@ -143,7 +143,7 @@ public class KamikaseAlgoritmo {
 				
 				if(lejania < 50 ){
 					n.getVelocidad().setX(1);
-					System.out.println("sumo  1     " + diferencia);
+//					System.out.println("sumo  1     " + diferencia);
 				}else{	diferencia=1;}
 
 				if (diferencia==1){

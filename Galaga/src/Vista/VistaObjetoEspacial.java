@@ -9,9 +9,10 @@ import Modelo.ObjetoEspacial;
 
 public class VistaObjetoEspacial implements Observer{
 
-	JLabel lblAsteroide;
-	JLabel lblEstrellaFugaz;
-	JLabel lblMeteorito;
+	private JLabel lblAsteroide;
+	private JLabel lblEstrellaFugaz;
+	private JLabel lblMeteorito;
+	private ObjetoEspacial objetoEspacial;
 	
 	public VistaObjetoEspacial() {
 		// asteroide
@@ -45,6 +46,14 @@ public class VistaObjetoEspacial implements Observer{
 	
 	public JLabel getLblAsteroide() {
 		return lblAsteroide;
+	}
+	
+	public ObjetoEspacial getObjetoEspacial() {
+		return objetoEspacial;
+	}
+	
+	public void setObjetoEspacial(ObjetoEspacial objetoEspacial) {
+		this.objetoEspacial = objetoEspacial;
 	}
 
 	public JLabel getLblEstrellaFugaz() {

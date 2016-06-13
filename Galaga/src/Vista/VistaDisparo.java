@@ -15,6 +15,8 @@ public class VistaDisparo implements Observer {
 	JLabel lblLaserEnemigo;
 	JLabel lblMisilEnemigo;
 	
+	Disparo disparo;
+	
 	public VistaDisparo() {
 		// laser jugador
 		lblLaserJugador = new JLabel();
@@ -69,6 +71,14 @@ public class VistaDisparo implements Observer {
 	
 	public JLabel getLblMisilEnemigo() {
 		return lblMisilEnemigo;
+	}
+	
+	public Disparo getDisparo() {
+		return disparo;
+	}
+	
+	public void setDisparo(Disparo disparo) {
+		this.disparo = disparo;
 	}
 	
 }

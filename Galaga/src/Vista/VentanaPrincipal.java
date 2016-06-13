@@ -24,6 +24,9 @@ public class VentanaPrincipal extends JFrame implements Observer{
 	private VistaEscenario espacio;
 	private VistaJugador vistaJugador;
 
+	private LinkedList<VistaObjetoEspacial> vistaObjetosEspaciales;
+	private LinkedList<VistaNaveEnemiga> vistaNavesEnemigas;
+	private LinkedList<VistaDisparo> vistaDisparos;
 	/**
 	 * ventana principal.
 	 */
@@ -69,6 +72,10 @@ public class VentanaPrincipal extends JFrame implements Observer{
 				
 		//----------------------------
 		
+		this.vistaObjetosEspaciales = new LinkedList<>();
+		this.vistaNavesEnemigas = new LinkedList<>();
+		this.vistaDisparos = new LinkedList<>();
+		
 		this.juego = juego;
 		// instanciamos la vista jugador 
 		this.vistaJugador = new VistaJugador();
@@ -94,22 +101,30 @@ public class VentanaPrincipal extends JFrame implements Observer{
 			
 			if (n.getClass().equals(Demoledor.class)) {
 				VistaNaveEnemiga vDem = new VistaNaveEnemiga();
+				vDem.setNaveEnemiga(n);
 				n.addObserver(vDem);
+				this.vistaNavesEnemigas.add(vDem);
 				this.espacio.getLblEspacio().add(vDem.getLblDemoledor());
 			}
 			if (n.getClass().equals(Destructor.class)) {
 				VistaNaveEnemiga vDes = new VistaNaveEnemiga();
+				vDes.setNaveEnemiga(n);
 				n.addObserver(vDes);
+				this.vistaNavesEnemigas.add(vDes);
 				this.espacio.getLblEspacio().add(vDes.getLblDestructor());
 			}
 			if (n.getClass().equals(Depredador.class)) {
 				VistaNaveEnemiga vDep = new VistaNaveEnemiga();
+				vDep.setNaveEnemiga(n);
 				n.addObserver(vDep);
+				this.vistaNavesEnemigas.add(vDep);
 				this.espacio.getLblEspacio().add(vDep.getLblDepredador());
 			}
 			if (n.getClass().equals(Exterminador.class)) {
 				VistaNaveEnemiga vExt = new VistaNaveEnemiga();
+				vExt.setNaveEnemiga(n);
 				n.addObserver(vExt);
+				this.vistaNavesEnemigas.add(vExt);
 				this.espacio.getLblEspacio().add(vExt.getLblExterminador());
 			}
 			
@@ -119,12 +134,14 @@ public class VentanaPrincipal extends JFrame implements Observer{
 		
 		for (Disparo disparo : disparosJugador) {
 			if (disparo.getClass().equals(Laser.class)){
-				VistaDisparo vDis = new VistaDisparo();
-				disparo.addObserver(vDis);
-				this.espacio.getLblEspacio().add(vDis.getLblLaserJugador());
+				VistaDisparo vLas = new VistaDisparo();
+				vLas.setDisparo(disparo);
+				disparo.addObserver(vLas);
+				this.espacio.getLblEspacio().add(vLas.getLblLaserJugador());
 			}
 			if (disparo.getClass().equals(Misil.class)){
 				VistaDisparo vMis = new VistaDisparo();
+				vMis.setDisparo(disparo);
 				disparo.addObserver(vMis);
 				this.espacio.getLblEspacio().add(vMis.getLblMisilJugador());
 			}
@@ -134,12 +151,14 @@ public class VentanaPrincipal extends JFrame implements Observer{
 		
 		for (Disparo disparo : disparosEnemigos) {
 			if (disparo.getClass().equals(Laser.class)){
-				VistaDisparo vDis = new VistaDisparo();
-				disparo.addObserver(vDis);
-				this.espacio.getLblEspacio().add(vDis.getLblLaserEnemigo());
+				VistaDisparo vLas = new VistaDisparo();
+				vLas.setDisparo(disparo);
+				disparo.addObserver(vLas);
+				this.espacio.getLblEspacio().add(vLas.getLblLaserEnemigo());
 			}
 			if (disparo.getClass().equals(Misil.class)){
 				VistaDisparo vMis = new VistaDisparo();
+				vMis.setDisparo(disparo);
 				disparo.addObserver(vMis);
 				this.espacio.getLblEspacio().add(vMis.getLblMisilEnemigo());
 			}
@@ -150,20 +169,83 @@ public class VentanaPrincipal extends JFrame implements Observer{
 		for (ObjetoEspacial objetoEspacial : objetosEspaciales) {
 			if (objetoEspacial.getClass().equals(EstrellaFugaz.class)){
 				VistaObjetoEspacial oEst = new VistaObjetoEspacial();
+				// agregamos el objeto a la clase
+				oEst.setObjetoEspacial(objetoEspacial);
 				objetoEspacial.addObserver(oEst);
-				this.espacio.getLblEspacio().add(oEst.getLblEstrellaFugaz());
+				this.vistaObjetosEspaciales.add(oEst);
+				this.espacio.getLblEspacio().add(oEst.getLblEstrellaFugaz(), objetoEspacial);
 			}
 			if (objetoEspacial.getClass().equals(Meteorito.class)){
 				VistaObjetoEspacial oMet = new VistaObjetoEspacial();
+				oMet.setObjetoEspacial(objetoEspacial);
 				objetoEspacial.addObserver(oMet);
+				this.vistaObjetosEspaciales.add(oMet);
 				this.espacio.getLblEspacio().add(oMet.getLblMeteorito());
 			}
 			if (objetoEspacial.getClass().equals(Asteroide.class)){
 				VistaObjetoEspacial oAst = new VistaObjetoEspacial();
+				oAst.setObjetoEspacial(objetoEspacial);
 				objetoEspacial.addObserver(oAst);
+				this.vistaObjetosEspaciales.add(oAst);
 				this.espacio.getLblEspacio().add(oAst.getLblAsteroide());
 			}
 		}
+		
+		LinkedList<ObjetoMovil> objetosMovilesMuertos = juego.getObjetosMovilesMuertos();
+		for (ObjetoMovil objetoMovilMuerto : objetosMovilesMuertos) {
+			if (objetoMovilMuerto.getClass().equals(EstrellaFugaz.class)) {
+				for (VistaObjetoEspacial vistaObjetoEspacial : vistaObjetosEspaciales) {
+					if (objetoMovilMuerto.equals(vistaObjetoEspacial.getObjetoEspacial())) {
+						objetoMovilMuerto.deleteObserver(vistaObjetoEspacial);
+						this.espacio.getLblEspacio().remove(vistaObjetoEspacial.getLblEstrellaFugaz());
+					}
+				}
+			}else if (objetoMovilMuerto.getClass().equals(Meteorito.class)) {
+				for (VistaObjetoEspacial vistaObjetoEspacial : vistaObjetosEspaciales) {
+					if (objetoMovilMuerto.equals(vistaObjetoEspacial.getObjetoEspacial())) {
+						objetoMovilMuerto.deleteObserver(vistaObjetoEspacial);
+						this.espacio.getLblEspacio().remove(vistaObjetoEspacial.getLblMeteorito());
+					}
+				}
+			}else if (objetoMovilMuerto.getClass().equals(Asteroide.class)) {
+				for (VistaObjetoEspacial vistaObjetoEspacial : vistaObjetosEspaciales) {
+					if (objetoMovilMuerto.equals(vistaObjetoEspacial.getObjetoEspacial())) {
+						objetoMovilMuerto.deleteObserver(vistaObjetoEspacial);
+						this.espacio.getLblEspacio().remove(vistaObjetoEspacial.getLblAsteroide());
+					}
+				}
+			}
+			if (objetoMovilMuerto.getClass().equals(Demoledor.class)) {
+				for (VistaNaveEnemiga vistaNaveEnemiga : vistaNavesEnemigas) {
+					if (objetoMovilMuerto.equals(vistaNaveEnemiga.getNaveEnemiga())) {
+						objetoMovilMuerto.deleteObserver(vistaNaveEnemiga);
+						this.espacio.getLblEspacio().remove(vistaNaveEnemiga.getLblDemoledor());
+					}
+				}
+			}else if (objetoMovilMuerto.getClass().equals(Depredador.class)) {
+				for (VistaNaveEnemiga vistaNaveEnemiga : vistaNavesEnemigas) {
+					if (objetoMovilMuerto.equals(vistaNaveEnemiga.getNaveEnemiga())) {
+						objetoMovilMuerto.deleteObserver(vistaNaveEnemiga);
+						this.espacio.getLblEspacio().remove(vistaNaveEnemiga.getLblDepredador());
+					}
+				}
+			}else if (objetoMovilMuerto.getClass().equals(Destructor.class)) {
+				for (VistaNaveEnemiga vistaNaveEnemiga : vistaNavesEnemigas) {
+					if (objetoMovilMuerto.equals(vistaNaveEnemiga.getNaveEnemiga())) {
+						objetoMovilMuerto.deleteObserver(vistaNaveEnemiga);
+						this.espacio.getLblEspacio().remove(vistaNaveEnemiga.getLblDestructor());
+					}
+				}
+			}else if (objetoMovilMuerto.getClass().equals(Exterminador.class)) {
+				for (VistaNaveEnemiga vistaNaveEnemiga : vistaNavesEnemigas) {
+					if (objetoMovilMuerto.equals(vistaNaveEnemiga.getNaveEnemiga())) {
+						objetoMovilMuerto.deleteObserver(vistaNaveEnemiga);
+						this.espacio.getLblEspacio().remove(vistaNaveEnemiga.getLblExterminador());
+					}
+				}
+			}
+		}
+		
 		
 	}
 

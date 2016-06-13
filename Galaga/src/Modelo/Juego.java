@@ -24,6 +24,7 @@ public class Juego extends Observable{
 	private LinkedList<Disparo> disparosEnemigosNuevos;
 	private LinkedList<Disparo> disparosJugador;
 	private LinkedList<Disparo> disparosJugadorNuevos;
+	private LinkedList<ObjetoMovil> objetosMuertos;
 	//
 	private int puntaje = 0;
 	
@@ -45,6 +46,7 @@ public class Juego extends Observable{
 		this.disparosJugadorNuevos = new LinkedList<>();
 		this.navesEnemigas = new LinkedList<>();
 		this.navesNuevas = new LinkedList<>();
+		this.objetosMuertos = new LinkedList<>();
 		this.historial = new Historial();
 	}
 	
@@ -102,7 +104,7 @@ public class Juego extends Observable{
 			// arrancar timer de nuevo
 			
 			try {
-				Thread.sleep(100); //1000
+				Thread.sleep(80); //1000
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -230,7 +232,7 @@ public class Juego extends Observable{
 			// aleatorio de 0 a 20
 			if (this.aleatorio.nextInt(20) == 0) {
 				// creamos una nueva estrella fugaz
-				EstrellaFugaz nuevaEstrellaFugaz = new EstrellaFugaz(new Punto(0, 300), new Punto(0, 0), 32,32);
+				EstrellaFugaz nuevaEstrellaFugaz = new EstrellaFugaz(new Punto(0, 250), new Punto(1, -1), 32,32);
 				// agregamos la nueva estrella a la lista de objetos espaciales
 				this.objetosEspacialesNuevos.add(nuevaEstrellaFugaz);
 				setChanged();
@@ -313,6 +315,7 @@ public class Juego extends Observable{
 			if (!this.espacio.estaDentroDeEspacio(this.navesEnemigas.get(i).getSuperficie())) {
 				//si la esquina max X es menor a cero o esquina min X es meyor al ancho-1 del espacio
 				if (this.navesEnemigas.get(i).getSuperficie().getEsquina_max().getX() < 0 || this.navesEnemigas.get(i).getSuperficie().getEsquina_min().getX() > this.espacio.getAncho()-1) {
+					this.objetosMuertos.add(this.navesEnemigas.get(i));
 					// eliminamos la nave
 					this.navesEnemigas.remove(i);
 					//
@@ -329,6 +332,7 @@ public class Juego extends Observable{
 		for (int i = 0; i < this.objetosEspaciales.size(); i++) {
 			//si está afuera del espacio
 			if (!this.espacio.estaDentroDeEspacio(this.objetosEspaciales.get(i).getSuperficie())) {
+				this.objetosMuertos.add(this.objetosEspaciales.get(i));
 				//lo eliminamos de la lista
 				this.objetosEspaciales.remove(i);
 				//
@@ -340,6 +344,7 @@ public class Juego extends Observable{
 		for (int i = 0; i < this.disparosEnemigos.size(); i++) {
 			//si está fuera del espacio
 			if (!this.espacio.estaDentroDeEspacio(this.disparosEnemigos.get(i).getSuperficie())) {
+				this.objetosMuertos.add(this.disparosEnemigos.get(i));
 				//lo eliminamos de la lista de disparos
 				this.disparosEnemigos.remove(i);
 				// 
@@ -351,12 +356,15 @@ public class Juego extends Observable{
 		for (int i = 0; i < this.disparosJugador.size(); i++) {
 			//si está fuera del espacio
 			if (!this.espacio.estaDentroDeEspacio(this.disparosJugador.get(i).getSuperficie())) {
+				this.objetosMuertos.add(this.disparosJugador.get(i));
 				//lo eliminamos del espacio
 				this.disparosJugador.remove(i);
 				//
 				i--;
 			}
 		}
+		this.setChanged();
+		this.notifyObservers();
 	}
 	
 	private void reubicarPosicion(ObjetoMovil objeto){
@@ -403,6 +411,7 @@ public class Juego extends Observable{
 					// descontamos 50% de energia de jugador
 					this.naveJugador.disminuirEnergia(50);					
 				}
+				this.objetosMuertos.add(navesEnemigas.get(i));
 				//eliminamos el enemigo
 				navesEnemigas.remove(i);
 				//retrocedemos un paso en i (ya que al remover
@@ -420,6 +429,8 @@ public class Juego extends Observable{
 					//descontamos energia segun el daño que cause el disparo
 					this.naveJugador.disminuirEnergia(disparosEnemigos.get(i).getDanio());					
 				}
+				// agregamos a objetos muertos
+				objetosMuertos.add(disparosEnemigos.get(i));
 				//eliminamos el disparo que impactó en la nave
 				disparosEnemigos.remove(i);
 				// retocedemos un paso en i
@@ -436,6 +447,8 @@ public class Juego extends Observable{
 					// le sumamos una vida al jugador
 					this.naveJugador.sumarVida();
 					System.out.println("Estrella Fugaz te ha regalado una vida");
+					// agregamos a objetos muertos
+					objetosMuertos.add(objetosEspaciales.get(i));
 					// eliminamos la estrella fugaz
 					this.objetosEspaciales.remove(i);
 					//retrocedemos un paso en i
@@ -448,6 +461,8 @@ public class Juego extends Observable{
 						// diminuir energia segun el daño que cause el objeto espacial 
 						this.naveJugador.disminuirEnergia(this.objetosEspaciales.get(i).getDanio());						
 					}
+					// agregamos a objetos muertos
+					objetosMuertos.add(objetosEspaciales.get(i));
 					// eliminemos el objeto espacial
 					this.objetosEspaciales.remove(i);
 					//retrocedemos un paso en i
@@ -466,11 +481,15 @@ public class Juego extends Observable{
 					this.navesEnemigas.get(i).disminuirEnergia(this.disparosJugador.get(j).getDanio());
 					// si la energia es menor o igual a cero
 					if (this.navesEnemigas.get(i).getEnergia() <= 0) {
+						// agregamos a objetos muertos
+						objetosMuertos.add(navesEnemigas.get(i));
 						// eliminamos la nave enemiga
 						this.navesEnemigas.remove(i);
 						// retrocedemos un paso en i
 						i--;
 					}
+					// agregamos a objetos muertos
+					objetosMuertos.add(disparosJugador.get(j));
 					// eliminamos el disparo jugador que impactó
 					this.disparosJugador.remove(j);
 					// retrocedemos un paso en j
@@ -487,10 +506,14 @@ public class Juego extends Observable{
 			for (int j = 0; j < this.disparosEnemigos.size(); j++) {
 				// si los disparos oponentes colicionan
 				if (this.disparosJugador.get(i).getSuperficie().colisiona(this.disparosEnemigos.get(j).getSuperficie())) {
+					// agregamos a objetos muertos
+					objetosMuertos.add(disparosJugador.get(i));
 					// removemos el disparo jugador
 					this.disparosJugador.remove(i);
 					// retrocedemos u n paso en i
 					i--;
+					// agregamos a objetos muertos
+					objetosMuertos.add(disparosEnemigos.get(j));
 					// removemos el disparo enemigo
 					this.disparosEnemigos.remove(j);
 					// retrocetemos en j;
@@ -514,10 +537,14 @@ public class Juego extends Observable{
 						this.naveJugador.sumarVida();
 						System.out.println("Estrella Fugaz te ha regalado una vida");
 					}
+					// agregamos a objetos muertos
+					objetosMuertos.add(objetosEspaciales.get(j));
 					// eliminamos la estrella fugaz
 					this.objetosEspaciales.remove(j);
 					//retrocedemos un paso en j
 					j--;
+					// agregamos a objetos muertos
+					objetosMuertos.add(disparosJugador.get(i));
 					// eliminamos disparo jugador
 					this.disparosJugador.remove(i);
 					// retrocedemos en i
@@ -531,6 +558,10 @@ public class Juego extends Observable{
 			}
 			
 		}
+		
+//		System.out.println(this.objetosMuertos.size()+"--------------------------------------------------------------------");
+		this.setChanged();
+		this.notifyObservers();
 		
 	}
 	
@@ -775,6 +806,18 @@ public class Juego extends Observable{
 		LinkedList<ObjetoEspacial> nuevos = (LinkedList<ObjetoEspacial>) this.objetosEspacialesNuevos.clone();
 		this.objetosEspaciales.addAll(this.objetosEspacialesNuevos);
 		this.objetosEspacialesNuevos.clear();
+		return nuevos;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public LinkedList<ObjetoMovil> getObjetosMovilesMuertos() {
+		int i = 0;
+		for (ObjetoMovil objetoMovil : objetosMuertos) {
+			i++;
+			System.out.println(i+" "+objetoMovil.getClass().getSimpleName());
+		}
+		LinkedList<ObjetoMovil> nuevos = (LinkedList<ObjetoMovil>) this.objetosMuertos.clone();
+		this.objetosMuertos.clear();
 		return nuevos;
 	}
 	

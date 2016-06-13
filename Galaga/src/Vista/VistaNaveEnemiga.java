@@ -13,8 +13,10 @@ public class VistaNaveEnemiga implements Observer {
 	JLabel lblDemoledor;
 	JLabel lblDepredador;
 	JLabel lblExterminador;
+	NaveEnemiga naveEnemiga;
 	
 	public VistaNaveEnemiga() {
+		
 		// DESTRUCTOR
 		lblDestructor = new JLabel();
 		URL pathDestructor = this.getClass().getResource("Imagenes/Destructor.png");
@@ -68,6 +70,14 @@ public class VistaNaveEnemiga implements Observer {
 	public JLabel getLblExterminador() {
 		// 
 		return lblExterminador;
+	}
+	
+	public NaveEnemiga getNaveEnemiga() {
+		return naveEnemiga;
+	}
+	
+	public void setNaveEnemiga(NaveEnemiga naveEnemiga) {
+		this.naveEnemiga = naveEnemiga;
 	}
 	
 }
