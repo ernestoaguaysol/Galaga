@@ -30,7 +30,7 @@ public class Juego extends Observable{
 	
 	private Historial historial;
 	
-	
+	private boolean pausa;
 	//aleatorio para usar en varios
 	private Random aleatorio = new Random();
 	
@@ -48,6 +48,7 @@ public class Juego extends Observable{
 		this.navesNuevas = new LinkedList<>();
 		this.objetosMuertos = new LinkedList<>();
 		this.historial = new Historial();
+		this.pausa = false;
 	}
 	
 	public void cargar() {
@@ -96,64 +97,66 @@ public class Juego extends Observable{
 //		if (this.naveJugador.getVidas() > 0) {
 		
 		
-		while (this.naveJugador.getVidas() > 0 || this.navesEnemigas.size() == 0)
-		{
+		while (this.naveJugador.getVidas() > 0 || this.navesEnemigas.size() == 0){
 			
-			// freno timer y obtengo tiempo transcurrido
+			if(!pausa){
 			
-			// arrancar timer de nuevo
+				// freno timer y obtengo tiempo transcurrido
 			
-			try {
-				Thread.sleep(80); //1000
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			// si el estado del jugador está en cero 
-			if (this.naveJugador.getEnergia() <= 0) {
-				// seteamos la posicion del jugador a la pocicion inicial
-				this.naveJugador.getPosicion().setX(posInicialX);
-				this.naveJugador.getPosicion().setY(posInicialY);
-				// detenemos la nave
-				this.naveJugador.detener();
-				// renovamos la energia al 100%
-				this.naveJugador.renovarEnergia();
-			}
 			
-			//diez iteraciones
-			for (int i = 0; i < 5; i++) {//tenia 16 y puse uno para probar+++++++++
-				
-				//la pantala es el espacio 512x512
-				this.chequearFueraDePantalla();
-				
-				// movemos todos los objetos moviles
-				this.moverTodo();
-				
-				//chequeamos si hay colicionas
-				this.chequearColisiones();		
-				
-				// cada x iteracionas va a decidir
-				if (0 == i) {
-					// recorremos cada nave enemiga
-					for (NaveEnemiga naveEnemiga : navesEnemigas) {				
-						// decidimos si la nave enemiga dispara
-						if (this.decidirDisparo()) {
-							this.disparosEnemigosNuevos.add(naveEnemiga.disparar());
-							this.setChanged();
-							this.notifyObservers();
-						}
-					}
-				
-					//decidimos si la nave enemiga ataca
-					this.decidirAtaque();
-					
-					//decide si aparece un objeto espacial en el espacio
-					this.decidirObjetoEspacial();					
+				// arrancar timer de nuevo
+				try {
+					Thread.sleep(80); //1000
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				// si el estado del jugador está en cero 
+				if (this.naveJugador.getEnergia() <= 0) {
+					// seteamos la posicion del jugador a la pocicion inicial
+					this.naveJugador.getPosicion().setX(posInicialX);
+					this.naveJugador.getPosicion().setY(posInicialY);
+					// detenemos la nave
+					this.naveJugador.detener();
+					// renovamos la energia al 100%
+					this.naveJugador.renovarEnergia();
 				}
 				
-			}
-			
-		}
+				//diez iteraciones
+				for (int i = 0; i < 5; i++) {//tenia 16 y puse uno para probar+++++++++
+					
+					//la pantala es el espacio 512x512
+					this.chequearFueraDePantalla();
+					
+					// movemos todos los objetos moviles
+					this.moverTodo();
+					
+					
+					// cada x iteracionas va a decidir
+					if (0 == i) {
+						// recorremos cada nave enemiga
+						for (NaveEnemiga naveEnemiga : navesEnemigas) {				
+							// decidimos si la nave enemiga dispara
+							if (this.decidirDisparo()) {
+								this.disparosEnemigosNuevos.add(naveEnemiga.disparar());
+								this.setChanged();
+								this.notifyObservers();
+							}
+						}
+					
+						//decidimos si la nave enemiga ataca
+						this.decidirAtaque();
+						
+						//decide si aparece un objeto espacial en el espacio
+						this.decidirObjetoEspacial();
+						
+						//chequeamos si hay colicionas
+						this.chequearColisiones();		
+					}
+				}
+			}//fin pausa
+			System.out.println();
+		}//fin while
 	}
 	
 	//movemos todos los objetos moviles
@@ -280,7 +283,7 @@ public class Juego extends Observable{
 		}
 		
 		// si quedan menos 4 naves enemigas
-		if (this.navesEnemigas.size() < 4) {
+		if (this.navesEnemigas.size() < 4 && navesEnemigas.size() > 0) {
 			if (0 == contadorDeKamikaze) {
 				// cambiamos el estato de algunas de las naves aleatorio 
 				this.navesEnemigas.get(aleatorio.nextInt(navesEnemigas.size())).estado = Estado.KAMIKAZE;
@@ -819,5 +822,14 @@ public class Juego extends Observable{
 		this.objetosMuertos.clear();
 		return nuevos;
 	}
+
+	public void setPausa(boolean pausa) {
+		// 
+		this.pausa = pausa;
+		
+	}
 	
+	public boolean getPausa() {
+		return this.pausa;
+	}
 }

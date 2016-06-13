@@ -18,7 +18,7 @@ public class VistaEscenario implements Observer {
 	{
 		lblEspacio = new JLabel();
 		lblEspacio.setBounds(0,0, 512, 512);
-		URL pathGalaga = this.getClass().getResource("Imagenes/fondoEstrellas.jpg");
+		URL pathGalaga = this.getClass().getResource("Imagenes/fondoNivel1.jpg");
 		ImageIcon imagenEspacio = new ImageIcon(pathGalaga);
 		Icon iconoEspacio = new ImageIcon(imagenEspacio.getImage().getScaledInstance(lblEspacio.getWidth(), lblEspacio.getHeight(), Image.SCALE_DEFAULT));
 		lblEspacio.setIcon(iconoEspacio);

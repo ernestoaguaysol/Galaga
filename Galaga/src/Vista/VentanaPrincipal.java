@@ -54,11 +54,17 @@ public class VentanaPrincipal extends JFrame implements Observer{
 		JMenu mnArchivo = new JMenu("Archivo");
 		menuBar_1.add(mnArchivo);
 		
-		JMenuItem mntmNuevo = new JMenuItem("Nuevo");
+		JMenuItem mntmNuevo = new JMenuItem("Nuevo Juego");
 		mnArchivo.add(mntmNuevo);
 		
-		JMenuItem mntmAbrir = new JMenuItem("Abrir");
+		JMenuItem mntmAbrir = new JMenuItem("Abrir Juego");
 		mnArchivo.add(mntmAbrir);
+		
+		JMenuItem mntmPausa = new JMenuItem("Pausa");
+		mnArchivo.add(mntmPausa);
+		
+		JMenuItem mntmSalir = new JMenuItem("Salir");
+		mnArchivo.add(mntmSalir);
 		
 		JMenu mnAyuda = new JMenu("Ayuda");
 		menuBar_1.add(mnAyuda);
