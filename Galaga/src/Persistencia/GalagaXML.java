@@ -9,6 +9,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.*;
 
+import Controlador.Controlador;
 import Modelo.Historial;
 import Modelo.ObjetoHistorial;
 
@@ -25,6 +26,7 @@ public class GalagaXML {
 			document = builder.parse(ruta);
 		} catch (Exception e) {
 			// algun mensaje----------------
+			Controlador.showMessageDialog("Error al leer Juego");
 			return null;
 		}
 		// creamos un historial nuevo
@@ -109,9 +111,9 @@ public class GalagaXML {
 					
 				}else if(objetoHistorial.getTipo().equals("disparo jugador")){
 					//tag <danio>
-//					NodeList danioNodo = e.getElementsByTagName("danio");
-//					// insertamos texto
-//					objetoHistorial.setDanio(danioNodo.item(0).getTextContent());										
+					NodeList danioNodo = e.getElementsByTagName("danio");
+					// insertamos texto
+					objetoHistorial.setDanio(danioNodo.item(0).getTextContent());										
 				}else if(objetoHistorial.getTipo().equals("disparo enemigo")){
 					//tag <danio>
 					NodeList danioNodo = e.getElementsByTagName("danio");
@@ -131,6 +133,7 @@ public class GalagaXML {
 		// si no hay historial
         if(historial.tamanio() < 1){
         	// --completar-------mensaje de excepcion----------//
+        	Controlador.showMessageDialog("no hay historial");
         	return;
         }else{
         	

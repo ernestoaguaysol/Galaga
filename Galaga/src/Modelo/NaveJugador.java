@@ -4,13 +4,13 @@ public class NaveJugador extends Nave{
 	//las vidas del jugador
 	private int vidas;
 	
-	public NaveJugador(Punto posicion,int ancho, int alto) {
+	public NaveJugador(Punto posicion,int ancho, int alto,int vidas, int energia) {
 		//cada nave del jugador comienza con 3 vidas
 		this.posicion = posicion;
 		this.ancho = ancho;
 		this.alto = alto;
-		this.vidas = 3;
-		this.energia = 100;
+		this.vidas = vidas;
+		this.energia = energia;
 		this.velocidad = new Punto(0, 0);
 		
 	}

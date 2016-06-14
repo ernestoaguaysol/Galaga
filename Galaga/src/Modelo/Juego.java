@@ -1,5 +1,6 @@
 package Modelo;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Random;
@@ -37,7 +38,7 @@ public class Juego extends Observable{
 	// constructor Juego
 	public Juego() {
 		this.espacio = new Espacio(512,512);
-		this.naveJugador = new NaveJugador(new Punto(this.posInicialX, this.posInicialY),32,32);
+		this.naveJugador = new NaveJugador(new Punto(this.posInicialX, this.posInicialY),32,32,3,100);
 		this.objetosEspaciales = new LinkedList<>();
 		this.objetosEspacialesNuevos = new LinkedList<>();
 		this.disparosEnemigos = new LinkedList<>();
@@ -886,7 +887,9 @@ public class Juego extends Observable{
 	}
 
 	public Historial getHistorial() {
-		// 
+		//
+		this.historial.limpiar();
+		this.cargarHistorialJuego();
 		return this.historial;
 	}
 
@@ -946,10 +949,26 @@ public class Juego extends Observable{
 		return this.pausa;
 	}
 	
-	public void cargarNivelGenerico(LinkedList<ObjetoMovil> objetos){
-		for (ObjetoMovil objetoMovil : objetos) {
-			if (objetoMovil.getClass().equals(NaveJugador.class)) {
+	public void cargarNivelGenerico(Historial historial){
+		ArrayList<ObjetoHistorial> objetoH = historial.getObjetos();
+		for (ObjetoHistorial objetoHistorial : objetoH) {
+			// la nave jugador
+			if (objetoHistorial.getTipo().equals("nave jugador")) {
+				int posX = Integer.parseInt(objetoHistorial.getPosicion().get(0));
+				int posY = Integer.parseInt(objetoHistorial.getPosicion().get(1));
 				
+//				int velX = Integer.parseInt(objetoHistorial.getVelocidad().get(0));
+//				int velY = Integer.parseInt(objetoHistorial.getVelocidad().get(1));
+
+				int ancho = Integer.parseInt(objetoHistorial.getTamanio().get(0));
+				int alto = Integer.parseInt(objetoHistorial.getTamanio().get(1));
+
+				int vidas = Integer.parseInt(objetoHistorial.getVidas());
+		
+				int energia = Integer.parseInt(objetoHistorial.getEnergia());
+				
+				
+				this.naveJugador = new NaveJugador(new Punto(posX, posY), ancho, alto,vidas,energia);
 			}
 		}
 	}

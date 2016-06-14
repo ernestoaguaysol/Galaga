@@ -23,4 +23,14 @@ public class Historial {
 		return objetos.size();
 	}
 
+	public void limpiar() {
+		// 
+		this.objetos.clear();
+		
+	}
+	
+	public ArrayList<ObjetoHistorial> getObjetos() {
+		return objetos;
+	}
+
 }

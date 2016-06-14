@@ -2,8 +2,15 @@ package Controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+import Modelo.Historial;
 import Modelo.Juego;
+import Persistencia.GalagaXML;
 import Vista.VentanaPrincipal;
 
 public class ControladorMenu implements ActionListener{
@@ -61,13 +68,13 @@ public class ControladorMenu implements ActionListener{
 		//
 		if (e.getSource() == this.ventana.getMenuItemAbrir()) {
 			//abrimos el juego guardado
-			
-			
+			this.abrir();
 		}
 		
 		if (e.getSource() == this.ventana.getMenuItemGuardar()) {
-			//cuardamos el juego
-			
+			this.juego.setPausa(true);
+			this.guardar();
+			System.exit(0);
 		}
 		
 		if (e.getSource() == this.ventana.getMenuItemPausa()) {
@@ -117,6 +124,41 @@ public class ControladorMenu implements ActionListener{
 		}
 	}
 	
+	private void abrir() {
+		// 
+		JFileChooser selectorDeArchivo = new JFileChooser();
+		FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos LOGO", "logo");
+		selectorDeArchivo.setFileFilter(filtro);
+		int estado = selectorDeArchivo.showOpenDialog(null);
+		if (estado == JFileChooser.APPROVE_OPTION) {
+			File archivo_selecionado = selectorDeArchivo.getSelectedFile();
+			String ruta = archivo_selecionado.getAbsolutePath();
+			Historial historial = GalagaXML.leerXML(ruta);
+			// aca va otro hilo
+			
+			juego.cargarNivelGenerico(historial);
+			
+		}else{
+			
+		}
+		
+	}
+
+	private void guardar(){
+		//cuardamos el juego
+		JFileChooser selectorDeArchivo = new JFileChooser();
+		int estado = selectorDeArchivo.showSaveDialog(null);
+		if (estado == JFileChooser.APPROVE_OPTION) {
+			File archivo_para_escribir = selectorDeArchivo.getSelectedFile();
+			String ruta = archivo_para_escribir.getAbsolutePath();
+			try {
+				GalagaXML.escribirXML(ruta, this.juego.getHistorial());
+			} catch (Exception ex) {
+				Controlador.showMessageDialog("No se pudo guardar el archivo");
+			}
+			
+		}
+	}
 	
 
 	
