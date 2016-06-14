@@ -1,10 +1,8 @@
 package Modelo;
 
 public class Bomba extends Disparo{
-	private Circulo explosion;
 
 	public Bomba(Punto posicion, Punto velocidad, int ancho, int alto) {
-		this.explosion = new Circulo(posicion, 70);
 		this.posicion = posicion;
 		this.ancho = ancho;
 		this.alto = alto;
@@ -12,7 +10,4 @@ public class Bomba extends Disparo{
 		this.danio = 100;
 	}
 	
-	public Circulo getExplosion() {
-		return explosion;
-	}
 }

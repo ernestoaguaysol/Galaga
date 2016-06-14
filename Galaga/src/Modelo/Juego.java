@@ -885,8 +885,8 @@ public class Juego extends Observable{
 		}
 	}
 
-	public Historial historial() {
-		// TODO Auto-generated method stub
+	public Historial getHistorial() {
+		// 
 		return this.historial;
 	}
 
@@ -944,5 +944,68 @@ public class Juego extends Observable{
 	
 	public boolean getPausa() {
 		return this.pausa;
+	}
+	
+	public void cargarNivelGenerico(LinkedList<ObjetoMovil> objetos){
+		for (ObjetoMovil objetoMovil : objetos) {
+			if (objetoMovil.getClass().equals(NaveJugador.class)) {
+				
+			}
+		}
+	}
+
+	public void descargarNivel() {
+		// 
+		for (NaveEnemiga naveEnemiga : navesEnemigas) {
+			this.objetosMuertos.add(naveEnemiga);
+			this.setChanged();
+			this.notifyObservers();
+		}
+		this.navesEnemigas.clear();
+		for (ObjetoEspacial objetoEspacial : objetosEspaciales) {
+			this.objetosMuertos.add(objetoEspacial);
+			this.setChanged();
+			this.notifyObservers();
+			
+		}
+		this.objetosEspaciales.clear();
+		for (Disparo disparo : disparosEnemigos) {
+			this.objetosMuertos.add(disparo);
+			this.setChanged();
+			this.notifyObservers();
+			
+		}
+		this.disparosEnemigos.clear();
+		for (Disparo disparo2 : disparosJugador) {
+			this.objetosMuertos.add(disparo2);
+			this.setChanged();
+			this.notifyObservers();
+			
+		}
+		this.disparosJugador.clear();
+		
+		for (Disparo disparo : disparosEnemigosNuevos) {
+			this.objetosMuertos.add(disparo);
+			this.setChanged();
+			this.notifyObservers();
+			
+		}
+		this.disparosEnemigosNuevos.clear();
+		
+		for (Disparo disparo : disparosJugadorNuevos) {
+			this.objetosMuertos.add(disparo);
+			this.setChanged();
+			this.notifyObservers();
+			
+		}
+		this.disparosJugadorNuevos.clear();
+		
+		for (ObjetoEspacial objetoEspacial : objetosEspacialesNuevos) {
+			this.objetosMuertos.add(objetoEspacial);
+			this.setChanged();
+			this.notifyObservers();
+			
+		}
+		this.disparosEnemigosNuevos.clear();
 	}
 }

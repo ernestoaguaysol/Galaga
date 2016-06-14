@@ -16,8 +16,6 @@ import javax.swing.JMenuItem;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 
-import Controlador.ControladorMenu;
-
 
 
 public class VentanaPrincipal extends JFrame implements Observer{
@@ -25,6 +23,13 @@ public class VentanaPrincipal extends JFrame implements Observer{
 	private static final long serialVersionUID = 1L;
 	
 	private JMenuItem mntmNuevo;
+	private JMenuItem mntmAbrir;
+	private JMenuItem mntmGuardar;
+	private JMenuItem mntmPausa;
+	private JMenuItem mntmSalir;
+	private JMenu mnAyuda;
+	private JMenuItem mntmCreditos;
+	private JMenuItem mntmControles;
 	
 	private Juego juego;
 	private VistaEscenario espacio;
@@ -47,7 +52,7 @@ public class VentanaPrincipal extends JFrame implements Observer{
 		getContentPane().add(panel, BorderLayout.CENTER);
 		
 		//----Imagen Favicon (Icono)
-		URL pathGalaga = this.getClass().getResource("Imagenes/Galaga_ship.png");
+		URL pathGalaga = this.getClass().getResource("Imagenes/NaveJugador2.png");
 		try{
 			Image imagenIcono = ImageIO.read(pathGalaga);
 			this.setIconImage(imagenIcono);
@@ -60,37 +65,32 @@ public class VentanaPrincipal extends JFrame implements Observer{
 		menuBar_1.add(mnArchivo);
 		
 		this.mntmNuevo = new JMenuItem("Nuevo Juego");
-//		mntmNuevo.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				controlador.jugarNuevo();
-//				
-//			}
-//		});
 		mnArchivo.add(mntmNuevo);
 		
-		JMenuItem mntmAbrir = new JMenuItem("Abrir Juego");
+		this.mntmAbrir = new JMenuItem("Abrir Juego");
 		mnArchivo.add(mntmAbrir);
+
+		this.mntmGuardar = new JMenuItem("Guardar Juego");
+		mnArchivo.add(mntmGuardar);
 		
-		JMenuItem mntmPausa = new JMenuItem("Pausa");
+		this.mntmPausa = new JMenuItem("Pausa");
 		mnArchivo.add(mntmPausa);
 		
-		JMenuItem mntmSalir = new JMenuItem("Salir");
+		this.mntmSalir = new JMenuItem("Salir");
 		mnArchivo.add(mntmSalir);
 		
-		JMenu mnAyuda = new JMenu("Ayuda");
+		this.mnAyuda = new JMenu("Ayuda");
 		menuBar_1.add(mnAyuda);
 		
-		JMenuItem mntmCreditos = new JMenuItem("Creditos");
+		this.mntmCreditos = new JMenuItem("Creditos");
 		mnAyuda.add(mntmCreditos);
 		
-		JMenuItem mntmControles = new JMenuItem("Controles");
+		this.mntmControles = new JMenuItem("Controles");
 		mnAyuda.add(mntmControles);
 		
 				
 		//----------------------------
 		
-//		this.controlador = new Controlador();
-//		this.addKeyListener(controlador);
 		
 		this.juego = juego;
 		this.vistaObjetosEspaciales = new LinkedList<>();
@@ -298,18 +298,49 @@ public class VentanaPrincipal extends JFrame implements Observer{
 	public void setActionListenerForMenu(ActionListener a) {
 		//
 		this.mntmNuevo.addActionListener(a);
-		 /// etc....
+		this.mntmAbrir.addActionListener(a);
+		this.mntmGuardar.addActionListener(a);
+		this.mntmPausa.addActionListener(a);
+		this.mntmSalir.addActionListener(a);
+		this.mntmCreditos.addActionListener(a);
+		this.mntmControles.addActionListener(a);
 		
 	}
 
 
 	public Object getMenuItemJuegoNuevo() {// aca hay que hacer para cada item para que el controlador menu sepa cual item se apretó
-		// TODO Auto-generated method stub
+		//
 		return this.mntmNuevo;
 	}
-
-
-
 	
+	public Object getMenuItemAbrir() {
+		//
+		return this.mntmAbrir;
+	}
 
+	public Object getMenuItemGuardar() {
+		//
+		return this.mntmGuardar;
+	}
+	
+	public Object getMenuItemPausa() {
+		//
+		return this.mntmPausa;
+	}
+	
+	public Object getMenuItemSalir() {
+		//
+		return this.mntmSalir;
+	}
+	
+	public Object getMenuItemCreditos() {
+		//
+		return this.mntmCreditos;
+	}
+	
+	public Object getMenuItemControles() {
+		//
+		return this.mntmControles;
+	}
+	
 }

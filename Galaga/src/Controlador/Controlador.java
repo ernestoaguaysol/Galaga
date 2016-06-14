@@ -21,17 +21,7 @@ public class Controlador implements KeyListener{
 	
 	@Override
 	public void keyPressed(KeyEvent e) {
-		int numeroTecla = e.getKeyCode();
-		
-		if (numeroTecla == KeyEvent.VK_I) {
-			
-			this.juego.cargarNivel1();
-		}
-		
-		if (numeroTecla == KeyEvent.VK_A) {
-			this.juego.jugar();
-		}
-		
+		int numeroTecla = e.getKeyCode();		
 		
 		if (numeroTecla == KeyEvent.VK_SPACE) {
 			
@@ -106,20 +96,6 @@ public class Controlador implements KeyListener{
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		//
-		int numeroTecla = e.getKeyCode();
-		if (numeroTecla == KeyEvent.VK_N) {
-			if (juego != null) {
-				
-			}else{
-				
-			}
-			
-		}
-		
-		
-		
-		// nuevo juego
 		
 		
 	}
@@ -135,13 +111,5 @@ public class Controlador implements KeyListener{
 		URL path = VentanaPrincipal.class.getResource("Imagenes/NaveJugador2.png");		
 		return JOptionPane.showConfirmDialog(null, mensaje, "Confirmar", 0, 0, new ImageIcon(path));
 	}
-	
-	public static void showAyudaMessage(String mensaje){
-		URL path = VentanaPrincipal.class.getResource("Imagenes/NaveJugador2.png");
-		JOptionPane.showMessageDialog(null,mensaje,"Ayuda", JOptionPane.WARNING_MESSAGE,new ImageIcon(path));
-		
-	}
-	
-	
 
 }
