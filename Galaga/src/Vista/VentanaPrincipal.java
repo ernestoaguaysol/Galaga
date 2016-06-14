@@ -2,6 +2,7 @@ package Vista;
 
 
 import java.awt.Image;
+import java.awt.event.ActionListener;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.Observable;
@@ -15,11 +16,15 @@ import javax.swing.JMenuItem;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 
+import Controlador.ControladorMenu;
+
 
 
 public class VentanaPrincipal extends JFrame implements Observer{
 
 	private static final long serialVersionUID = 1L;
+	
+	private JMenuItem mntmNuevo;
 	
 	private Juego juego;
 	private VistaEscenario espacio;
@@ -54,7 +59,7 @@ public class VentanaPrincipal extends JFrame implements Observer{
 		JMenu mnArchivo = new JMenu("Archivo");
 		menuBar_1.add(mnArchivo);
 		
-		JMenuItem mntmNuevo = new JMenuItem("Nuevo Juego");
+		this.mntmNuevo = new JMenuItem("Nuevo Juego");
 //		mntmNuevo.addActionListener(new ActionListener() {
 //			public void actionPerformed(ActionEvent e) {
 //				controlador.jugarNuevo();
@@ -288,6 +293,21 @@ public class VentanaPrincipal extends JFrame implements Observer{
 		
 		
 	}
+
+
+	public void setActionListenerForMenu(ActionListener a) {
+		//
+		this.mntmNuevo.addActionListener(a);
+		 /// etc....
+		
+	}
+
+
+	public Object getMenuItemJuegoNuevo() {// aca hay que hacer para cada item para que el controlador menu sepa cual item se apretó
+		// TODO Auto-generated method stub
+		return this.mntmNuevo;
+	}
+
 
 
 	

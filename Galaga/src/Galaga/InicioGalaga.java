@@ -2,7 +2,7 @@ package Galaga;
 
 import javax.swing.UIManager;
 
-import Controlador.Controlador;
+import Controlador.*;
 import Modelo.Juego;
 import Vista.VentanaPrincipal;
 
@@ -22,8 +22,10 @@ public class InicioGalaga {
 		Controlador controlador = new Controlador(juego);
 		vista.addKeyListener(controlador);
 		
-		juego.cargarNivel1();
-		juego.jugar();
+		ControladorMenu controlador_menu = new ControladorMenu(juego, vista);
+		
+//		juego.cargarNivel1();
+//		juego.jugar();
 		
 //		
 	}
