@@ -23,9 +23,7 @@ public class InicioGalaga {
 		vista.addKeyListener(controlador);
 		
 		ControladorMenu controlador_menu = new ControladorMenu(juego, vista);
-		
-//		juego.cargarNivel1();
-//		juego.jugar();
+		controlador_menu.getClass(); // para sacar la alerta
 		
 //		
 	}

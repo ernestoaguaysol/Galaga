@@ -27,8 +27,10 @@ import javax.swing.JPanel;
 
 
 
+
 import sonido.Sonido;
 import Controlador.ControladorMenu;
+
 
 
 
@@ -37,6 +39,13 @@ public class VentanaPrincipal extends JFrame implements Observer{
 	private static final long serialVersionUID = 1L;
 	
 	private JMenuItem mntmNuevo;
+	private JMenuItem mntmAbrir;
+	private JMenuItem mntmGuardar;
+	private JMenuItem mntmPausa;
+	private JMenuItem mntmSalir;
+	private JMenu mnAyuda;
+	private JMenuItem mntmCreditos;
+	private JMenuItem mntmControles;
 	
 	private Juego juego;
 	private VistaEscenario espacio;
@@ -62,7 +71,7 @@ public class VentanaPrincipal extends JFrame implements Observer{
 		
 		
 		//----Imagen Favicon (Icono)
-		URL pathGalaga = this.getClass().getResource("Imagenes/Galaga_ship.png");
+		URL pathGalaga = this.getClass().getResource("Imagenes/NaveJugador2.png");
 		try{
 			Image imagenIcono = ImageIO.read(pathGalaga);
 			this.setIconImage(imagenIcono);
@@ -75,37 +84,32 @@ public class VentanaPrincipal extends JFrame implements Observer{
 		menuBar_1.add(mnArchivo);
 		
 		this.mntmNuevo = new JMenuItem("Nuevo Juego");
-//		mntmNuevo.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				controlador.jugarNuevo();
-//				
-//			}
-//		});
 		mnArchivo.add(mntmNuevo);
 		
-		JMenuItem mntmAbrir = new JMenuItem("Abrir Juego");
+		this.mntmAbrir = new JMenuItem("Abrir Juego");
 		mnArchivo.add(mntmAbrir);
+
+		this.mntmGuardar = new JMenuItem("Guardar Juego");
+		mnArchivo.add(mntmGuardar);
 		
-		JMenuItem mntmPausa = new JMenuItem("Pausa");
+		this.mntmPausa = new JMenuItem("Pausa");
 		mnArchivo.add(mntmPausa);
 		
-		JMenuItem mntmSalir = new JMenuItem("Salir");
+		this.mntmSalir = new JMenuItem("Salir");
 		mnArchivo.add(mntmSalir);
 		
-		JMenu mnAyuda = new JMenu("Ayuda");
+		this.mnAyuda = new JMenu("Ayuda");
 		menuBar_1.add(mnAyuda);
 		
-		JMenuItem mntmCreditos = new JMenuItem("Creditos");
+		this.mntmCreditos = new JMenuItem("Creditos");
 		mnAyuda.add(mntmCreditos);
 		
-		JMenuItem mntmControles = new JMenuItem("Controles");
+		this.mntmControles = new JMenuItem("Controles");
 		mnAyuda.add(mntmControles);
 		
 				
 		//----------------------------
 		
-//		this.controlador = new Controlador();
-//		this.addKeyListener(controlador);
 		
 		this.juego = juego;
 		this.vistaObjetosEspaciales = new LinkedList<>();
@@ -195,12 +199,14 @@ public class VentanaPrincipal extends JFrame implements Observer{
 		for (Disparo disparo : disparosEnemigos) {
 			if (disparo.getClass().equals(Laser.class)){
 				VistaDisparo vLas = new VistaDisparo();
+				//cargo sonido
 				try {
 					Sonido.disparoEnemigo1();
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				//
 				vLas.setDisparo(disparo);
 				disparo.addObserver(vLas);
 				this.vistaDisparos.add(vLas);
@@ -208,12 +214,14 @@ public class VentanaPrincipal extends JFrame implements Observer{
 			}
 			if (disparo.getClass().equals(Misil.class)){
 				VistaDisparo vMis = new VistaDisparo();
+				//cargo sonido
 				try {
 					Sonido.disparoEnemigo();
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				//
 				vMis.setDisparo(disparo);
 				disparo.addObserver(vMis);
 				this.vistaDisparos.add(vMis);
@@ -253,12 +261,14 @@ public class VentanaPrincipal extends JFrame implements Observer{
 			if (objetoMovilMuerto.getClass().equals(EstrellaFugaz.class)) {
 				for (VistaObjetoEspacial vistaObjetoEspacial : vistaObjetosEspaciales) {
 					if (objetoMovilMuerto.equals(vistaObjetoEspacial.getObjetoEspacial())) {
+						//cargo sonido
 						try {
 							Sonido.masEnergia();
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
+						//
 						objetoMovilMuerto.deleteObserver(vistaObjetoEspacial);
 						this.espacio.getLblEspacio().remove(vistaObjetoEspacial.getLblEstrellaFugaz());
 					}
@@ -266,12 +276,14 @@ public class VentanaPrincipal extends JFrame implements Observer{
 			}else if (objetoMovilMuerto.getClass().equals(Meteorito.class)) {
 				for (VistaObjetoEspacial vistaObjetoEspacial : vistaObjetosEspaciales) {
 					if (objetoMovilMuerto.equals(vistaObjetoEspacial.getObjetoEspacial())) {
+						//cargo sonido
 						try {
 							Sonido.muerteObjeto1();
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
+						//
 						objetoMovilMuerto.deleteObserver(vistaObjetoEspacial);
 						this.espacio.getLblEspacio().remove(vistaObjetoEspacial.getLblMeteorito());
 					}
@@ -279,12 +291,14 @@ public class VentanaPrincipal extends JFrame implements Observer{
 			}else if (objetoMovilMuerto.getClass().equals(Asteroide.class)) {
 				for (VistaObjetoEspacial vistaObjetoEspacial : vistaObjetosEspaciales) {
 					if (objetoMovilMuerto.equals(vistaObjetoEspacial.getObjetoEspacial())) {
+						//cargo sonido
 						try {
 							Sonido.muerteObjeto();
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
+						//
 						objetoMovilMuerto.deleteObserver(vistaObjetoEspacial);
 						this.espacio.getLblEspacio().remove(vistaObjetoEspacial.getLblAsteroide());
 					}
@@ -292,12 +306,14 @@ public class VentanaPrincipal extends JFrame implements Observer{
 			}else if (objetoMovilMuerto.getClass().equals(Demoledor.class)) {
 				for (VistaNaveEnemiga vistaNaveEnemiga : vistaNavesEnemigas) {
 					if (objetoMovilMuerto.equals(vistaNaveEnemiga.getNaveEnemiga())) {
+						//cargo sonido
 						try {
 							Sonido.explosion();
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
+						//
 						objetoMovilMuerto.deleteObserver(vistaNaveEnemiga);
 						this.espacio.getLblEspacio().remove(vistaNaveEnemiga.getLblDemoledor());
 					}
@@ -305,12 +321,14 @@ public class VentanaPrincipal extends JFrame implements Observer{
 			}else if (objetoMovilMuerto.getClass().equals(Depredador.class)) {
 				for (VistaNaveEnemiga vistaNaveEnemiga : vistaNavesEnemigas) {
 					if (objetoMovilMuerto.equals(vistaNaveEnemiga.getNaveEnemiga())) {
+						//cargo sonido
 						try {
 							Sonido.explosion1();
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
+						//
 						objetoMovilMuerto.deleteObserver(vistaNaveEnemiga);
 						this.espacio.getLblEspacio().remove(vistaNaveEnemiga.getLblDepredador());
 					}
@@ -355,18 +373,49 @@ public class VentanaPrincipal extends JFrame implements Observer{
 	public void setActionListenerForMenu(ActionListener a) {
 		//
 		this.mntmNuevo.addActionListener(a);
-		 /// etc....
+		this.mntmAbrir.addActionListener(a);
+		this.mntmGuardar.addActionListener(a);
+		this.mntmPausa.addActionListener(a);
+		this.mntmSalir.addActionListener(a);
+		this.mntmCreditos.addActionListener(a);
+		this.mntmControles.addActionListener(a);
 		
 	}
 
 
 	public Object getMenuItemJuegoNuevo() {// aca hay que hacer para cada item para que el controlador menu sepa cual item se apretó
-		// TODO Auto-generated method stub
+		//
 		return this.mntmNuevo;
 	}
-
-
-
 	
+	public Object getMenuItemAbrir() {
+		//
+		return this.mntmAbrir;
+	}
 
+	public Object getMenuItemGuardar() {
+		//
+		return this.mntmGuardar;
+	}
+	
+	public Object getMenuItemPausa() {
+		//
+		return this.mntmPausa;
+	}
+	
+	public Object getMenuItemSalir() {
+		//
+		return this.mntmSalir;
+	}
+	
+	public Object getMenuItemCreditos() {
+		//
+		return this.mntmCreditos;
+	}
+	
+	public Object getMenuItemControles() {
+		//
+		return this.mntmControles;
+	}
+	
 }

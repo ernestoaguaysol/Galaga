@@ -3,7 +3,6 @@ package Controlador;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.net.URL;
-
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -23,19 +22,8 @@ public class Controlador implements KeyListener{
 	
 	
 	@Override
-	public void keyPressed(KeyEvent e) {
-		
-		int numeroTecla = e.getKeyCode();
-		
-		if (numeroTecla == KeyEvent.VK_I) {
-			
-			this.juego.cargarNivel1();
-		}
-		
-		if (numeroTecla == KeyEvent.VK_A) {
-			this.juego.jugar();
-		}
-		
+	public void keyPressed(KeyEvent e) {	
+		int numeroTecla = e.getKeyCode();		
 		
 		if (numeroTecla == KeyEvent.VK_SPACE) {
 			
