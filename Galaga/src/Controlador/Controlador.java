@@ -3,15 +3,18 @@ package Controlador;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.net.URL;
+
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+
+import sonido.Sonido;
 import Modelo.Juego;
 import Vista.VentanaPrincipal;
 
 public class Controlador implements KeyListener{
 
 	private Juego juego;
-	
+		
 	public Controlador(Juego juego) {
 		//
 		this.juego = juego;
@@ -21,6 +24,7 @@ public class Controlador implements KeyListener{
 	
 	@Override
 	public void keyPressed(KeyEvent e) {
+		
 		int numeroTecla = e.getKeyCode();
 		
 		if (numeroTecla == KeyEvent.VK_I) {
@@ -36,6 +40,17 @@ public class Controlador implements KeyListener{
 		if (numeroTecla == KeyEvent.VK_SPACE) {
 			
 			this.juego.dispararJugador();
+			
+			//cada ves que el jugador dispara genera ejecuta el metodo que llama al sonido disparo
+				
+					try {
+						Sonido.disparoJugador();
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				
+			//*/
 		}
 		//comparamos
 		if (numeroTecla == KeyEvent.VK_LEFT) {
@@ -62,7 +77,14 @@ public class Controlador implements KeyListener{
 			if (this.juego.getPausa()) {
 				this.juego.setPausa(false);
 			}else {
-				this.juego.setPausa(true);				
+				this.juego.setPausa(true);
+				
+				try {
+					Sonido.pausa();;
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		}
 	

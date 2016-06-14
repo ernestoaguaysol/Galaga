@@ -7,15 +7,27 @@ import java.net.URL;
 import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Observer;
+
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+
 import Modelo.*;
+
 import javax.swing.JMenuItem;
+
 import java.awt.BorderLayout;
+
 import javax.swing.JPanel;
 
+
+
+
+
+
+
+import sonido.Sonido;
 import Controlador.ControladorMenu;
 
 
@@ -32,6 +44,7 @@ public class VentanaPrincipal extends JFrame implements Observer{
 	private LinkedList<VistaObjetoEspacial> vistaObjetosEspaciales;
 	private LinkedList<VistaNaveEnemiga> vistaNavesEnemigas;
 	private LinkedList<VistaDisparo> vistaDisparos;
+	
 	/**
 	 * ventana principal.
 	 */
@@ -45,6 +58,8 @@ public class VentanaPrincipal extends JFrame implements Observer{
 		
 		JPanel panel = new JPanel();
 		getContentPane().add(panel, BorderLayout.CENTER);
+		
+		
 		
 		//----Imagen Favicon (Icono)
 		URL pathGalaga = this.getClass().getResource("Imagenes/Galaga_ship.png");
@@ -180,6 +195,12 @@ public class VentanaPrincipal extends JFrame implements Observer{
 		for (Disparo disparo : disparosEnemigos) {
 			if (disparo.getClass().equals(Laser.class)){
 				VistaDisparo vLas = new VistaDisparo();
+				try {
+					Sonido.disparoEnemigo1();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				vLas.setDisparo(disparo);
 				disparo.addObserver(vLas);
 				this.vistaDisparos.add(vLas);
@@ -187,6 +208,12 @@ public class VentanaPrincipal extends JFrame implements Observer{
 			}
 			if (disparo.getClass().equals(Misil.class)){
 				VistaDisparo vMis = new VistaDisparo();
+				try {
+					Sonido.disparoEnemigo();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				vMis.setDisparo(disparo);
 				disparo.addObserver(vMis);
 				this.vistaDisparos.add(vMis);
@@ -226,6 +253,12 @@ public class VentanaPrincipal extends JFrame implements Observer{
 			if (objetoMovilMuerto.getClass().equals(EstrellaFugaz.class)) {
 				for (VistaObjetoEspacial vistaObjetoEspacial : vistaObjetosEspaciales) {
 					if (objetoMovilMuerto.equals(vistaObjetoEspacial.getObjetoEspacial())) {
+						try {
+							Sonido.masEnergia();
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 						objetoMovilMuerto.deleteObserver(vistaObjetoEspacial);
 						this.espacio.getLblEspacio().remove(vistaObjetoEspacial.getLblEstrellaFugaz());
 					}
@@ -233,6 +266,12 @@ public class VentanaPrincipal extends JFrame implements Observer{
 			}else if (objetoMovilMuerto.getClass().equals(Meteorito.class)) {
 				for (VistaObjetoEspacial vistaObjetoEspacial : vistaObjetosEspaciales) {
 					if (objetoMovilMuerto.equals(vistaObjetoEspacial.getObjetoEspacial())) {
+						try {
+							Sonido.muerteObjeto1();
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 						objetoMovilMuerto.deleteObserver(vistaObjetoEspacial);
 						this.espacio.getLblEspacio().remove(vistaObjetoEspacial.getLblMeteorito());
 					}
@@ -240,6 +279,12 @@ public class VentanaPrincipal extends JFrame implements Observer{
 			}else if (objetoMovilMuerto.getClass().equals(Asteroide.class)) {
 				for (VistaObjetoEspacial vistaObjetoEspacial : vistaObjetosEspaciales) {
 					if (objetoMovilMuerto.equals(vistaObjetoEspacial.getObjetoEspacial())) {
+						try {
+							Sonido.muerteObjeto();
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 						objetoMovilMuerto.deleteObserver(vistaObjetoEspacial);
 						this.espacio.getLblEspacio().remove(vistaObjetoEspacial.getLblAsteroide());
 					}
@@ -247,6 +292,12 @@ public class VentanaPrincipal extends JFrame implements Observer{
 			}else if (objetoMovilMuerto.getClass().equals(Demoledor.class)) {
 				for (VistaNaveEnemiga vistaNaveEnemiga : vistaNavesEnemigas) {
 					if (objetoMovilMuerto.equals(vistaNaveEnemiga.getNaveEnemiga())) {
+						try {
+							Sonido.explosion();
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 						objetoMovilMuerto.deleteObserver(vistaNaveEnemiga);
 						this.espacio.getLblEspacio().remove(vistaNaveEnemiga.getLblDemoledor());
 					}
@@ -254,6 +305,12 @@ public class VentanaPrincipal extends JFrame implements Observer{
 			}else if (objetoMovilMuerto.getClass().equals(Depredador.class)) {
 				for (VistaNaveEnemiga vistaNaveEnemiga : vistaNavesEnemigas) {
 					if (objetoMovilMuerto.equals(vistaNaveEnemiga.getNaveEnemiga())) {
+						try {
+							Sonido.explosion1();
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 						objetoMovilMuerto.deleteObserver(vistaNaveEnemiga);
 						this.espacio.getLblEspacio().remove(vistaNaveEnemiga.getLblDepredador());
 					}
