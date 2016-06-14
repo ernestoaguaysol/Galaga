@@ -51,7 +51,7 @@ public class Juego extends Observable{
 		this.pausa = false;
 	}
 	
-	public void cargar() {
+	public void cargarNivel1() {
 		// lista de naves enemigas
 		//cracion de demoledores
 		Demoledor dem1 = new Demoledor(new Punto(47, 447), new Punto(0, 0), 32,32);
@@ -93,19 +93,13 @@ public class Juego extends Observable{
 	
 	//el bucle principal del juego
 	public void jugar() {
-//		// si el jugador tiene vidas
-//		if (this.naveJugador.getVidas() > 0) {
-		
+
 		while (this.naveJugador.getVidas() > 0 && this.navesEnemigas.size() > 0){
 			
 			if(!pausa){
 			
-				// freno timer y obtengo tiempo transcurrido
-			
-			
-				// arrancar timer de nuevo
 				try {
-					Thread.sleep(15); //1000
+					Thread.sleep(15); // tiempo de pausa
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -115,72 +109,59 @@ public class Juego extends Observable{
 					this.naveJugador.getPosicion().setX(posInicialX);
 					this.naveJugador.getPosicion().setY(posInicialY);
 					// detenemos la nave
-					this.naveJugador.detener();
+					this.naveJugador.detener(); // para cuando vuelva a la posicion inicial no se este moviendo
 					// renovamos la energia al 100%
 					this.naveJugador.renovarEnergia();
 				}
 				
 				//la pantala es el espacio 512x512
 				this.chequearFueraDePantalla();
-				//diez iteraciones
-//				for (int i = 0; i < 5; i++) {//tenia 16 y puse uno para probar+++++++++
 					
+				// movemos todos los objetos moviles
+				this.moverTodo();
+				// recorremos cada nave enemiga
+				for (NaveEnemiga naveEnemiga : navesEnemigas) {				
+					// decidimos si la nave enemiga dispara
+					if (this.decidirDisparo()) {
+						this.disparosEnemigosNuevos.add(naveEnemiga.disparar());
+						this.setChanged();
+						this.notifyObservers();
+					}
+				}
 					
-					
-					
-					// cada x iteracionas va a decidir
-						// movemos todos los objetos moviles
-						this.moverTodo();
-						// recorremos cada nave enemiga
-						for (NaveEnemiga naveEnemiga : navesEnemigas) {				
-							// decidimos si la nave enemiga dispara
-							if (this.decidirDisparo()) {
-								this.disparosEnemigosNuevos.add(naveEnemiga.disparar());
-								this.setChanged();
-								this.notifyObservers();
-							}
-						}
-					
-						//decidimos si la nave enemiga ataca
-						this.decidirAtaque();
+				//decidimos si la nave enemiga ataca
+				this.decidirAtaque();
 						
-						//decide si aparece un objeto espacial en el espacio
-						this.decidirObjetoEspacial();
+				//decide si aparece un objeto espacial en el espacio
+				this.decidirObjetoEspacial();
 						
-					//movemos la nave jugador
-					this.naveJugador.mover();
+				//movemos la nave jugador
+				this.naveJugador.mover();
 
-					//chequeamos si hay colicionas
-					this.chequearColisiones();		
-//				}//fin for
-			}else{
-				// arrancar timer de nuevo
+				//chequeamos si hay colicionas
+				this.chequearColisiones();
+				
+			}else{ // entra en pausa
+				
 				try {
-					Thread.sleep(500); //1000
+					Thread.sleep(500); //
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-//				System.out.println("naves enemigas"+this.navesEnemigas.size());
-			}
-			
+			}// fin if else			
 			
 		}//fin while
 	}
 	
 	//movemos todos los objetos moviles
 	private void moverTodo() {
-		//
-//		//movemos la nave jugador
-//		this.naveJugador.mover();
 		
 		//movemos todas las naves enemigas
 		for (NaveEnemiga n : navesEnemigas) {
 			
-			//+++++++++++++++ chequeo si la nave tiene estado KAMIKASE tiene otro patron asignado
+			//chequeo si la nave tiene estado KAMIKASE tiene otro patron asignado
 			if (n.getEstado().equals(Estado.KAMIKAZE)){
-//				//sobreescribo el metodo mover de la clase naveEnemiga para poder recibir la posicion del jugador
-//				n.mover(this.naveJugador.posicion);
+				//metodo mover de la clase Kamikase Algoritmo
 				KamikaseAlgoritmo.moverKamikaze(this.naveJugador.getPosicion(), n);
 				n.mover();
 			}else if(n.getEstado().equals(Estado.VOLVIENDO)){//si el estado es volviendo
@@ -189,8 +170,6 @@ public class Juego extends Observable{
 			}else {
 				KamikaseAlgoritmo.moverPasivo(n);
 				n.mover();
-				
-
 			}
 			
 		}
@@ -237,46 +216,144 @@ public class Juego extends Observable{
 				cantAsteriode++;
 			}
 			
-		}
+		}// fin for
 		
 		// si no hay estrella fugaz
 		if (cantEstrellaFugaz == 0) {
-			// aleatorio de 0 a 20
-			if (this.aleatorio.nextInt(20) == 0) {
-				// creamos una nueva estrella fugaz
-				EstrellaFugaz nuevaEstrellaFugaz = new EstrellaFugaz(new Punto(0, 250), new Punto(1, -1), 32,32);
-				// agregamos la nueva estrella a la lista de objetos espaciales
-				this.objetosEspacialesNuevos.add(nuevaEstrellaFugaz);
-				setChanged();
-				notifyObservers();
+			int pos = this.aleatorio.nextInt(412)+100;
+			if (this.naveJugador.getVidas() == 1) { // si el jugador tiene una vida
+				// aleatorio
+				if (this.aleatorio.nextInt(500) == 50) {
+					// creamos una nueva estrella fugaz
+					EstrellaFugaz nuevaEstrellaFugaz = new EstrellaFugaz(new Punto(0, pos), new Punto(1, 0), 32,32);
+					// agregamos la nueva estrella a la lista de objetos espaciales
+					this.objetosEspacialesNuevos.add(nuevaEstrellaFugaz);
+					setChanged();
+					notifyObservers();
+				}
+				
+			}
+			if (this.naveJugador.getEnergia() < 50) {
+				// aleatorio
+				if (this.aleatorio.nextInt(500) == 50) {
+					// creamos una nueva estrella fugaz
+					EstrellaFugaz nuevaEstrellaFugaz = new EstrellaFugaz(new Punto(0, pos), new Punto(1, 0), 32,32);
+					// agregamos la nueva estrella a la lista de objetos espaciales
+					this.objetosEspacialesNuevos.add(nuevaEstrellaFugaz);
+					setChanged();
+					notifyObservers();
+				}				
 			}
 		}
 		
 		if (cantMeteorito < 2) {
-			// aleatorio de 0 a 20 ¿si es 0?
-			if (this.aleatorio.nextInt(20) == 0) {
-				// creamos un nuevo meteorito
-				Meteorito nuevoMeteorito = new Meteorito(new Punto(0, 303), new Punto(1, -1),32,32,25);
-				// agregamos el nuevo meteorito a la lista de objetos espaciales
-				this.objetosEspacialesNuevos.add(nuevoMeteorito);
-				setChanged();
-				notifyObservers();	
-			}
-		}
+			// aleatorio
+			if (this.aleatorio.nextInt(500) == 0) {
+				int i = this.aleatorio.nextInt(3); // para decidir de que lado sale izq,der,centro
+				int pos = this.aleatorio.nextInt(384)+64;
+				if (i == 0) { // salimos de la izquierda
+					if (pos < 192) {
+						// creamos un nuevo meteorito
+						Meteorito nuevoMeteorito = new Meteorito(new Punto(0, pos), new Punto(1, 0),32,32,25);
+						// agregamos el nuevo meteorito a la lista de objetos espaciales
+						this.objetosEspacialesNuevos.add(nuevoMeteorito);
+						setChanged();
+						notifyObservers();	
+						
+					}else{
+						
+						// creamos un nuevo meteorito
+						Meteorito nuevoMeteorito = new Meteorito(new Punto(0, pos), new Punto(1, -1),32,32,25);
+						// agregamos el nuevo meteorito a la lista de objetos espaciales
+						this.objetosEspacialesNuevos.add(nuevoMeteorito);
+						setChanged();
+						notifyObservers();	
+						
+					}
+					
+				}else if (i == 1) {// derecha
+					if (pos < 192) {
+						// creamos un nuevo meteorito
+						Meteorito nuevoMeteorito = new Meteorito(new Punto(479, pos), new Punto(-1, 0),32,32,25);
+						// agregamos el nuevo meteorito a la lista de objetos espaciales
+						this.objetosEspacialesNuevos.add(nuevoMeteorito);
+						setChanged();
+						notifyObservers();	
+						
+					}else{
+						
+						// creamos un nuevo meteorito
+						Meteorito nuevoMeteorito = new Meteorito(new Punto(479, pos), new Punto(-1, -1),32,32,25);
+						// agregamos el nuevo meteorito a la lista de objetos espaciales
+						this.objetosEspacialesNuevos.add(nuevoMeteorito);
+						setChanged();
+						notifyObservers();	
+						
+					}
+				}else if (i == 2) { // centro
+					// creamos un nuevo meteorito
+					Meteorito nuevoMeteorito = new Meteorito(new Punto(pos, 511), new Punto(0, -1),32,32,25);
+					// agregamos el nuevo meteorito a la lista de objetos espaciales
+					this.objetosEspacialesNuevos.add(nuevoMeteorito);
+					setChanged();
+					notifyObservers();
+				}// fin if
+			}// fin if aleatorio
+		}// fin meteorito
 		
 		if (cantAsteriode < 2) {
-			// aleatorio de 0 a 20 ¿si es 0?
-			if (this.aleatorio.nextInt(20) == 0) {
-				// creamos un nuevo asteroide
-				Asteroide nuevoAsteroide = new Asteroide(new Punto(479, 271),new Punto(-1, -1),32,32,40);
-				// agregamos el nuevo asteroide la a la lista de objetos espaciales
-				this.objetosEspacialesNuevos.add(nuevoAsteroide);
-				setChanged();
-				notifyObservers();
-			}
-		}
-		
-	}
+			if (this.aleatorio.nextInt(500) == 0) {
+				int i = this.aleatorio.nextInt(3); // para decidir de que lado sale izq,der,centro
+				int pos = this.aleatorio.nextInt(384)+64;
+				if (i == 0) { // derecha
+					if (pos < 192) { // lo lanzamos horizontal
+						// creamos un nuevo asteroide
+						Asteroide nuevoAsteroide = new Asteroide(new Punto(0, pos),new Punto(1, 0),32,32,40);
+						// agregamos el nuevo asteroide la a la lista de objetos espaciales
+						this.objetosEspacialesNuevos.add(nuevoAsteroide);
+						setChanged();
+						notifyObservers();
+						
+					}else { // lo lanzamos diagonal
+						// creamos un nuevo asteroide
+						Asteroide nuevoAsteroide = new Asteroide(new Punto(0, pos),new Punto(1, -1),32,32,40);
+						// agregamos el nuevo asteroide la a la lista de objetos espaciales
+						this.objetosEspacialesNuevos.add(nuevoAsteroide);
+						setChanged();
+						notifyObservers();
+						
+					}
+				}else if (i == 1) { // izquierda
+					if (pos < 192) { // lo lanzamos horizontal
+						// creamos un nuevo asteroide
+						Asteroide nuevoAsteroide = new Asteroide(new Punto(479, pos),new Punto(-1, 0),32,32,40);
+						// agregamos el nuevo asteroide la a la lista de objetos espaciales
+						this.objetosEspacialesNuevos.add(nuevoAsteroide);
+						setChanged();
+						notifyObservers();
+						
+					}else { // lo lanzamos diagonal
+						// creamos un nuevo asteroide
+						Asteroide nuevoAsteroide = new Asteroide(new Punto(479, pos),new Punto(-1, -1),32,32,40);
+						// agregamos el nuevo asteroide la a la lista de objetos espaciales
+						this.objetosEspacialesNuevos.add(nuevoAsteroide);
+						setChanged();
+						notifyObservers();
+						
+					}
+				}else if(i == 2){ // centro
+					
+					// creamos un nuevo asteroide
+					Asteroide nuevoAsteroide = new Asteroide(new Punto(pos, 511),new Punto(0, -1),32,32,40);
+					// agregamos el nuevo asteroide la a la lista de objetos espaciales
+					this.objetosEspacialesNuevos.add(nuevoAsteroide);
+					setChanged();
+					notifyObservers();
+					
+				}
+			}//fin if
+		}//
+	}////fin
 
 	// metodo para decidir los ataques de las naves enemigas
 	private void decidirAtaque() {
@@ -570,25 +647,26 @@ public class Juego extends Observable{
 						// le sumamos una vida al jugador
 						this.naveJugador.sumarVida();
 						System.out.println("Estrella Fugaz te ha regalado una vida");
+					}else{
+						// agregamos a objetos muertos
+						objetosMuertos.add(objetosEspaciales.get(j));
+						this.setChanged();
+						this.notifyObservers();
+						// eliminamos la estrella fugaz
+						this.objetosEspaciales.remove(j);
+						//retrocedemos un paso en j
+						j--;
+						// agregamos a objetos muertos
+						objetosMuertos.add(disparosJugador.get(i));
+						this.setChanged();
+						this.notifyObservers();
+						// eliminamos disparo jugador
+						this.disparosJugador.remove(i);
+						// retrocedemos en i
+						i--;
+						// comenzamos de nuevo
+						break;
 					}
-					// agregamos a objetos muertos
-					objetosMuertos.add(objetosEspaciales.get(j));
-					this.setChanged();
-					this.notifyObservers();
-					// eliminamos la estrella fugaz
-					this.objetosEspaciales.remove(j);
-					//retrocedemos un paso en j
-					j--;
-					// agregamos a objetos muertos
-					objetosMuertos.add(disparosJugador.get(i));
-					this.setChanged();
-					this.notifyObservers();
-					// eliminamos disparo jugador
-					this.disparosJugador.remove(i);
-					// retrocedemos en i
-					i--;
-					// comenzamos de nuevo
-					break;
 					//----------------------------------------
 					//faltaria sumar puntaje
 					

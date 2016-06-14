@@ -3,21 +3,21 @@ package Controlador;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.net.URL;
-
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-
 import Modelo.Juego;
 import Vista.VentanaPrincipal;
 
-public class Controlador implements KeyListener {
+public class Controlador implements KeyListener{
 
-	private Juego juego = null;
+	private Juego juego;
 	
 	public Controlador(Juego juego) {
 		//
 		this.juego = juego;
 	}
+	
+	
 	
 	@Override
 	public void keyPressed(KeyEvent e) {
@@ -25,14 +25,11 @@ public class Controlador implements KeyListener {
 		
 		if (numeroTecla == KeyEvent.VK_I) {
 			
-			this.juego.cargar();
-			this.juego.imprimir();
+			this.juego.cargarNivel1();
 		}
 		
 		if (numeroTecla == KeyEvent.VK_A) {
 			this.juego.jugar();
-			this.juego.imprimir();
-			
 		}
 		
 		
@@ -76,7 +73,7 @@ public class Controlador implements KeyListener {
 					+ "Aguaysol Ernesto\n"
 					+ "";
 			this.juego.setPausa(true);				
-			criditos(mensaje);
+			showMessageDialog(mensaje);
 			this.juego.setPausa(false);
 		}
 	}
@@ -127,16 +124,16 @@ public class Controlador implements KeyListener {
 		
 	}
 	
-	public static void criditos(String mensaje){
+	public static void showMessageDialog(String mensaje){
 		
 		URL path = VentanaPrincipal.class.getResource("Imagenes/NaveJugador2.png");
-		JOptionPane.showMessageDialog(null, mensaje ,"Créditos", JOptionPane.INFORMATION_MESSAGE,new ImageIcon(path));
+		JOptionPane.showMessageDialog(null, mensaje ,"Mensaje", JOptionPane.INFORMATION_MESSAGE,new ImageIcon(path));
 		
 	}
 	
-	public static String showImputDialog(String mensaje){
-		URL path = VentanaPrincipal.class.getResource("Imagenes/NaveJugador2.png");
-		return (String) JOptionPane.showInputDialog(null, mensaje ,"Entrada", JOptionPane.INFORMATION_MESSAGE,new ImageIcon(path), null, "");
+	public static int showConfirmDialog(String mensaje){
+		URL path = VentanaPrincipal.class.getResource("Imagenes/NaveJugador2.png");		
+		return JOptionPane.showConfirmDialog(null, mensaje, "Confirmar", 0, 0, new ImageIcon(path));
 	}
 	
 	public static void showAyudaMessage(String mensaje){
@@ -144,6 +141,7 @@ public class Controlador implements KeyListener {
 		JOptionPane.showMessageDialog(null,mensaje,"Ayuda", JOptionPane.WARNING_MESSAGE,new ImageIcon(path));
 		
 	}
-
 	
+	
+
 }

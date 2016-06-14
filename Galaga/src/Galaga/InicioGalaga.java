@@ -1,6 +1,7 @@
 package Galaga;
 
 import javax.swing.UIManager;
+
 import Controlador.Controlador;
 import Modelo.Juego;
 import Vista.VentanaPrincipal;
@@ -12,16 +13,19 @@ public class InicioGalaga {
 			UIManager.setLookAndFeel("com.jtattoo.plaf.hifi.HiFiLookAndFeel");
 		} catch (Exception e) {}
 		
+		
 		Juego juego = new Juego();
-		VentanaPrincipal ventana = new VentanaPrincipal(juego);
-		ventana.setVisible(true);	
+		VentanaPrincipal vista = new VentanaPrincipal(juego);
+		vista.setVisible(true);	
+		juego.addObserver(vista);
+
 		Controlador controlador = new Controlador(juego);
-		ventana.addKeyListener(controlador);
+		vista.addKeyListener(controlador);
 		
-		juego.addObserver(ventana);
-		
-		juego.cargar();
+		juego.cargarNivel1();
 		juego.jugar();
+		
+//		
 	}
 
 }

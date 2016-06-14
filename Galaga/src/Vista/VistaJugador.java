@@ -19,19 +19,23 @@ import Modelo.NaveJugador;;
 public class VistaJugador implements Observer{
 	//
 	private JLabel lblNave;
+	private JLabel lblNaveInmortal;
 	private LinkedList<JLabel> lblVidas;
-	private ImageIcon imagenNave;
 	private JProgressBar energia;
+	private NaveJugador naveJugador;
 	
 	public VistaJugador(){
 		// nave
 		lblNave = new JLabel();
-//		lblNave.setBounds(n.getPosicion().getX(),n.getPosicion().getY()-512, 32, 32);
 		URL pathGalaga = this.getClass().getResource("Imagenes/NaveJugador.png");
-		imagenNave = new ImageIcon(pathGalaga);
-//		Icon iconoNave = new ImageIcon(imagenNave.getImage().getScaledInstance(lblNave.getWidth(), lblNave.getHeight(), Image.SCALE_DEFAULT));
+		ImageIcon imagenNave = new ImageIcon(pathGalaga);
 		lblNave.setIcon(imagenNave);
-//		lblNave.repaint();
+		
+		// 
+		lblNaveInmortal = new JLabel();
+		URL pathCampoEnergia = this.getClass().getResource("Imagenes/NaveInmortal.png");
+		ImageIcon imagenInmortal = new ImageIcon(pathCampoEnergia);
+		lblNaveInmortal.setIcon(imagenInmortal);
 		
 		// vidas
 		this.lblVidas = new LinkedList<>();
@@ -67,7 +71,12 @@ public class VistaJugador implements Observer{
 	public void update(Observable obs, Object arg1) 
 	{
 		NaveJugador n = (NaveJugador) obs;
-		lblNave.setBounds(n.getPosicion().getX(),512- n.getPosicion().getY()-n.getAlto(), n.getAlto(), n.getAncho());		
+//		if (true) {
+//			lblNaveInmortal.setBounds(n.getPosicion().getX(),512- n.getPosicion().getY()-n.getAlto(), n.getAlto(), n.getAncho());		
+//		}else {
+			lblNave.setBounds(n.getPosicion().getX(),512- n.getPosicion().getY()-n.getAlto(), n.getAlto(), n.getAncho());					
+//		}
+			
 		this.energia.setValue(n.getEnergia());
 		if (n.getVidas() == 3) {
 			this.lblVidas.get(0).setVisible(true);
@@ -96,12 +105,24 @@ public class VistaJugador implements Observer{
 		return this.lblNave;
 	}
 	
+	public JLabel getLblInmortal() {
+		return lblNaveInmortal;
+	}
+	
 	public JProgressBar getEnergia() {
 		return energia;
 	}
 	
 	public LinkedList<JLabel> getLblVidas() {
 		return lblVidas;
+	}
+	
+	public NaveJugador getNaveJugador() {
+		return naveJugador;
+	}
+	
+	public void setNaveJugador(NaveJugador naveJugador) {
+		this.naveJugador = naveJugador;
 	}
 	
 }

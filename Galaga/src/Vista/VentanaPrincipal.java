@@ -16,6 +16,7 @@ import java.awt.BorderLayout;
 import javax.swing.JPanel;
 
 
+
 public class VentanaPrincipal extends JFrame implements Observer{
 
 	private static final long serialVersionUID = 1L;
@@ -23,7 +24,6 @@ public class VentanaPrincipal extends JFrame implements Observer{
 	private Juego juego;
 	private VistaEscenario espacio;
 	private VistaJugador vistaJugador;
-
 	private LinkedList<VistaObjetoEspacial> vistaObjetosEspaciales;
 	private LinkedList<VistaNaveEnemiga> vistaNavesEnemigas;
 	private LinkedList<VistaDisparo> vistaDisparos;
@@ -55,6 +55,12 @@ public class VentanaPrincipal extends JFrame implements Observer{
 		menuBar_1.add(mnArchivo);
 		
 		JMenuItem mntmNuevo = new JMenuItem("Nuevo Juego");
+//		mntmNuevo.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				controlador.jugarNuevo();
+//				
+//			}
+//		});
 		mnArchivo.add(mntmNuevo);
 		
 		JMenuItem mntmAbrir = new JMenuItem("Abrir Juego");
@@ -78,11 +84,14 @@ public class VentanaPrincipal extends JFrame implements Observer{
 				
 		//----------------------------
 		
+//		this.controlador = new Controlador();
+//		this.addKeyListener(controlador);
+		
+		this.juego = juego;
 		this.vistaObjetosEspaciales = new LinkedList<>();
 		this.vistaNavesEnemigas = new LinkedList<>();
 		this.vistaDisparos = new LinkedList<>();
 		
-		this.juego = juego;
 		// instanciamos la vista jugador 
 		this.vistaJugador = new VistaJugador();
 		// al juego le pasamos un observador
@@ -91,6 +100,7 @@ public class VentanaPrincipal extends JFrame implements Observer{
 		this.espacio = new VistaEscenario();
 		// agregamos label al escenario
 		this.espacio.getLblEspacio().add(this.vistaJugador.getLblNaveJugador());
+		this.espacio.getLblEspacio().add(this.vistaJugador.getLblInmortal());
 		this.espacio.getLblEspacio().add(this.vistaJugador.getEnergia());
 		this.espacio.getLblEspacio().add(this.vistaJugador.getLblVidas().get(0));
 		this.espacio.getLblEspacio().add(this.vistaJugador.getLblVidas().get(1));
@@ -280,10 +290,6 @@ public class VentanaPrincipal extends JFrame implements Observer{
 	}
 
 
-	public void agregarJuego(Juego juego) {
-		//
-		this.juego = juego;
-		
-	}
+	
 
 }
