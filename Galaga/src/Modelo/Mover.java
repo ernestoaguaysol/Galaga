@@ -2,7 +2,7 @@ package Modelo;
 
 //import java.util.LinkedList;
 
-public class KamikaseAlgoritmo {
+public class Mover {
 	private static int diferencia;
 	
 	

@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 
+import Controlador.Controlador;
 import Modelo.*;
 
 import javax.swing.JMenuItem;
@@ -20,6 +21,8 @@ import javax.swing.JMenuItem;
 import java.awt.BorderLayout;
 
 import javax.swing.JPanel;
+
+
 
 
 
@@ -173,6 +176,19 @@ public class VentanaPrincipal extends JFrame implements Observer{
 			}
 			
 		}
+		
+		//si la cantidad de vidas es igual a 0, mostramos mensaje de game over y limpiamos la pantalla.
+		if(juego.getNaveJugador().getVidas()==0){
+			Controlador.showMessageDialog("GAME OVER");
+			Galaga.InicioGalaga.main(null);
+		}
+		//si el juego termina con la destruccion de todas las naves enemigas nos muestra la informacion
+		//y queda preparado para un nuevo juego.
+		if(juego.isGameWin()){
+			Controlador.showMessageDialog("FELICITACIONES!!!!!......\n"+"DESTRUISTE A TODAS LAS NAVES ENEMIGAS..\n"+"Proximamente Tendremos mas Niveles\n"+"si es que aprobamos.................");
+			Galaga.InicioGalaga.main(null);
+		}
+		
 		
 		LinkedList<Disparo> disparosJugador = juego.getDisparosJugadorNuevos();
 		

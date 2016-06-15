@@ -28,7 +28,7 @@ public class Juego extends Observable{
 	private LinkedList<ObjetoMovil> objetosMuertos;
 	//
 	private int puntaje = 0;
-	
+	private boolean gameWin;
 	private Historial historial;
 	
 	private boolean pausa;
@@ -55,14 +55,14 @@ public class Juego extends Observable{
 	public void cargarNivel1() {
 		// lista de naves enemigas
 		//cracion de demoledores
-		Demoledor dem1 = new Demoledor(new Punto(47, 447), new Punto(0, 0), 32,32);
-		Demoledor dem2 = new Demoledor(new Punto(111, 447), new Punto(0, 0), 32,32);
-		Demoledor dem3 = new Demoledor(new Punto(175, 447), new Punto(0, 0), 32,32);
-		Demoledor dem4 = new Demoledor(new Punto(239, 447), new Punto(0, 0), 32,32);
+		//Demoledor dem1 = new Demoledor(new Punto(47, 447), new Punto(0, 0), 32,32);
+		//Demoledor dem2 = new Demoledor(new Punto(111, 447), new Punto(0, 0), 32,32);
+		//Demoledor dem3 = new Demoledor(new Punto(175, 447), new Punto(0, 0), 32,32);
+		//Demoledor dem4 = new Demoledor(new Punto(239, 447), new Punto(0, 0), 32,32);
 		Demoledor dem5 = new Demoledor(new Punto(303, 447), new Punto(0, 0), 32,32);
 		Demoledor dem6 = new Demoledor(new Punto(367, 447), new Punto(0, 0), 32,32);
 		Demoledor dem7 = new Demoledor(new Punto(431, 447), new Punto(0, 0), 32,32);
-		//creacion de destructores
+		/*/creacion de destructores
 		Destructor des1 = new Destructor(new Punto(47, 383), new Punto(0, 0), 32,32);
 		Destructor des2 = new Destructor(new Punto(111, 383), new Punto(0, 0), 32,32);
 		Destructor des3 = new Destructor(new Punto(175, 383), new Punto(0, 0), 32,32);
@@ -81,15 +81,15 @@ public class Juego extends Observable{
 		Depredador dep5 = new Depredador(new Punto(303, 319), new Punto(0, 0), 32,32);
 		Depredador dep6 = new Depredador(new Punto(367, 319), new Punto(0, 0), 32,32);
 		Depredador dep7 = new Depredador(new Punto(431, 319), new Punto(0, 0), 32,32);
-		//los añadimos a la lista de naves enemigas
-		this.navesNuevas.add(dem1);
-		this.navesNuevas.add(dem2);
-		this.navesNuevas.add(dem3);
-		this.navesNuevas.add(dem4);
+		*///los añadimos a la lista de naves enemigas
+		//this.navesNuevas.add(dem1);
+		//this.navesNuevas.add(dem2);
+		//this.navesNuevas.add(dem3);
+		//this.navesNuevas.add(dem4);
 		this.navesNuevas.add(dem5);
 		this.navesNuevas.add(dem6);
 		this.navesNuevas.add(dem7);
-		///
+		/*//
 		this.navesNuevas.add(des1);
 		this.navesNuevas.add(des2);
 		this.navesNuevas.add(des3);
@@ -105,7 +105,7 @@ public class Juego extends Observable{
 		this.navesNuevas.add(dep5);
 		this.navesNuevas.add(dep6);
 		this.navesNuevas.add(dep7);
-		//	
+		*///
 		
 		this.setChanged();
 		this.notifyObservers();
@@ -149,7 +149,9 @@ public class Juego extends Observable{
 						this.notifyObservers();
 					}
 				}
-					
+				
+				
+				
 				//decidimos si la nave enemiga ataca
 				this.decidirAtaque();
 						
@@ -172,6 +174,10 @@ public class Juego extends Observable{
 			}// fin if else			
 			
 		}//fin while
+		if(this.navesEnemigas.size()==0){
+			gameWin=true;
+		}
+		
 	}
 	
 	//movemos todos los objetos moviles
@@ -183,13 +189,13 @@ public class Juego extends Observable{
 			//chequeo si la nave tiene estado KAMIKASE tiene otro patron asignado
 			if (n.getEstado().equals(Estado.KAMIKAZE)){
 				//metodo mover de la clase Kamikase Algoritmo
-				KamikaseAlgoritmo.moverKamikaze(this.naveJugador.getPosicion(), n);
+				Mover.moverKamikaze(this.naveJugador.getPosicion(), n);
 				n.mover();
 			}else if(n.getEstado().equals(Estado.VOLVIENDO)){//si el estado es volviendo
-				KamikaseAlgoritmo.moverVolviendo(n);
+				Mover.moverVolviendo(n);
 				n.mover();
 			}else {
-				KamikaseAlgoritmo.moverPasivo(n); //o si es Pasivo...
+				Mover.moverPasivo(n); //o si es Pasivo...
 				n.mover();
 			}
 			
@@ -1129,4 +1135,12 @@ public class Juego extends Observable{
 		}
 		this.disparosEnemigosNuevos.clear();
 	}
+	
+
+	//retorno el estado del juego, naves enemigas destruidas.
+	public boolean isGameWin() {
+		return gameWin;
+	}
+
+	
 }
