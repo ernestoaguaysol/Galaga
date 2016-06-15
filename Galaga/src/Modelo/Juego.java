@@ -73,6 +73,14 @@ public class Juego extends Observable{
 		
 		
 		
+		//creacion de depredador
+		Depredador dep1 = new Depredador(new Punto(47, 319), new Punto(0, 0), 32,32);
+		Depredador dep2 = new Depredador(new Punto(111, 319), new Punto(0, 0), 32,32);
+		Depredador dep3 = new Depredador(new Punto(175, 319), new Punto(0, 0), 32,32);
+		Depredador dep4 = new Depredador(new Punto(239, 319), new Punto(0, 0), 32,32);
+		Depredador dep5 = new Depredador(new Punto(303, 319), new Punto(0, 0), 32,32);
+		Depredador dep6 = new Depredador(new Punto(367, 319), new Punto(0, 0), 32,32);
+		Depredador dep7 = new Depredador(new Punto(431, 319), new Punto(0, 0), 32,32);
 		//los añadimos a la lista de naves enemigas
 		this.navesNuevas.add(dem1);
 		this.navesNuevas.add(dem2);
@@ -89,6 +97,14 @@ public class Juego extends Observable{
 		this.navesNuevas.add(des5);
 		this.navesNuevas.add(des6);
 		this.navesNuevas.add(des7);
+		///
+		this.navesNuevas.add(dep1);
+		this.navesNuevas.add(dep2);
+		this.navesNuevas.add(dep3);
+		this.navesNuevas.add(dep4);
+		this.navesNuevas.add(dep5);
+		this.navesNuevas.add(dep6);
+		this.navesNuevas.add(dep7);
 		//	
 		
 		this.setChanged();
@@ -225,12 +241,12 @@ public class Juego extends Observable{
 		
 		// si no hay estrella fugaz
 		if (cantEstrellaFugaz == 0) {
-			int pos = this.aleatorio.nextInt(412)+100;
+			int pos = this.aleatorio.nextInt(384)+64;
 			if (this.naveJugador.getVidas() == 1) { // si el jugador tiene una vida
 				// aleatorio
 				if (this.aleatorio.nextInt(500) == 50) {
 					// creamos una nueva estrella fugaz
-					EstrellaFugaz nuevaEstrellaFugaz = new EstrellaFugaz(new Punto(0, pos), new Punto(1, 0), 32,32);
+					EstrellaFugaz nuevaEstrellaFugaz = new EstrellaFugaz(new Punto(pos,511), new Punto(0, -1), 32,32);
 					// agregamos la nueva estrella a la lista de objetos espaciales
 					this.objetosEspacialesNuevos.add(nuevaEstrellaFugaz);
 					setChanged();
@@ -242,7 +258,7 @@ public class Juego extends Observable{
 				// aleatorio
 				if (this.aleatorio.nextInt(500) == 50) {
 					// creamos una nueva estrella fugaz
-					EstrellaFugaz nuevaEstrellaFugaz = new EstrellaFugaz(new Punto(0, pos), new Punto(1, 0), 32,32);
+					EstrellaFugaz nuevaEstrellaFugaz = new EstrellaFugaz(new Punto(pos,511), new Punto(0, -1), 32,32);
 					// agregamos la nueva estrella a la lista de objetos espaciales
 					this.objetosEspacialesNuevos.add(nuevaEstrellaFugaz);
 					setChanged();
@@ -954,27 +970,109 @@ public class Juego extends Observable{
 	}
 	
 	public void cargarNivelGenerico(Historial historial){
+		// primero descargamos el nivel
+		this.descargarNivel();
+		
 		ArrayList<ObjetoHistorial> objetoH = historial.getObjetos();
 		for (ObjetoHistorial objetoHistorial : objetoH) {
+			// todos tiene velocidad, posicion, alto y ancho
+			int posX = Integer.parseInt(objetoHistorial.getPosicion().get(0));
+			int posY = Integer.parseInt(objetoHistorial.getPosicion().get(1));
+			
+			int velX = Integer.parseInt(objetoHistorial.getVelocidad().get(0));
+			int velY = Integer.parseInt(objetoHistorial.getVelocidad().get(1));
+			
+			int ancho = Integer.parseInt(objetoHistorial.getTamanio().get(0));
+			int alto = Integer.parseInt(objetoHistorial.getTamanio().get(1));
+			
 			// la nave jugador
 			if (objetoHistorial.getTipo().equals("nave jugador")) {
-				int posX = Integer.parseInt(objetoHistorial.getPosicion().get(0));
-				int posY = Integer.parseInt(objetoHistorial.getPosicion().get(1));
+
+//				int vidas = Integer.parseInt(objetoHistorial.getVidas());
+//		
+//				int energia = Integer.parseInt(objetoHistorial.getEnergia());
+//				
+//				this.naveJugador = new NaveJugador(new Punto(posX, posY), ancho, alto,vidas,energia);
+//				
+			}else if (objetoHistorial.getTipo().equals("nave enemiga")) {
 				
-//				int velX = Integer.parseInt(objetoHistorial.getVelocidad().get(0));
-//				int velY = Integer.parseInt(objetoHistorial.getVelocidad().get(1));
-
-				int ancho = Integer.parseInt(objetoHistorial.getTamanio().get(0));
-				int alto = Integer.parseInt(objetoHistorial.getTamanio().get(1));
-
-				int vidas = Integer.parseInt(objetoHistorial.getVidas());
-		
 				int energia = Integer.parseInt(objetoHistorial.getEnergia());
-				
-				
-				this.naveJugador = new NaveJugador(new Punto(posX, posY), ancho, alto,vidas,energia);
-			}
-		}
+				Estado estado = null;
+				if (objetoHistorial.getEstado().equals("PASIVO")) {
+					estado = Estado.PASIVO;
+					System.out.println("cargo"+estado.name());
+				}else if (objetoHistorial.getEstado().equals("KAMIKAZE")) {
+					estado = Estado.KAMIKAZE;
+					System.out.println("cargo"+estado.name());
+				}else if (objetoHistorial.getEstado().equals("VOLVIENDO")) {
+					estado = Estado.VOLVIENDO;
+					System.out.println("cargo"+estado.name());
+				}else if (objetoHistorial.getEstado().equals("ATACANDO")) {
+					estado = Estado.ATACANDO;
+					System.out.println("cargo"+estado.name());
+				}
+				if (objetoHistorial.getNombre().equals("demoledor")) {
+					Demoledor dem = new Demoledor(new Punto(posX, posY), new Punto(velX, velY), ancho, alto);
+					dem.setEstado(estado);
+					dem.setEnergia(energia);
+					this.navesNuevas.add(dem);
+				}else if (objetoHistorial.getNombre().equals("depredador")) {
+					Depredador dep = new Depredador(new Punto(posX, posY), new Punto(velX, velY), alto,ancho);
+					dep.setEstado(estado);
+					dep.setEnergia(energia);
+					this.navesNuevas.add(dep);
+					
+				}else if (objetoHistorial.getNombre().equals("destructor")) {
+					Destructor des = new Destructor(new Punto(posX, posY), new Punto(velX, velY), ancho, alto);
+					des.setEstado(estado);
+					des.setEnergia(energia);
+					this.navesNuevas.add(des);
+					
+				}else if (objetoHistorial.getNombre().equals("exterminador")) {
+					Exterminador ext = new Exterminador(new Punto(posX, posY), new Punto(velX, velY), ancho, alto);
+					ext.setEstado(estado);
+					ext.setEnergia(energia);
+					this.navesNuevas.add(ext);
+					
+				}
+			}else if (objetoHistorial.getTipo().equals("objeto espacial")) {
+				int danio = Integer.parseInt(objetoHistorial.getDanio());
+				if (objetoHistorial.getNombre().equals("estrella fugaz")) {
+					EstrellaFugaz est = new EstrellaFugaz(new Punto(posX, posY), new Punto(velX, velY), ancho, alto);
+					this.objetosEspacialesNuevos.add(est);
+				}else if (objetoHistorial.getNombre().equals("meteorito")) {
+					Meteorito met = new Meteorito(new Punto(posX, posY), new Punto(velX, velY), ancho, alto, danio);
+					this.objetosEspacialesNuevos.add(met);
+				}else if (objetoHistorial.getNombre().equals("asteroide")) {
+					Asteroide ast = new Asteroide(new Punto(posX, posY), new Punto(velX, velY), ancho, alto, danio);
+					this.objetosEspacialesNuevos.add(ast);
+				}
+			}else if (objetoHistorial.getTipo().equals("disparo enemigo")) {
+				if (objetoHistorial.getNombre().equals("laser")) {
+					Laser las = new Laser(new Punto(posX, posY), new Punto(velX, velY), ancho, alto); 
+					this.disparosEnemigosNuevos.add(las);
+				}else if (objetoHistorial.getNombre().equals("misil")) {
+					Misil mis = new Misil(new Punto(posX, posY), new Punto(velX, velY), ancho, alto);
+					this.disparosEnemigosNuevos.add(mis);
+				}else if (objetoHistorial.getNombre().equals("bomba")) {
+					Bomba bom = new Bomba(new Punto(posX, posY), new Punto(velX, velY), ancho, alto);
+					this.disparosEnemigosNuevos.add(bom);
+				}
+			}else if (objetoHistorial.getTipo().equals("disparo jugador")) {
+				if (objetoHistorial.getNombre().equals("laser")) {
+					Laser las = new Laser(new Punto(posX, posY), new Punto(velX, velY), ancho, alto); 
+					this.disparosEnemigosNuevos.add(las);
+				}else if (objetoHistorial.getNombre().equals("misil")) {
+					Misil mis = new Misil(new Punto(posX, posY), new Punto(velX, velY), ancho, alto);
+					this.disparosEnemigosNuevos.add(mis);
+				}else if (objetoHistorial.getNombre().equals("bomba")) {
+					Bomba bom = new Bomba(new Punto(posX, posY), new Punto(velX, velY), ancho, alto);
+					this.disparosEnemigosNuevos.add(bom);
+				}
+			}// fin if objetos
+		}// fin for
+		setChanged();
+		notifyObservers();
 	}
 
 	public void descargarNivel() {
