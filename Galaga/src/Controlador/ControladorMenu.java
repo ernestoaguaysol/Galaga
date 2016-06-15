@@ -127,16 +127,26 @@ public class ControladorMenu implements ActionListener{
 	private void abrir() {
 		// 
 		JFileChooser selectorDeArchivo = new JFileChooser();
-		FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos LOGO", "logo");
+		FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos Galaga", "galaga");
 		selectorDeArchivo.setFileFilter(filtro);
 		int estado = selectorDeArchivo.showOpenDialog(null);
 		if (estado == JFileChooser.APPROVE_OPTION) {
 			File archivo_selecionado = selectorDeArchivo.getSelectedFile();
 			String ruta = archivo_selecionado.getAbsolutePath();
 			Historial historial = GalagaXML.leerXML(ruta);
-			// aca va otro hilo
-			
-			juego.cargarNivelGenerico(historial);
+			//
+			Thread t = new Thread(new Runnable() {
+        		
+        		@Override
+        		public void run() {
+        			juego.descargarNivel();
+        			juego.cargarNivelGenerico(historial);
+        			juego.jugar();
+        			
+        		}
+        	});
+        	
+        	t.start();
 			
 		}else{
 			

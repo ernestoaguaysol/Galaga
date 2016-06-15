@@ -968,24 +968,28 @@ public class Juego extends Observable{
 			// la nave jugador
 			if (objetoHistorial.getTipo().equals("nave jugador")) {
 
-				int vidas = Integer.parseInt(objetoHistorial.getVidas());
-		
-				int energia = Integer.parseInt(objetoHistorial.getEnergia());
-				
-				this.naveJugador = new NaveJugador(new Punto(posX, posY), ancho, alto,vidas,energia);
-				
+//				int vidas = Integer.parseInt(objetoHistorial.getVidas());
+//		
+//				int energia = Integer.parseInt(objetoHistorial.getEnergia());
+//				
+//				this.naveJugador = new NaveJugador(new Punto(posX, posY), ancho, alto,vidas,energia);
+//				
 			}else if (objetoHistorial.getTipo().equals("nave enemiga")) {
 				
 				int energia = Integer.parseInt(objetoHistorial.getEnergia());
 				Estado estado = null;
 				if (objetoHistorial.getEstado().equals("PASIVO")) {
 					estado = Estado.PASIVO;
-				}else if (objetoHistorial.getEstado().equals("KAMIKZAZE")) {
+					System.out.println("cargo"+estado.name());
+				}else if (objetoHistorial.getEstado().equals("KAMIKAZE")) {
 					estado = Estado.KAMIKAZE;
+					System.out.println("cargo"+estado.name());
 				}else if (objetoHistorial.getEstado().equals("VOLVIENDO")) {
 					estado = Estado.VOLVIENDO;
+					System.out.println("cargo"+estado.name());
 				}else if (objetoHistorial.getEstado().equals("ATACANDO")) {
 					estado = Estado.ATACANDO;
+					System.out.println("cargo"+estado.name());
 				}
 				if (objetoHistorial.getNombre().equals("demoledor")) {
 					Demoledor dem = new Demoledor(new Punto(posX, posY), new Punto(velX, velY), ancho, alto);
@@ -1045,8 +1049,10 @@ public class Juego extends Observable{
 					Bomba bom = new Bomba(new Punto(posX, posY), new Punto(velX, velY), ancho, alto);
 					this.disparosEnemigosNuevos.add(bom);
 				}
-			}
-		}
+			}// fin if objetos
+		}// fin for
+		setChanged();
+		notifyObservers();
 	}
 
 	public void descargarNivel() {
