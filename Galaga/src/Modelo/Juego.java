@@ -70,6 +70,9 @@ public class Juego extends Observable{
 		Destructor des5 = new Destructor(new Punto(303, 383), new Punto(0, 0), 32,32);
 		Destructor des6 = new Destructor(new Punto(367, 383), new Punto(0, 0), 32,32);
 		Destructor des7 = new Destructor(new Punto(431, 383), new Punto(0, 0), 32,32);
+		
+		
+		
 		//los añadimos a la lista de naves enemigas
 		this.navesNuevas.add(dem1);
 		this.navesNuevas.add(dem2);
@@ -86,7 +89,8 @@ public class Juego extends Observable{
 		this.navesNuevas.add(des5);
 		this.navesNuevas.add(des6);
 		this.navesNuevas.add(des7);
-		//		
+		//	
+		
 		this.setChanged();
 		this.notifyObservers();
 	}
@@ -169,7 +173,7 @@ public class Juego extends Observable{
 				KamikaseAlgoritmo.moverVolviendo(n);
 				n.mover();
 			}else {
-				KamikaseAlgoritmo.moverPasivo(n);
+				KamikaseAlgoritmo.moverPasivo(n); //o si es Pasivo...
 				n.mover();
 			}
 			

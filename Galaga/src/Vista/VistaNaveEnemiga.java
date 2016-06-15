@@ -3,8 +3,12 @@ package Vista;
 import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
+
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+
+import sonido.Sonido;
+import Modelo.Estado;
 import Modelo.NaveEnemiga;
 
 public class VistaNaveEnemiga implements Observer {

@@ -29,19 +29,19 @@ public class Sonido {
 	}	
 	
 	//diparo enemigo
-	public static void disparoEnemigo1() throws Exception, IOException, UnsupportedAudioFileException{
+	public static void disparoEnemigo() throws Exception, IOException, UnsupportedAudioFileException{
 		Clip sonido = AudioSystem.getClip();
 		sonido.open(AudioSystem.getAudioInputStream(BufferedInputStream.class.getResourceAsStream("/sonidos/photon.wav")));
 		sonido.open();
 		sonido.start();
 	}	
-	public static void disparoEnemigo() throws Exception, IOException, UnsupportedAudioFileException{
+	public static void disparoEnemigo1() throws Exception, IOException, UnsupportedAudioFileException{
 		Clip sonido = AudioSystem.getClip();
 		sonido.open(AudioSystem.getAudioInputStream(BufferedInputStream.class.getResourceAsStream("/sonidos/laser_enemigo.wav")));
 		sonido.open();
 		sonido.start();
 	}	
-	//paussa
+	//pausa
 	public static void pausa() throws Exception, IOException, UnsupportedAudioFileException{
 		Clip sonido = AudioSystem.getClip();
 		sonido.open(AudioSystem.getAudioInputStream(BufferedInputStream.class.getResourceAsStream("/sonidos/crystalcastles.wav")));
@@ -67,14 +67,14 @@ public class Sonido {
 	
 	public static void muerteObjeto() throws Exception, IOException, UnsupportedAudioFileException{
 		Clip sonido = AudioSystem.getClip();
-		sonido.open(AudioSystem.getAudioInputStream(BufferedInputStream.class.getResourceAsStream("/sonidos/explosion2.wav")));
+		sonido.open(AudioSystem.getAudioInputStream(BufferedInputStream.class.getResourceAsStream("/sonidos/enemy1death.wav")));
 		sonido.open();
 		sonido.start();
 		
 	}	
 	public static void muerteObjeto1() throws Exception, IOException, UnsupportedAudioFileException{
 		Clip sonido = AudioSystem.getClip();
-		sonido.open(AudioSystem.getAudioInputStream(BufferedInputStream.class.getResourceAsStream("/sonidos/explosion2.wav")));
+		sonido.open(AudioSystem.getAudioInputStream(BufferedInputStream.class.getResourceAsStream("/sonidos/enemy2death.wav")));
 		sonido.open();
 		sonido.start();
 		
@@ -88,7 +88,13 @@ public class Sonido {
 		
 	}
 	
-	
+	public static void vidaExtra() throws Exception, IOException, UnsupportedAudioFileException{
+		Clip sonido = AudioSystem.getClip();
+		sonido.open(AudioSystem.getAudioInputStream(BufferedInputStream.class.getResourceAsStream("/sonidos/coin_credit.wav")));
+		sonido.open();
+		sonido.start();
+		
+	}
 	
 	
 	

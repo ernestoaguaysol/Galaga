@@ -2,16 +2,18 @@ package Modelo;
 
 public class Depredador extends NaveEnemiga {
 	
-	public Depredador(Punto posicion, Punto velocidad, int radio) {
+	public Depredador(Punto posicion,Punto velocidad, int ancho, int alto) {
 		//estado de la nave demoledor al iniciar
-		estado = Estado.PASIVO;
-		//posicion al iniciar
-		this.posicion = posicion;
-		this.posicioInicial = new Punto(posicion.getX(),posicion.getY());//tomaba siempre los valores de la posicion en un instante dado lo cambie para que genere un punto y concerve su posicion original de creacion.
-		//velocidad del enemigo
-		this.velocidad = velocidad;
-		//energia
-		this.energia = 100;
+				estado = Estado.PASIVO;
+				//posicion al iniciar
+				this.posicion = posicion;
+				this.posicioInicial = new Punto(posicion.getX(),posicion.getY());//tomaba siempre los valores de la posicion en un instante dado lo cambie para que genere un punto y concerve su posicion original de creacion.
+				this.ancho = ancho;
+				this.alto = alto;
+				//velocidad del enemigo
+				this.velocidad = velocidad;
+				//energia
+				this.energia = 100;
 	}
 
 	@Override

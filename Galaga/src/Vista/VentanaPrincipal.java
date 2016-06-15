@@ -202,7 +202,6 @@ public class VentanaPrincipal extends JFrame implements Observer{
 				try {
 					Sonido.disparoEnemigo1();
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				//
@@ -217,7 +216,6 @@ public class VentanaPrincipal extends JFrame implements Observer{
 				try {
 					Sonido.disparoEnemigo();
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				//
@@ -262,9 +260,8 @@ public class VentanaPrincipal extends JFrame implements Observer{
 					if (objetoMovilMuerto.equals(vistaObjetoEspacial.getObjetoEspacial())) {
 						//cargo sonido
 						try {
-							Sonido.masEnergia();
+							Sonido.vidaExtra();
 						} catch (Exception e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 						//
@@ -279,7 +276,6 @@ public class VentanaPrincipal extends JFrame implements Observer{
 						try {
 							Sonido.muerteObjeto1();
 						} catch (Exception e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 						//
@@ -294,7 +290,6 @@ public class VentanaPrincipal extends JFrame implements Observer{
 						try {
 							Sonido.muerteObjeto();
 						} catch (Exception e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 						//
@@ -309,7 +304,6 @@ public class VentanaPrincipal extends JFrame implements Observer{
 						try {
 							Sonido.explosion();
 						} catch (Exception e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 						//
@@ -324,7 +318,6 @@ public class VentanaPrincipal extends JFrame implements Observer{
 						try {
 							Sonido.explosion1();
 						} catch (Exception e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 						//

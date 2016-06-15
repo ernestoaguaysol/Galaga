@@ -13,7 +13,7 @@ public class KamikaseAlgoritmo {
 			public static void moverKamikaze(Punto posicionJugador, NaveEnemiga enemigo) {
 				//
 				
-				if (enemigo.getPosicion().getY() > 60) { //60
+				if (enemigo.getPosicion().getY() > 40) { //60
 										
 					if (posicionJugador.getX() < enemigo.getPosicion().getX()) {
 						enemigo.getVelocidad().setX(-1);
@@ -30,36 +30,34 @@ public class KamikaseAlgoritmo {
 			}
 
 			public static void moverVolviendo(NaveEnemiga n) {
-				// 
-
-					
+				// 					
 					if (n.getPosicioInicial().getY() > n.getPosicion().getY()) {
 						n.getVelocidad().setX(0);
 						n.getVelocidad().setY(-1);
 					 
-					if (n.getPosicioInicial().getX() == n.getPosicion().getX()) {					
-							n.getVelocidad().setX(0);
-							n.getVelocidad().setY(1);
-					} 
+					}							
 					if(n.getPosicioInicial().getX()>n.posicion.getX()){
 						n.getVelocidad().setX(2);
 						n.getVelocidad().setY(-1);
-					}else{
+					}else{ 
 						n.getVelocidad().setX(-2);
 						n.getVelocidad().setY(-1);
 					}
 					
-				}else {
-					n.setEstado(Estado.PASIVO);
-					n.getVelocidad().setY(0);
-					n.posicion.setX(n.posicioInicial.getX()-15);
-					n.posicion.setY(n.posicioInicial.getY());
+					if (n.getPosicioInicial().getX() == n.getPosicion().getX()) {					
+						n.getVelocidad().setX(0);
+						n.getVelocidad().setY(-1);
+					} 
+										
+					if(n.getPosicioInicial().getY() == n.getPosicion().getY()) {
+						n.getVelocidad().setY(0);
+						n.setEstado(Estado.PASIVO);
+						n.posicion.setX(n.posicioInicial.getX());
+						n.posicion.setY(n.posicioInicial.getY());
+						
 					
-				}	
-					
+					}
 			}
-			
-	
 			
 			
 			public static void moverPasivo(NaveEnemiga n) {
