@@ -70,6 +70,14 @@ public class Juego extends Observable{
 		Destructor des5 = new Destructor(new Punto(303, 383), new Punto(0, 0), 32,32);
 		Destructor des6 = new Destructor(new Punto(367, 383), new Punto(0, 0), 32,32);
 		Destructor des7 = new Destructor(new Punto(431, 383), new Punto(0, 0), 32,32);
+		//creacion de depredador
+		Depredador dep1 = new Depredador(new Punto(47, 319), new Punto(0, 0), 32,32);
+		Depredador dep2 = new Depredador(new Punto(111, 319), new Punto(0, 0), 32,32);
+		Depredador dep3 = new Depredador(new Punto(175, 319), new Punto(0, 0), 32,32);
+		Depredador dep4 = new Depredador(new Punto(239, 319), new Punto(0, 0), 32,32);
+		Depredador dep5 = new Depredador(new Punto(303, 319), new Punto(0, 0), 32,32);
+		Depredador dep6 = new Depredador(new Punto(367, 319), new Punto(0, 0), 32,32);
+		Depredador dep7 = new Depredador(new Punto(431, 319), new Punto(0, 0), 32,32);
 		//los añadimos a la lista de naves enemigas
 		this.navesNuevas.add(dem1);
 		this.navesNuevas.add(dem2);
@@ -86,6 +94,14 @@ public class Juego extends Observable{
 		this.navesNuevas.add(des5);
 		this.navesNuevas.add(des6);
 		this.navesNuevas.add(des7);
+		///
+		this.navesNuevas.add(dep1);
+		this.navesNuevas.add(dep2);
+		this.navesNuevas.add(dep3);
+		this.navesNuevas.add(dep4);
+		this.navesNuevas.add(dep5);
+		this.navesNuevas.add(dep6);
+		this.navesNuevas.add(dep7);
 		//		
 		this.setChanged();
 		this.notifyObservers();
