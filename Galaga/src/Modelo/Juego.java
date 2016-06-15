@@ -237,12 +237,12 @@ public class Juego extends Observable{
 		
 		// si no hay estrella fugaz
 		if (cantEstrellaFugaz == 0) {
-			int pos = this.aleatorio.nextInt(412)+100;
+			int pos = this.aleatorio.nextInt(384)+64;
 			if (this.naveJugador.getVidas() == 1) { // si el jugador tiene una vida
 				// aleatorio
 				if (this.aleatorio.nextInt(500) == 50) {
 					// creamos una nueva estrella fugaz
-					EstrellaFugaz nuevaEstrellaFugaz = new EstrellaFugaz(new Punto(0, pos), new Punto(1, 0), 32,32);
+					EstrellaFugaz nuevaEstrellaFugaz = new EstrellaFugaz(new Punto(pos,511), new Punto(0, -1), 32,32);
 					// agregamos la nueva estrella a la lista de objetos espaciales
 					this.objetosEspacialesNuevos.add(nuevaEstrellaFugaz);
 					setChanged();
@@ -254,7 +254,7 @@ public class Juego extends Observable{
 				// aleatorio
 				if (this.aleatorio.nextInt(500) == 50) {
 					// creamos una nueva estrella fugaz
-					EstrellaFugaz nuevaEstrellaFugaz = new EstrellaFugaz(new Punto(0, pos), new Punto(1, 0), 32,32);
+					EstrellaFugaz nuevaEstrellaFugaz = new EstrellaFugaz(new Punto(pos,511), new Punto(0, -1), 32,32);
 					// agregamos la nueva estrella a la lista de objetos espaciales
 					this.objetosEspacialesNuevos.add(nuevaEstrellaFugaz);
 					setChanged();
