@@ -2,7 +2,7 @@ package Modelo;
 
 public class Depredador extends NaveEnemiga {
 	
-	public Depredador(Punto posicion, Punto velocidad, int radio) {
+	public Depredador(Punto posicion, Punto velocidad, int alto, int ancho) {
 		//estado de la nave demoledor al iniciar
 		estado = Estado.PASIVO;
 		//posicion al iniciar
@@ -12,6 +12,9 @@ public class Depredador extends NaveEnemiga {
 		this.velocidad = velocidad;
 		//energia
 		this.energia = 100;
+		
+		this.alto = alto;
+		this.ancho = ancho;
 	}
 
 	@Override
