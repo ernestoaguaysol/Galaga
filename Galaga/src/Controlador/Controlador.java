@@ -66,13 +66,14 @@ public class Controlador implements KeyListener{
 				this.juego.setPausa(false);
 			}else {
 				this.juego.setPausa(true);
-				
+				//cargamos un sonido ruidoso para la pausa!...
 				try {
-					Sonido.pausa();;
+					Sonido.pausa();
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				//
 			}
 		}
 	

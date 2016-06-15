@@ -20,6 +20,8 @@ public class Sonido {
 			
 	}	
 	
+	
+	
 	//diparo jugador
 	public static void disparoJugador() throws Exception, IOException, UnsupportedAudioFileException{
 		Clip sonido = AudioSystem.getClip();

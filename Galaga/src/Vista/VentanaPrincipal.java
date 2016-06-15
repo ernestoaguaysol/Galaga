@@ -328,6 +328,13 @@ public class VentanaPrincipal extends JFrame implements Observer{
 			}else if (objetoMovilMuerto.getClass().equals(Destructor.class)) {
 				for (VistaNaveEnemiga vistaNaveEnemiga : vistaNavesEnemigas) {
 					if (objetoMovilMuerto.equals(vistaNaveEnemiga.getNaveEnemiga())) {
+						//cargo sonido
+						try {
+							Sonido.explosion();
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+						//
 						objetoMovilMuerto.deleteObserver(vistaNaveEnemiga);
 						this.espacio.getLblEspacio().remove(vistaNaveEnemiga.getLblDestructor());
 					}
@@ -335,6 +342,13 @@ public class VentanaPrincipal extends JFrame implements Observer{
 			}else if (objetoMovilMuerto.getClass().equals(Exterminador.class)) {
 				for (VistaNaveEnemiga vistaNaveEnemiga : vistaNavesEnemigas) {
 					if (objetoMovilMuerto.equals(vistaNaveEnemiga.getNaveEnemiga())) {
+						//cargo sonido
+						try {
+							Sonido.explosion();
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+						//
 						objetoMovilMuerto.deleteObserver(vistaNaveEnemiga);
 						this.espacio.getLblEspacio().remove(vistaNaveEnemiga.getLblExterminador());
 					}
