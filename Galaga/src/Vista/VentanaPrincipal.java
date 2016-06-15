@@ -179,7 +179,12 @@ public class VentanaPrincipal extends JFrame implements Observer{
 		
 		//si la cantidad de vidas es igual a 0, mostramos mensaje de game over y limpiamos la pantalla.
 		if(juego.getNaveJugador().getVidas()==0){
-			Controlador.showMessageDialog("GAME OVER");
+			Controlador.showMessageDialog("GAME OVER\n"+"te has quedado sin vidas...");
+			Galaga.InicioGalaga.main(null);
+		}
+		//si el jugador muere matando la ultima nave es juego perdido
+		if(juego.getNaveJugador().getVidas()==0 && juego.isGameWin()){
+			Controlador.showMessageDialog("GAME OVER\n"+"destruiste todas las naves pero...\n"+"tambien has sido destruido");
 			Galaga.InicioGalaga.main(null);
 		}
 		//si el juego termina con la destruccion de todas las naves enemigas nos muestra la informacion
@@ -274,6 +279,8 @@ public class VentanaPrincipal extends JFrame implements Observer{
 			if (objetoMovilMuerto.getClass().equals(EstrellaFugaz.class)) {
 				for (VistaObjetoEspacial vistaObjetoEspacial : vistaObjetosEspaciales) {
 					if (objetoMovilMuerto.equals(vistaObjetoEspacial.getObjetoEspacial())) {
+						objetoMovilMuerto.deleteObserver(vistaObjetoEspacial);
+						this.espacio.getLblEspacio().remove(vistaObjetoEspacial.getLblEstrellaFugaz());
 						//cargo sonido
 						try {
 							Sonido.vidaExtra();
@@ -281,13 +288,13 @@ public class VentanaPrincipal extends JFrame implements Observer{
 							e.printStackTrace();
 						}
 						//
-						objetoMovilMuerto.deleteObserver(vistaObjetoEspacial);
-						this.espacio.getLblEspacio().remove(vistaObjetoEspacial.getLblEstrellaFugaz());
 					}
 				}
 			}else if (objetoMovilMuerto.getClass().equals(Meteorito.class)) {
 				for (VistaObjetoEspacial vistaObjetoEspacial : vistaObjetosEspaciales) {
 					if (objetoMovilMuerto.equals(vistaObjetoEspacial.getObjetoEspacial())) {
+						objetoMovilMuerto.deleteObserver(vistaObjetoEspacial);
+						this.espacio.getLblEspacio().remove(vistaObjetoEspacial.getLblMeteorito());
 						//cargo sonido
 						try {
 							Sonido.muerteObjeto1();
@@ -295,13 +302,13 @@ public class VentanaPrincipal extends JFrame implements Observer{
 							e.printStackTrace();
 						}
 						//
-						objetoMovilMuerto.deleteObserver(vistaObjetoEspacial);
-						this.espacio.getLblEspacio().remove(vistaObjetoEspacial.getLblMeteorito());
 					}
 				}
 			}else if (objetoMovilMuerto.getClass().equals(Asteroide.class)) {
 				for (VistaObjetoEspacial vistaObjetoEspacial : vistaObjetosEspaciales) {
 					if (objetoMovilMuerto.equals(vistaObjetoEspacial.getObjetoEspacial())) {
+						objetoMovilMuerto.deleteObserver(vistaObjetoEspacial);
+						this.espacio.getLblEspacio().remove(vistaObjetoEspacial.getLblAsteroide());
 						//cargo sonido
 						try {
 							Sonido.muerteObjeto();
@@ -309,13 +316,13 @@ public class VentanaPrincipal extends JFrame implements Observer{
 							e.printStackTrace();
 						}
 						//
-						objetoMovilMuerto.deleteObserver(vistaObjetoEspacial);
-						this.espacio.getLblEspacio().remove(vistaObjetoEspacial.getLblAsteroide());
 					}
 				}
 			}else if (objetoMovilMuerto.getClass().equals(Demoledor.class)) {
 				for (VistaNaveEnemiga vistaNaveEnemiga : vistaNavesEnemigas) {
 					if (objetoMovilMuerto.equals(vistaNaveEnemiga.getNaveEnemiga())) {
+						objetoMovilMuerto.deleteObserver(vistaNaveEnemiga);
+						this.espacio.getLblEspacio().remove(vistaNaveEnemiga.getLblDemoledor());
 						//cargo sonido
 						try {
 							Sonido.explosion();
@@ -323,13 +330,13 @@ public class VentanaPrincipal extends JFrame implements Observer{
 							e.printStackTrace();
 						}
 						//
-						objetoMovilMuerto.deleteObserver(vistaNaveEnemiga);
-						this.espacio.getLblEspacio().remove(vistaNaveEnemiga.getLblDemoledor());
 					}
 				}
 			}else if (objetoMovilMuerto.getClass().equals(Depredador.class)) {
 				for (VistaNaveEnemiga vistaNaveEnemiga : vistaNavesEnemigas) {
 					if (objetoMovilMuerto.equals(vistaNaveEnemiga.getNaveEnemiga())) {
+						objetoMovilMuerto.deleteObserver(vistaNaveEnemiga);
+						this.espacio.getLblEspacio().remove(vistaNaveEnemiga.getLblDepredador());
 						//cargo sonido
 						try {
 							Sonido.explosion1();
@@ -337,13 +344,13 @@ public class VentanaPrincipal extends JFrame implements Observer{
 							e.printStackTrace();
 						}
 						//
-						objetoMovilMuerto.deleteObserver(vistaNaveEnemiga);
-						this.espacio.getLblEspacio().remove(vistaNaveEnemiga.getLblDepredador());
 					}
 				}
 			}else if (objetoMovilMuerto.getClass().equals(Destructor.class)) {
 				for (VistaNaveEnemiga vistaNaveEnemiga : vistaNavesEnemigas) {
 					if (objetoMovilMuerto.equals(vistaNaveEnemiga.getNaveEnemiga())) {
+						objetoMovilMuerto.deleteObserver(vistaNaveEnemiga);
+						this.espacio.getLblEspacio().remove(vistaNaveEnemiga.getLblDestructor());
 						//cargo sonido
 						try {
 							Sonido.explosion();
@@ -351,13 +358,13 @@ public class VentanaPrincipal extends JFrame implements Observer{
 							e.printStackTrace();
 						}
 						//
-						objetoMovilMuerto.deleteObserver(vistaNaveEnemiga);
-						this.espacio.getLblEspacio().remove(vistaNaveEnemiga.getLblDestructor());
 					}
 				}
 			}else if (objetoMovilMuerto.getClass().equals(Exterminador.class)) {
 				for (VistaNaveEnemiga vistaNaveEnemiga : vistaNavesEnemigas) {
 					if (objetoMovilMuerto.equals(vistaNaveEnemiga.getNaveEnemiga())) {
+						objetoMovilMuerto.deleteObserver(vistaNaveEnemiga);
+						this.espacio.getLblEspacio().remove(vistaNaveEnemiga.getLblExterminador());
 						//cargo sonido
 						try {
 							Sonido.explosion();
@@ -365,8 +372,6 @@ public class VentanaPrincipal extends JFrame implements Observer{
 							e.printStackTrace();
 						}
 						//
-						objetoMovilMuerto.deleteObserver(vistaNaveEnemiga);
-						this.espacio.getLblEspacio().remove(vistaNaveEnemiga.getLblExterminador());
 					}
 				}
 			}else if (objetoMovilMuerto.getClass().equals(Laser.class)) {
