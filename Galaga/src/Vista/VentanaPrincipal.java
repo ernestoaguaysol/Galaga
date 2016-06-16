@@ -7,6 +7,7 @@ import java.net.URL;
 import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
@@ -21,6 +22,7 @@ import javax.swing.JMenuItem;
 import java.awt.BorderLayout;
 
 import javax.swing.JPanel;
+
 
 
 
@@ -54,7 +56,7 @@ public class VentanaPrincipal extends JFrame implements Observer{
 	private VistaJugador vistaJugador;
 	private LinkedList<VistaObjetoEspacial> vistaObjetosEspaciales;
 	private LinkedList<VistaNaveEnemiga> vistaNavesEnemigas;
-	private LinkedList<VistaDisparo> vistaDisparos;
+	private CopyOnWriteArrayList<VistaDisparo> vistaDisparos;
 	
 	/**
 	 * ventana principal.
@@ -116,7 +118,7 @@ public class VentanaPrincipal extends JFrame implements Observer{
 		this.juego = juego;
 		this.vistaObjetosEspaciales = new LinkedList<>();
 		this.vistaNavesEnemigas = new LinkedList<>();
-		this.vistaDisparos = new LinkedList<>();
+		this.vistaDisparos = new CopyOnWriteArrayList<>();
 		
 		// instanciamos la vista jugador 
 		this.vistaJugador = new VistaJugador();

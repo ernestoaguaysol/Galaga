@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Random;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.Semaphore;
+
 import Modelo.NaveJugador;
 
 
@@ -23,9 +26,11 @@ public class Juego extends Observable{
 	private LinkedList<ObjetoEspacial> objetosEspacialesNuevos;
 	private LinkedList<Disparo> disparosEnemigos;
 	private LinkedList<Disparo> disparosEnemigosNuevos;
-	private LinkedList<Disparo> disparosJugador;
+	private CopyOnWriteArrayList<Disparo> disparosJugador;
 	private LinkedList<Disparo> disparosJugadorNuevos;
 	private LinkedList<ObjetoMovil> objetosMuertos;
+	
+	
 	//
 	private int puntaje = 0;
 	private boolean gameWin;
@@ -35,6 +40,8 @@ public class Juego extends Observable{
 	//aleatorio para usar en varios
 	private Random aleatorio = new Random();
 	
+	private Semaphore semaforo;
+	
 	// constructor Juego
 	public Juego() {
 		this.espacio = new Espacio(512,512);
@@ -43,13 +50,14 @@ public class Juego extends Observable{
 		this.objetosEspacialesNuevos = new LinkedList<>();
 		this.disparosEnemigos = new LinkedList<>();
 		this.disparosEnemigosNuevos = new LinkedList<>();
-		this.disparosJugador = new LinkedList<>();
+		this.disparosJugador = new CopyOnWriteArrayList<>();
 		this.disparosJugadorNuevos = new LinkedList<>();
 		this.navesEnemigas = new LinkedList<>();
 		this.navesNuevas = new LinkedList<>();
 		this.objetosMuertos = new LinkedList<>();
 		this.historial = new Historial();
 		this.pausa = false;
+		this.semaforo = new Semaphore(1);
 	}
 	
 	public void cargarNivel1() {
@@ -212,9 +220,16 @@ public class Juego extends Observable{
 		}
 		
 		//movemos todos lOS disparos del jugador
+		try {
+			this.semaforo.acquire();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		for (Disparo disparoJugador : disparosJugador) {
 			disparoJugador.mover();
 		}
+		this.semaforo.release();
 		
 	}
 
@@ -740,7 +755,15 @@ public class Juego extends Observable{
 	public void dispararJugador()
 	{
 		// agregamos un nuevo disparo a la lista de disparo jugador nuevos
+		try {
+			this.semaforo.acquire();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		this.disparosJugadorNuevos.add(this.naveJugador.disparar());
+		this.semaforo.release();
+		
 		this.setChanged();
 		this.notifyObservers();
 	}
